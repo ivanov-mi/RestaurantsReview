@@ -10,6 +10,7 @@ import Foundation
 struct Restaurant {
     let name: String
     let cuisine: String
+    let imagePath: String?
     var reviews: [Review]
     
     var rating: Double? {
