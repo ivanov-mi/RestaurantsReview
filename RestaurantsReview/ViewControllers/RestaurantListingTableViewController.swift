@@ -93,6 +93,10 @@ class RestaurantListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let detailsVC = storyboard.instantiateViewController(withIdentifier: "RestaurantDetailsViewController") as? RestaurantDetailsViewController {
+            detailsVC.restaurant = restaurants[indexPath.row]
+            navigationController?.pushViewController(detailsVC, animated: true)
+        }
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Review {
+struct Review: Equatable, Hashable {
     let authorID: UUID
     let content: String
     let rating: Int
