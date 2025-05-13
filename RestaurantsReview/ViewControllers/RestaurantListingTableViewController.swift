@@ -8,6 +8,8 @@
 import UIKit
 
 class RestaurantListViewController: UITableViewController {
+    
+    // MARK: Test Data
     var restaurants: [Restaurant] = [
         Restaurant(name: "Sushi Place", cuisine: "Japanese", imagePath: "image1", reviews: [
             Review(authorID: UUID(), content: "Fresh and delicious sushi!", rating: 5, dateOfVisit: Date()),
@@ -56,9 +58,8 @@ class RestaurantListViewController: UITableViewController {
             Review(authorID: UUID(), content: "Authentic ramen experience.", rating: 4, dateOfVisit: Date())
         ])
     ]
-
-
-
+    
+    // MARK: VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Restaurants"
@@ -67,7 +68,8 @@ class RestaurantListViewController: UITableViewController {
         
         tableView.separatorStyle = .none
     }
-
+    
+    // MARK: Override
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return restaurants.count
     }
@@ -77,17 +79,8 @@ class RestaurantListViewController: UITableViewController {
         let restaurant = restaurants[indexPath.row]
         
         cell.nameLabel.text = restaurant.name
-        if let rating = restaurant.rating {
-            cell.ratingLabel.text = String(format: "%.1f", rating)
-        } else {
-            cell.ratingLabel.text = "N/A"
-        }
-        
-        if let imagePath = restaurant.imagePath {
-            cell.restaurantImageView.image = UIImage(named: imagePath)
-        }  else {
-            cell.restaurantImageView.image = UIImage(systemName: "photo")
-        }
+        cell.ratingLabel.text = restaurant.rating.map { String(format: "%.1f", $0) } ?? "N/A"
+        cell.restaurantImageView.image = restaurant.imagePath.flatMap { UIImage(named: $0) } ?? UIImage(systemName: "photo")
 
         return cell
     }

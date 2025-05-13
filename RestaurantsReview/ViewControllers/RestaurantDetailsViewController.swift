@@ -9,8 +9,10 @@ import UIKit
 
 class RestaurantDetailsViewController: UIViewController {
     
+    // MARK: - Properties
     var restaurant: Restaurant?
     
+    // MARK: - IBOutlets
     @IBOutlet weak var restaurantImageView: UIImageView!
     @IBOutlet weak var restaurantNameLabel: UILabel!
     @IBOutlet weak var cuisineDescriptionLabel: UILabel!
@@ -24,58 +26,75 @@ class RestaurantDetailsViewController: UIViewController {
     @IBOutlet weak var emptyRatingLabel: UILabel!
     @IBOutlet weak var reviewsStackView: UIStackView!
     
+    // MARK: - VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         populateData()
     }
+}
 
-    private func populateData() {
+private extension RestaurantDetailsViewController {
+
+    // MARK: - Data Population
+    func populateData() {
         guard let restaurant = restaurant else { return }
 
         configureImage(from: restaurant.imagePath)
-        configureRating(restaurant.rating)
+        configureRating(restaurant.rating, reviewCount: restaurant.reviews.count)
         configureText(name: restaurant.name, cuisine: restaurant.cuisine)
         configureReviews(restaurant.reviews)
-        totalRatesLabel.text = "\(restaurant.reviews.count)"
     }
 
-    private func configureImage(from imagePath: String?) {
+    // MARK: - Configuration Methods
+    func configureImage(from imagePath: String?) {
         restaurantImageView.image = imagePath.flatMap(UIImage.init(named:)) ?? UIImage(systemName: "photo")
     }
 
-    private func configureRating(_ rating: Double?) {
+    func configureRating(_ rating: Double?, reviewCount: Int) {
         if let rating = rating {
-            currentRatingLabel.text = String(format: "%.1f", rating)
-            maxPossibleRatingLabel.text = "out of 5"
-            starRatingView.rating = rating
-            maxPossibleRatingLabel.isHidden = false
-            emptyRatingLabel.isHidden = true
+            showRatingDetails(rating)
         } else {
-            ratingContentView.isHidden = true
-            maxPossibleRatingLabel.isHidden = false
-            emptyRatingLabel.text = "Not rated yet"
+            hideRatingDetails()
         }
+        totalRatesLabel.text = "\(reviewCount) ratings"
     }
 
-    private func configureText(name: String, cuisine: String) {
+    func showRatingDetails(_ rating: Double) {
+        currentRatingLabel.text = String(format: "%.1f", rating)
+        maxPossibleRatingLabel.text = "out of 5"
+        starRatingView.rating = rating
+        ratingContentView.isHidden = false
+        emptyRatingLabel.isHidden = true
+    }
+
+    func hideRatingDetails() {
+        ratingContentView.isHidden = true
+        emptyRatingLabel.text = "Not rated yet"
+        emptyRatingLabel.isHidden = false
+    }
+
+    func configureText(name: String, cuisine: String) {
         restaurantNameLabel.text = name
         cuisineDescriptionLabel.text = cuisine
     }
 
-    private func configureReviews(_ reviews: [Review]) {
+    func configureReviews(_ reviews: [Review]) {
         reviewsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        reviewsStackView.isHidden = reviews.isEmpty
 
-        guard !reviews.isEmpty else {
-            reviewsStackView.isHidden = true
-            return
-        }
+        guard !reviews.isEmpty else { return }
 
-        reviewsStackView.isHidden = false
+        let roles = determineReviewRoles(from: reviews)
+        addReviewViews(for: roles)
+    }
 
-        guard let mostRecent = reviews.max(by: { $0.dateOfVisit < $1.dateOfVisit }),
+    // MARK: - Helper Methods
+    func determineReviewRoles(from reviews: [Review]) -> [Review: Set<ReviewListItemType>] {
+        guard
+            let mostRecent = reviews.max(by: { $0.dateOfVisit < $1.dateOfVisit }),
             let lowest = reviews.min(by: { $0.rating < $1.rating }),
             let highest = reviews.max(by: { $0.rating < $1.rating })
-        else { return }
+        else { return [:] }
 
         var roles: [Review: Set<ReviewListItemType>] = [:]
 
@@ -87,6 +106,10 @@ class RestaurantDetailsViewController: UIViewController {
             roles[review, default: []].insert(role)
         }
 
+        return roles
+    }
+
+    func addReviewViews(for roles: [Review: Set<ReviewListItemType>]) {
         for (review, tags) in roles {
             let view = ReviewListItemView()
             view.configure(with: ReviewListItemViewModel(
