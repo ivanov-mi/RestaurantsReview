@@ -7,27 +7,23 @@
 
 import Foundation
 
+enum Role: String, Codable {
+    case user, admin
+}
+
 struct User {
-    var id: UUID
-    var name: String
+    let id: UUID
+    var username: String
     var email: String
     var password: String
-    var isAdmin: Bool
+    var role: Role
     
     init(name: String, email: String, password: String) {
         self.id = UUID()
-        self.name = name
+        self.username = name
         self.email = email
         self.password = password
-        self.isAdmin = false
-    }
-    
-    mutating func promoteToAdmin() {
-        isAdmin = true
-    }
-    
-    mutating func demoteToUser() {
-        isAdmin = false
+        self.role = .user
     }
     
     func authenticate(inputPassword: String) -> Bool {

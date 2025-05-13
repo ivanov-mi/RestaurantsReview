@@ -115,7 +115,7 @@ private extension RestaurantDetailsViewController {
             view.configure(with: ReviewListItemViewModel(
                 tags: tags,
                 rating: review.rating,
-                comment: review.content
+                comment: review.comment
             ))
             reviewsStackView.addArrangedSubview(view)
         }

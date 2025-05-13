@@ -8,8 +8,9 @@
 import Foundation
 
 struct Review: Equatable, Hashable {
-    let authorID: UUID
-    let content: String
+    let userId: UUID
+    let comment: String
     let rating: Int
     let dateOfVisit: Date
+    let dateCreated: Date
 }
