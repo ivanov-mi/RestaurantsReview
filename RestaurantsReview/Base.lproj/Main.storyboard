@@ -66,29 +66,29 @@
                                                     <constraint firstAttribute="height" constant="2" id="B5y-mh-Tth"/>
                                                 </constraints>
                                             </view>
-                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ki0-90-qg1" userLabel="Star Rate Content View">
-                                                <rect key="frame" x="32" y="26" width="329" height="50"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ki0-90-qg1" userLabel="Star Rate Content View">
+                                                <rect key="frame" x="32" y="26" width="329" height="150.66666666666666"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to rate" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xBc-lP-WXf" userLabel="Star Rate Label">
-                                                        <rect key="frame" x="0.0" y="0.0" width="69.333333333333329" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="164.66666666666666" height="150.66666666666666"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z5M-16-h6A" userLabel="Star Rate View" customClass="StarRatingView" customModule="RestaurantsReview" customModuleProvider="target">
-                                                        <rect key="frame" x="69.333333333333343" y="0.0" width="259.66666666666663" height="50"/>
+                                                        <rect key="frame" x="164.66666666666663" y="0.0" width="164.33333333333337" height="150.66666666666666"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     </view>
                                                 </subviews>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add revriew (Optional)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UrQ-cp-XHv" userLabel="Add Review Label">
-                                                <rect key="frame" x="16" y="100" width="361" height="20.333333333333329"/>
+                                                <rect key="frame" x="16" y="200.66666666666669" width="361" height="20.333333333333343"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SuO-YL-g2K">
-                                                <rect key="frame" x="40" y="136.33333333333334" width="313" height="160.00000000000003"/>
+                                                <rect key="frame" x="40" y="237" width="313" height="160"/>
                                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" priority="751" constant="160" id="xfP-H8-0aL"/>
@@ -98,7 +98,7 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="weh-8H-txZ">
-                                                <rect key="frame" x="16" y="328.33333333333331" width="361" height="50"/>
+                                                <rect key="frame" x="16" y="429" width="361" height="50"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date of Visit" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZg-bn-shl" userLabel="Date Picker Label">
                                                         <rect key="frame" x="0.0" y="0.0" width="92.666666666666671" height="50"/>
@@ -107,7 +107,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="e9a-UC-U1z">
-                                                        <rect key="frame" x="93" y="0.0" width="268" height="50"/>
+                                                        <rect key="frame" x="92.666666666666657" y="0.0" width="268.33333333333337" height="50"/>
                                                     </datePicker>
                                                 </subviews>
                                             </stackView>
@@ -161,7 +161,7 @@
                         <outlet property="datePickerLabel" destination="fZg-bn-shl" id="d29-WJ-61e"/>
                         <outlet property="scrollView" destination="zu5-OW-5C8" id="fDD-yD-hgM"/>
                         <outlet property="starRatingLabel" destination="xBc-lP-WXf" id="Xc3-49-fH1"/>
-                        <outlet property="starRatingView" destination="z5M-16-h6A" id="2nq-se-fQG"/>
+                        <outlet property="starRatingView" destination="z5M-16-h6A" id="6OJ-eZ-gLD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="26W-5H-2En" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -213,44 +213,73 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="508-4Q-S51" userLabel="Overall average">
                                                         <rect key="frame" x="0.0" y="75" width="377" height="80"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rmp-Gh-Dch" userLabel="Current Rating">
-                                                                <rect key="frame" x="16" y="8" width="112" height="43.666666666666664"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="raM-va-6X4" userLabel="Max posible rating">
-                                                                <rect key="frame" x="51.333333333333329" y="59.666666666666693" width="41.333333333333329" height="20.333333333333336"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <view contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="eyV-v4-GKc" customClass="StarRatingView" customModule="RestaurantsReview" customModuleProvider="target">
-                                                                <rect key="frame" x="144" y="16" width="217" height="27.666666666666671"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                            </view>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lf-fg-VGs" userLabel="Rating Numbers Label">
-                                                                <rect key="frame" x="232" y="51.666666666666629" width="41.333333333333314" height="20.333333333333329"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="6Ft-gT-VZH">
+                                                                <rect key="frame" x="0.0" y="0.0" width="377" height="80"/>
+                                                                <subviews>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ram-KP-18X" userLabel="Number Rating">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="188.66666666666666" height="80"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rmp-Gh-Dch" userLabel="Current Rating">
+                                                                                <rect key="frame" x="8" y="8" width="164.66666666666666" height="35.666666666666664"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="raM-va-6X4" userLabel="Max posible rating">
+                                                                                <rect key="frame" x="12.000000000000004" y="51.666666666666629" width="41.333333333333343" height="20.333333333333329"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                        </subviews>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                        <constraints>
+                                                                            <constraint firstItem="raM-va-6X4" firstAttribute="leading" secondItem="ram-KP-18X" secondAttribute="leading" constant="12" id="0dH-NY-Ugc"/>
+                                                                            <constraint firstItem="rmp-Gh-Dch" firstAttribute="top" secondItem="ram-KP-18X" secondAttribute="top" constant="8" id="3FS-ba-617"/>
+                                                                            <constraint firstItem="rmp-Gh-Dch" firstAttribute="leading" secondItem="ram-KP-18X" secondAttribute="leading" constant="8" id="9FC-9Z-CvD"/>
+                                                                            <constraint firstAttribute="bottom" secondItem="raM-va-6X4" secondAttribute="bottom" constant="8" id="ZhK-W3-ggx"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="rmp-Gh-Dch" secondAttribute="trailing" constant="16" id="j4z-mg-6tf"/>
+                                                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="raM-va-6X4" secondAttribute="trailing" constant="16" id="kNf-Rl-1eK"/>
+                                                                            <constraint firstItem="raM-va-6X4" firstAttribute="top" secondItem="rmp-Gh-Dch" secondAttribute="bottom" constant="8" id="lWF-q7-ZpH"/>
+                                                                        </constraints>
+                                                                    </view>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aoZ-Bv-Buc" userLabel="Star Rating">
+                                                                        <rect key="frame" x="188.66666666666663" y="0.0" width="188.33333333333337" height="80"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lf-fg-VGs" userLabel="Rating Numbers Label">
+                                                                                <rect key="frame" x="73.333333333333343" y="51.666666666666629" width="41.333333333333343" height="20.333333333333329"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <view contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="eyV-v4-GKc" customClass="StarRatingView" customModule="RestaurantsReview" customModuleProvider="target">
+                                                                                <rect key="frame" x="8" y="8" width="172.33333333333334" height="35.666666666666664"/>
+                                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="height" priority="100" constant="40" id="cZY-cn-qUI"/>
+                                                                                </constraints>
+                                                                            </view>
+                                                                        </subviews>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="bottom" secondItem="5lf-fg-VGs" secondAttribute="bottom" constant="8" id="6A3-ms-yav"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="eyV-v4-GKc" secondAttribute="trailing" constant="8" id="Iwg-sr-HrF"/>
+                                                                            <constraint firstItem="5lf-fg-VGs" firstAttribute="top" secondItem="eyV-v4-GKc" secondAttribute="bottom" constant="8" id="KFi-DH-wVp"/>
+                                                                            <constraint firstItem="eyV-v4-GKc" firstAttribute="top" secondItem="aoZ-Bv-Buc" secondAttribute="top" constant="8" id="Omi-qS-XYi"/>
+                                                                            <constraint firstItem="eyV-v4-GKc" firstAttribute="leading" secondItem="aoZ-Bv-Buc" secondAttribute="leading" constant="8" id="bNs-xW-Cke"/>
+                                                                            <constraint firstItem="5lf-fg-VGs" firstAttribute="centerX" secondItem="eyV-v4-GKc" secondAttribute="centerX" id="n05-9P-1RR"/>
+                                                                        </constraints>
+                                                                    </view>
+                                                                </subviews>
+                                                            </stackView>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5lf-fg-VGs" secondAttribute="trailing" constant="16" id="6Oc-1l-3Zx"/>
-                                                            <constraint firstItem="rmp-Gh-Dch" firstAttribute="top" secondItem="508-4Q-S51" secondAttribute="top" constant="8.0000000000000036" id="KrW-JI-YqK"/>
-                                                            <constraint firstAttribute="bottom" secondItem="5lf-fg-VGs" secondAttribute="bottom" constant="8" id="PgV-QO-hL9"/>
-                                                            <constraint firstItem="rmp-Gh-Dch" firstAttribute="leading" secondItem="508-4Q-S51" secondAttribute="leading" constant="16" id="RDc-sq-odx"/>
-                                                            <constraint firstItem="5lf-fg-VGs" firstAttribute="centerX" secondItem="eyV-v4-GKc" secondAttribute="centerX" id="RcS-ro-tjA"/>
-                                                            <constraint firstItem="eyV-v4-GKc" firstAttribute="leading" secondItem="rmp-Gh-Dch" secondAttribute="trailing" priority="249" constant="16" id="TZb-t0-4Nk"/>
-                                                            <constraint firstItem="raM-va-6X4" firstAttribute="centerX" secondItem="rmp-Gh-Dch" secondAttribute="centerX" id="XOy-HL-xJj"/>
-                                                            <constraint firstAttribute="trailing" secondItem="eyV-v4-GKc" secondAttribute="trailing" constant="16" id="YPA-Ja-tXr"/>
-                                                            <constraint firstAttribute="bottom" secondItem="raM-va-6X4" secondAttribute="bottom" id="iW7-Vz-mRq"/>
-                                                            <constraint firstItem="eyV-v4-GKc" firstAttribute="centerY" secondItem="rmp-Gh-Dch" secondAttribute="centerY" id="kOf-pH-j3o"/>
+                                                            <constraint firstItem="6Ft-gT-VZH" firstAttribute="top" secondItem="508-4Q-S51" secondAttribute="top" id="Aws-VF-jal"/>
+                                                            <constraint firstAttribute="trailing" secondItem="6Ft-gT-VZH" secondAttribute="trailing" id="Qzf-GK-2LF"/>
+                                                            <constraint firstAttribute="bottom" secondItem="6Ft-gT-VZH" secondAttribute="bottom" id="U6q-Jd-zXv"/>
                                                             <constraint firstAttribute="height" constant="80" id="pDy-FZ-aRl"/>
-                                                            <constraint firstItem="eyV-v4-GKc" firstAttribute="top" secondItem="508-4Q-S51" secondAttribute="top" constant="16" id="rDr-jJ-YLm"/>
-                                                            <constraint firstItem="raM-va-6X4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="rmp-Gh-Dch" secondAttribute="bottom" constant="8" id="tac-qI-Hec"/>
+                                                            <constraint firstItem="6Ft-gT-VZH" firstAttribute="leading" secondItem="508-4Q-S51" secondAttribute="leading" id="qe7-Tc-DWg"/>
                                                         </constraints>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dye-f5-UnS" userLabel="Empty Rating Label">

@@ -69,7 +69,9 @@ private extension RestaurantDetailsViewController {
     func showRatingDetails(_ rating: Double) {
         currentRatingLabel.text = String(format: "%.1f", rating)
         maxPossibleRatingLabel.text = "out of 5"
-        starRatingView.rating = rating
+        starRatingView.setRating(rating)
+        
+        starRatingView.isUserInteractionEnabled = false
         ratingContentView.isHidden = false
         emptyRatingLabel.isHidden = true
     }

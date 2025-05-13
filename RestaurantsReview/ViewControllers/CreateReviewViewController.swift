@@ -7,8 +7,6 @@
 
 import UIKit
 
-import UIKit
-
 protocol CreateReviewViewControllerDelegate: AnyObject {
     func didSubmitReview(_ review: Review)
     func didCancelReview()
@@ -31,10 +29,6 @@ class CreateReviewViewController: UIViewController {
 
     private func configureRatingLabel() {
         starRatingLabel.text = "Tap to rate"
-    }
-    
-    private func configureStarRatingView() {
-        starRatingView.isUserInteractionEnabled = false
     }
     
     private func confugureAddReviewLabel() {
@@ -86,7 +80,6 @@ class CreateReviewViewController: UIViewController {
         view.backgroundColor = .systemBackground
 
         configureRatingLabel()
-        configureStarRatingView()
         confugureAddReviewLabel()
         configureTextView()
         configureDatePickerLabel()

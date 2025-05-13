@@ -7,30 +7,31 @@
 
 import UIKit
 
+protocol StarRatingViewDelegate: AnyObject {
+    func starRatingView(_ view: StarRatingView, didChangeRating rating: Double)
+}
+
+@IBDesignable
 class StarRatingView: UIView {
-    
+
+    // MARK: - Outlets
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var stackView: UIStackView!
-    
-    private var imageViews: [UIImageView] = []
-    
-    var rating: Double = 0 {
-        didSet {
-            updateStars()
-        }
-    }
-    
-    var maxRating = 5
-    var starSize: CGFloat = 32 {
-        didSet {
-            updateStarSizes()
-        }
+    @IBOutlet weak var star1Button: UIButton!
+    @IBOutlet weak var star2Button: UIButton!
+    @IBOutlet weak var star3Button: UIButton!
+    @IBOutlet weak var star4Button: UIButton!
+    @IBOutlet weak var star5Button: UIButton!
+
+    // MARK: - Properties
+    private var starButtons: [UIButton] = []
+    private(set) var rating: Double = 0 {
+        didSet { updateStars() }
     }
 
-    let filledStar = UIImage(systemName: "star.fill")
-    let halfStar = UIImage(systemName: "star.leadinghalf.filled")
-    let emptyStar = UIImage(systemName: "star")
+    weak var delegate: StarRatingViewDelegate?
 
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -46,34 +47,43 @@ class StarRatingView: UIView {
         addSubview(contentView)
         contentView.frame = bounds
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        setupStars()
+
+        starButtons = [star1Button, star2Button, star3Button, star4Button, star5Button]
         updateStars()
     }
 
-    private func setupStars() {
-        imageViews = stackView.arrangedSubviews.compactMap { $0 as? UIImageView }
-        updateStarSizes()
+    // MARK: - Actions
+    @IBAction func starTapped(_ sender: UIButton) {
+        guard let index = starButtons.firstIndex(of: sender) else { return }
+
+        let selectedRating = Double(index + 1) // whole stars only
+        rating = selectedRating
+        delegate?.starRatingView(self, didChangeRating: selectedRating)
     }
 
-    private func updateStarSizes() {
-        imageViews.forEach { imageView in
-            imageView.widthAnchor.constraint(equalToConstant: starSize).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: starSize).isActive = true
-        }
-    }
-
+    // MARK: - UI Update
     private func updateStars() {
-        for (index, imageView) in imageViews.enumerated() {
-            let starValue = Double(index) + 1
-            if rating >= starValue {
-                imageView.image = filledStar
-            } else if rating >= starValue - 0.5 {
-                imageView.image = halfStar
+        for (index, button) in starButtons.enumerated() {
+            let fullIndex = Double(index)
+            let imageName: String
+
+            if fullIndex + 1 <= rating {
+                imageName = "star.fill"
+            } else if fullIndex + 0.5 <= rating {
+                imageName = "star.leadinghalf.filled"
             } else {
-                imageView.image = emptyStar
+                imageName = "star"
             }
+
+            button.setImage(UIImage(systemName: imageName), for: .normal)
+            button.tintColor = .systemYellow
         }
+    }
+
+    // MARK: - Public API
+    func setRating(_ value: Double) {
+        rating = max(0, min(5, value))
     }
 }
+
 
