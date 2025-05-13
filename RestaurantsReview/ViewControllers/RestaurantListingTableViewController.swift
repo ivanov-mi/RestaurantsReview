@@ -89,7 +89,17 @@ class RestaurantListViewController: UITableViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let detailsVC = storyboard.instantiateViewController(withIdentifier: "RestaurantDetailsViewController") as? RestaurantDetailsViewController {
             detailsVC.restaurant = restaurants[indexPath.row]
+            detailsVC.delegate = self
             navigationController?.pushViewController(detailsVC, animated: true)
+        }
+    }
+}
+
+extension RestaurantListViewController: RestaurantDetailsViewControllerDelegate {
+    func didUpdateRestaurant(_ restaurant: Restaurant) {
+        if let index = restaurants.firstIndex(where: { $0.name == restaurant.name }) {
+            restaurants[index] = restaurant
+            tableView.reloadData()
         }
     }
 }

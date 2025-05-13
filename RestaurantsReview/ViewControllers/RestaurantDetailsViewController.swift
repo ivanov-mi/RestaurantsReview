@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol RestaurantDetailsViewControllerDelegate: AnyObject {
+    func didUpdateRestaurant(_ restaurant: Restaurant)
+}
+
 class RestaurantDetailsViewController: UIViewController {
     
     // MARK: - Properties
@@ -27,6 +31,8 @@ class RestaurantDetailsViewController: UIViewController {
     
     @IBOutlet weak var emptyRatingLabel: UILabel!
     @IBOutlet weak var reviewsStackView: UIStackView!
+    
+    weak var delegate: RestaurantDetailsViewControllerDelegate?
     
     // MARK: - VC Lifecycle
     override func viewDidLoad() {
@@ -141,9 +147,12 @@ extension RestaurantDetailsViewController: CreateReviewViewControllerDelegate {
     }
     
     func didSubmitReview(_ review: Review) {
-//        restaurant?.reviews.append(review)
-//        populateData()
-        print("Review submitted")
+        restaurant?.reviews.append(review)
+        populateData()
+        
+        if let restaurant {
+            delegate?.didUpdateRestaurant(restaurant)
+        }
     }
 
     @objc func presentReviewForm() {
