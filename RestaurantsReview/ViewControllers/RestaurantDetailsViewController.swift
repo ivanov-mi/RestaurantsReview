@@ -35,28 +35,29 @@ class RestaurantDetailsViewController: UIViewController {
 
 private extension RestaurantDetailsViewController {
 
-    // MARK: - Data Population
+    // MARK: - Populate Data
     func populateData() {
         guard let restaurant = restaurant else { return }
 
         configureImage(from: restaurant.imagePath)
         configureRating(restaurant.rating, reviewCount: restaurant.reviews.count)
         configureText(name: restaurant.name, cuisine: restaurant.cuisine)
-        configureReviews(restaurant.reviews)
+        configureReviews(from: restaurant)
     }
 
-    // MARK: - Configuration Methods
+    // MARK: - Image
     func configureImage(from imagePath: String?) {
         restaurantImageView.image = imagePath.flatMap(UIImage.init(named:)) ?? UIImage(systemName: "photo")
     }
 
+    // MARK: - Rating
     func configureRating(_ rating: Double?, reviewCount: Int) {
         if let rating = rating {
             showRatingDetails(rating)
         } else {
             hideRatingDetails()
         }
-        totalRatesLabel.text = "\(reviewCount) ratings"
+        totalRatesLabel.text = "\(reviewCount) rating\(reviewCount == 1 ? "" : "s")"
     }
 
     func showRatingDetails(_ rating: Double) {
@@ -73,37 +74,40 @@ private extension RestaurantDetailsViewController {
         emptyRatingLabel.isHidden = false
     }
 
+    // MARK: - Static Text
     func configureText(name: String, cuisine: String) {
         restaurantNameLabel.text = name
         cuisineDescriptionLabel.text = cuisine
     }
 
-    func configureReviews(_ reviews: [Review]) {
+    // MARK: - Reviews
+    func configureReviews(from restaurant: Restaurant) {
         reviewsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        reviewsStackView.isHidden = reviews.isEmpty
 
-        guard !reviews.isEmpty else { return }
+        guard !restaurant.reviews.isEmpty else {
+            reviewsStackView.isHidden = true
+            return
+        }
 
-        let roles = determineReviewRoles(from: reviews)
+        reviewsStackView.isHidden = false
+
+        let roles = determineReviewRoles(from: restaurant)
         addReviewViews(for: roles)
     }
 
-    // MARK: - Helper Methods
-    func determineReviewRoles(from reviews: [Review]) -> [Review: Set<ReviewListItemType>] {
-        guard
-            let mostRecent = reviews.max(by: { $0.dateOfVisit < $1.dateOfVisit }),
-            let lowest = reviews.min(by: { $0.rating < $1.rating }),
-            let highest = reviews.max(by: { $0.rating < $1.rating })
-        else { return [:] }
-
+    func determineReviewRoles(from restaurant: Restaurant) -> [Review: Set<ReviewListItemType>] {
         var roles: [Review: Set<ReviewListItemType>] = [:]
 
-        for (review, role) in [
-            (mostRecent, ReviewListItemType.mostRecent),
-            (lowest, ReviewListItemType.lowestRated),
-            (highest, ReviewListItemType.highestRated)
-        ] {
-            roles[review, default: []].insert(role)
+        if let mostRecent = restaurant.latestReview {
+            roles[mostRecent, default: []].insert(.mostRecent)
+        }
+
+        if let lowest = restaurant.lowestRated {
+            roles[lowest, default: []].insert(.lowestRated)
+        }
+
+        if let highest = restaurant.highestRated {
+            roles[highest, default: []].insert(.highestRated)
         }
 
         return roles
@@ -117,7 +121,9 @@ private extension RestaurantDetailsViewController {
                 rating: review.rating,
                 comment: review.comment
             ))
+            
             reviewsStackView.addArrangedSubview(view)
         }
     }
 }
+
