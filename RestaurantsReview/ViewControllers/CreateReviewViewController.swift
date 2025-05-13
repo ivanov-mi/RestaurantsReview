@@ -13,54 +13,32 @@ protocol CreateReviewViewControllerDelegate: AnyObject {
 }
 
 class CreateReviewViewController: UIViewController {
+
+    // MARK: - IBOutlets
+    @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var starRatingLabel: UILabel!
     @IBOutlet weak var starRatingView: StarRatingView!
+    
     @IBOutlet weak var addReviewLabel: UILabel!
     @IBOutlet weak var commentTextView: UITextView!
+    
     @IBOutlet weak var datePickerLabel: UILabel!
     @IBOutlet weak var datePicker: UIDatePicker!
 
-    @IBOutlet weak var scrollView: UIScrollView!
-    
     // MARK: - Properties
     weak var delegate: CreateReviewViewControllerDelegate?
     var userId: UUID!
-
-    private func configureRatingLabel() {
-        starRatingLabel.text = "Tap to rate"
-    }
-    
-    private func confugureAddReviewLabel() {
-        addReviewLabel.text = "Add your comment"
-    }
-
-    private func configureTextView() {
-        commentTextView.layer.cornerRadius = 10
-        commentTextView.layer.borderWidth = 0.5
-        commentTextView.layer.borderColor = UIColor.systemGray4.cgColor
-        commentTextView.font = .systemFont(ofSize: 16)
-    }
-    
-    private func configureDatePickerLabel() {
-        datePickerLabel.text = "Date of Visit"
-    }
-
-    private func configure() {
-        datePicker.datePickerMode = .date
-        datePicker.maximumDate = Date()
-    }
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        setupLayout()
-        setupKeyboardObservers()
-        setupDismissKeyboardOnTap()
+        setupUI()
+        setupKeyboardHandling()
     }
 
-    // MARK: - Setup Methods
+    // MARK: - UI Setup
     private func setupNavigationBar() {
         title = "Write a Review"
         navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -76,14 +54,59 @@ class CreateReviewViewController: UIViewController {
         )
     }
 
-    private func setupLayout() {
+    private func setupUI() {
         view.backgroundColor = .systemBackground
 
-        configureRatingLabel()
-        confugureAddReviewLabel()
+        configureLabels()
         configureTextView()
-        configureDatePickerLabel()
-        configure()
+        configureDatePicker()
+    }
+
+    private func configureLabels() {
+        starRatingLabel.text = "Tap to rate"
+        addReviewLabel.text = "Add your comment"
+        datePickerLabel.text = "Date of Visit"
+    }
+
+    private func configureTextView() {
+        commentTextView.layer.cornerRadius = 10
+        commentTextView.layer.borderWidth = 0.5
+        commentTextView.layer.borderColor = UIColor.systemGray4.cgColor
+        commentTextView.font = .systemFont(ofSize: 16)
+        commentTextView.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+    }
+
+    private func configureDatePicker() {
+        datePicker.datePickerMode = .date
+        datePicker.maximumDate = Date()
+    }
+
+    // MARK: - Keyboard Handling
+    private func setupKeyboardHandling() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+
+        scrollView.contentInset.bottom = keyboardFrame.height
+        scrollView.verticalScrollIndicatorInsets.bottom = keyboardFrame.height
+    }
+
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        scrollView.contentInset.bottom = 0
+        scrollView.verticalScrollIndicatorInsets.bottom = 0
+    }
+
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     // MARK: - Actions
@@ -118,33 +141,5 @@ class CreateReviewViewController: UIViewController {
         alert.addAction(.init(title: "OK", style: .default))
         present(alert, animated: true)
     }
-    
-    private func setupKeyboardObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    private func setupDismissKeyboardOnTap() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tapGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapGesture)
-    }
-
-    @objc private func keyboardWillShow(_ notification: Notification) {
-        guard let userInfo = notification.userInfo,
-              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-
-        let bottomInset = keyboardFrame.height
-        scrollView.contentInset.bottom = bottomInset
-        scrollView.verticalScrollIndicatorInsets.bottom = bottomInset
-    }
-
-    @objc private func keyboardWillHide(_ notification: Notification) {
-        scrollView.contentInset.bottom = 0
-        scrollView.verticalScrollIndicatorInsets.bottom = 0
-    }
-
-    @objc private func dismissKeyboard() {
-        view.endEditing(true)
-    }
 }
+
