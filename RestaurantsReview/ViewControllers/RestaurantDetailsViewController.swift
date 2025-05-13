@@ -23,6 +23,8 @@ class RestaurantDetailsViewController: UIViewController {
     @IBOutlet weak var starRatingView: StarRatingView!
     @IBOutlet weak var totalRatesLabel: UILabel!
     
+    @IBOutlet weak var createReviewButton: UIButton!
+    
     @IBOutlet weak var emptyRatingLabel: UILabel!
     @IBOutlet weak var reviewsStackView: UIStackView!
     
@@ -30,6 +32,10 @@ class RestaurantDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         populateData()
+    }
+    
+    @IBAction func rateAndReviewButtonTapped(_ sender: Any) {
+        presentReviewForm() 
     }
 }
 
@@ -123,6 +129,31 @@ private extension RestaurantDetailsViewController {
             ))
             
             reviewsStackView.addArrangedSubview(view)
+        }
+    }
+}
+
+extension RestaurantDetailsViewController: CreateReviewViewControllerDelegate {
+    func didCancelReview() {
+        print("Submition caneeled")
+    }
+    
+    func didSubmitReview(_ review: Review) {
+//        restaurant?.reviews.append(review)
+//        populateData()
+        print("Review submitted")
+    }
+
+    @objc func presentReviewForm() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let createReviewVC = storyboard.instantiateViewController(withIdentifier: "CreateReviewViewController") as? CreateReviewViewController {
+            
+            // TODO: Fix user identity
+            
+            createReviewVC.userId = UUID()
+            createReviewVC.delegate = self
+            let navController = UINavigationController(rootViewController: createReviewVC)
+            present(navController, animated: true)
         }
     }
 }

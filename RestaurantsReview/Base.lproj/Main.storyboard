@@ -45,6 +45,129 @@
             </objects>
             <point key="canvasLocation" x="-17.557251908396946" y="-209.1549295774648"/>
         </scene>
+        <!--Create Review View Controller-->
+        <scene sceneID="BO2-jO-46l">
+            <objects>
+                <viewController storyboardIdentifier="CreateReviewViewController" id="BzX-zs-o8f" customClass="CreateReviewViewController" customModule="RestaurantsReview" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ebk-og-O0X">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zu5-OW-5C8">
+                                <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7HL-Cg-yAE">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="800"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mDW-Uw-nK0" userLabel="Divider">
+                                                <rect key="frame" x="16" y="0.0" width="361" height="2"/>
+                                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="2" id="B5y-mh-Tth"/>
+                                                </constraints>
+                                            </view>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ki0-90-qg1" userLabel="Star Rate Content View">
+                                                <rect key="frame" x="32" y="26" width="329" height="50"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to rate" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xBc-lP-WXf" userLabel="Star Rate Label">
+                                                        <rect key="frame" x="0.0" y="0.0" width="69.333333333333329" height="50"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z5M-16-h6A" userLabel="Star Rate View" customClass="StarRatingView" customModule="RestaurantsReview" customModuleProvider="target">
+                                                        <rect key="frame" x="69.333333333333343" y="0.0" width="259.66666666666663" height="50"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add revriew (Optional)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UrQ-cp-XHv" userLabel="Add Review Label">
+                                                <rect key="frame" x="16" y="100" width="361" height="20.333333333333329"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SuO-YL-g2K">
+                                                <rect key="frame" x="40" y="136.33333333333334" width="313" height="160.00000000000003"/>
+                                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" priority="751" constant="160" id="xfP-H8-0aL"/>
+                                                </constraints>
+                                                <color key="textColor" systemColor="labelColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="weh-8H-txZ">
+                                                <rect key="frame" x="16" y="328.33333333333331" width="361" height="50"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date of Visit" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZg-bn-shl" userLabel="Date Picker Label">
+                                                        <rect key="frame" x="0.0" y="0.0" width="92.666666666666671" height="50"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="e9a-UC-U1z">
+                                                        <rect key="frame" x="93" y="0.0" width="268" height="50"/>
+                                                    </datePicker>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="weh-8H-txZ" secondAttribute="bottom" priority="100" constant="200" id="3WS-Kd-8Fj"/>
+                                            <constraint firstItem="UrQ-cp-XHv" firstAttribute="leading" secondItem="7HL-Cg-yAE" secondAttribute="leading" constant="16" id="4AS-bH-VX4"/>
+                                            <constraint firstItem="SuO-YL-g2K" firstAttribute="leading" secondItem="7HL-Cg-yAE" secondAttribute="leading" constant="40" id="D9L-Ck-Nl3"/>
+                                            <constraint firstAttribute="trailing" secondItem="mDW-Uw-nK0" secondAttribute="trailing" constant="16" id="Nt1-wa-hA0"/>
+                                            <constraint firstItem="UrQ-cp-XHv" firstAttribute="top" secondItem="ki0-90-qg1" secondAttribute="bottom" constant="24" id="Oby-dX-rJV"/>
+                                            <constraint firstAttribute="trailing" secondItem="weh-8H-txZ" secondAttribute="trailing" constant="16" id="P43-Pk-RaM"/>
+                                            <constraint firstAttribute="height" priority="100" constant="800" id="QiS-nG-xZa"/>
+                                            <constraint firstItem="weh-8H-txZ" firstAttribute="top" secondItem="SuO-YL-g2K" secondAttribute="bottom" constant="32" id="Qyr-Nb-fqQ"/>
+                                            <constraint firstAttribute="trailing" secondItem="SuO-YL-g2K" secondAttribute="trailing" constant="40" id="Sw2-yF-E94"/>
+                                            <constraint firstItem="mDW-Uw-nK0" firstAttribute="leading" secondItem="7HL-Cg-yAE" secondAttribute="leading" constant="16" id="Z1n-QB-3dW"/>
+                                            <constraint firstItem="SuO-YL-g2K" firstAttribute="top" secondItem="UrQ-cp-XHv" secondAttribute="bottom" constant="16" id="bjB-FU-cEg"/>
+                                            <constraint firstItem="ki0-90-qg1" firstAttribute="top" secondItem="mDW-Uw-nK0" secondAttribute="bottom" constant="24" id="cM7-AG-ATh"/>
+                                            <constraint firstAttribute="trailing" secondItem="UrQ-cp-XHv" secondAttribute="trailing" constant="16" id="dvR-Hs-J9t"/>
+                                            <constraint firstItem="ki0-90-qg1" firstAttribute="leading" secondItem="7HL-Cg-yAE" secondAttribute="leading" constant="32" id="kB1-3B-LSa"/>
+                                            <constraint firstItem="mDW-Uw-nK0" firstAttribute="top" secondItem="7HL-Cg-yAE" secondAttribute="top" id="lYv-V1-wvq"/>
+                                            <constraint firstItem="weh-8H-txZ" firstAttribute="leading" secondItem="7HL-Cg-yAE" secondAttribute="leading" constant="16" id="ozw-dU-uiI"/>
+                                            <constraint firstAttribute="trailing" secondItem="ki0-90-qg1" secondAttribute="trailing" constant="32" id="xGP-oU-f27"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="u62-j3-qvC" firstAttribute="width" secondItem="7HL-Cg-yAE" secondAttribute="width" id="TFg-Md-8Iw"/>
+                                    <constraint firstItem="7HL-Cg-yAE" firstAttribute="bottom" secondItem="fKq-EM-pAE" secondAttribute="bottom" id="e9p-Tg-gkn"/>
+                                    <constraint firstItem="7HL-Cg-yAE" firstAttribute="trailing" secondItem="fKq-EM-pAE" secondAttribute="trailing" id="iEh-Lz-B51"/>
+                                    <constraint firstItem="7HL-Cg-yAE" firstAttribute="leading" secondItem="fKq-EM-pAE" secondAttribute="leading" id="xbV-D1-eeZ"/>
+                                    <constraint firstItem="7HL-Cg-yAE" firstAttribute="top" secondItem="fKq-EM-pAE" secondAttribute="top" id="zcC-AP-uXi"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="fKq-EM-pAE"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="u62-j3-qvC"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="7in-yL-rXE"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="zu5-OW-5C8" firstAttribute="leading" secondItem="7in-yL-rXE" secondAttribute="leading" id="C9K-Zn-bRe"/>
+                            <constraint firstItem="7in-yL-rXE" firstAttribute="trailing" secondItem="zu5-OW-5C8" secondAttribute="trailing" id="KOq-9F-2Uf"/>
+                            <constraint firstItem="7in-yL-rXE" firstAttribute="bottom" secondItem="zu5-OW-5C8" secondAttribute="bottom" id="eiL-qV-XI8"/>
+                            <constraint firstItem="zu5-OW-5C8" firstAttribute="top" secondItem="7in-yL-rXE" secondAttribute="top" id="kEa-M2-WN6"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="addReviewLabel" destination="UrQ-cp-XHv" id="VS8-rO-hB9"/>
+                        <outlet property="commentTextView" destination="SuO-YL-g2K" id="xc7-Ld-ehx"/>
+                        <outlet property="datePicker" destination="e9a-UC-U1z" id="44n-xZ-bVb"/>
+                        <outlet property="datePickerLabel" destination="fZg-bn-shl" id="d29-WJ-61e"/>
+                        <outlet property="scrollView" destination="zu5-OW-5C8" id="fDD-yD-hgM"/>
+                        <outlet property="starRatingLabel" destination="xBc-lP-WXf" id="Xc3-49-fH1"/>
+                        <outlet property="starRatingView" destination="z5M-16-h6A" id="2nq-se-fQG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="26W-5H-2En" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="908" y="1223"/>
+        </scene>
         <!--Restaurant Details View Controller-->
         <scene sceneID="is7-hi-V8h">
             <objects>
@@ -149,6 +272,9 @@
                                                                 </constraints>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="Rate &amp; Review"/>
+                                                                <connections>
+                                                                    <action selector="rateAndReviewButtonTapped:" destination="tWK-bZ-jyt" eventType="touchUpInside" id="8Qi-YR-JUI"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -199,6 +325,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="createReviewButton" destination="ZTg-l5-5Cv" id="s24-gW-dfQ"/>
                         <outlet property="cuisineDescriptionLabel" destination="QcR-rm-8xa" id="jTL-P3-Jdc"/>
                         <outlet property="currentRatingLabel" destination="rmp-Gh-Dch" id="K37-Pn-eVK"/>
                         <outlet property="emptyRatingLabel" destination="dye-f5-UnS" id="AHp-2D-1fz"/>
@@ -217,8 +344,17 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
