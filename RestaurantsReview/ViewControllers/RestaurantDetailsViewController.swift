@@ -18,6 +18,8 @@ class RestaurantDetailsViewController: UIViewController {
     @IBOutlet weak var ratingContentView: UIView!
     @IBOutlet weak var currentRatingLabel: UILabel!
     @IBOutlet weak var maxPossibleRatingLabel: UILabel!
+    @IBOutlet weak var starRatingView: StarRatingView!
+    @IBOutlet weak var totalRatesLabel: UILabel!
     
     @IBOutlet weak var emptyRatingLabel: UILabel!
     @IBOutlet weak var reviewsStackView: UIStackView!
@@ -34,6 +36,7 @@ class RestaurantDetailsViewController: UIViewController {
         configureRating(restaurant.rating)
         configureText(name: restaurant.name, cuisine: restaurant.cuisine)
         configureReviews(restaurant.reviews)
+        totalRatesLabel.text = "\(restaurant.reviews.count)"
     }
 
     private func configureImage(from imagePath: String?) {
@@ -44,6 +47,7 @@ class RestaurantDetailsViewController: UIViewController {
         if let rating = rating {
             currentRatingLabel.text = String(format: "%.1f", rating)
             maxPossibleRatingLabel.text = "out of 5"
+            starRatingView.rating = rating
             maxPossibleRatingLabel.isHidden = false
             emptyRatingLabel.isHidden = true
         } else {
