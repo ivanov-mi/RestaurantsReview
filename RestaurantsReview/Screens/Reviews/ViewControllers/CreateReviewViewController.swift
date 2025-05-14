@@ -14,22 +14,22 @@ protocol CreateReviewViewControllerDelegate: AnyObject {
 class CreateReviewViewController: UIViewController {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak private var scrollView: UIScrollView!
     
-    @IBOutlet weak var starRatingLabel: UILabel!
-    @IBOutlet weak var starRatingView: StarRatingView!
+    @IBOutlet weak private var starRatingLabel: UILabel!
+    @IBOutlet weak private var starRatingView: StarRatingView!
     
-    @IBOutlet weak var addReviewLabel: UILabel!
-    @IBOutlet weak var commentTextView: UITextView!
+    @IBOutlet weak private var addReviewLabel: UILabel!
+    @IBOutlet weak private var commentTextView: UITextView!
     
-    @IBOutlet weak var datePickerLabel: UILabel!
-    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak private var datePickerLabel: UILabel!
+    @IBOutlet weak private var datePicker: UIDatePicker!
 
     // MARK: - Properties
     weak var delegate: CreateReviewViewControllerDelegate?
     var userId: UUID!
 
-    // MARK: - Lifecycle
+    // MARK: - VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -37,7 +37,7 @@ class CreateReviewViewController: UIViewController {
         setupKeyboardHandling()
     }
 
-    // MARK: - UI Setup
+    // MARK: - Setup
     private func setupNavigationBar() {
         title = "Write a Review"
         navigationItem.leftBarButtonItem = UIBarButtonItem(
