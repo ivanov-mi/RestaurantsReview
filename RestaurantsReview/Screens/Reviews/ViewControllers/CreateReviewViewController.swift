@@ -9,7 +9,6 @@ import UIKit
 
 protocol CreateReviewViewControllerDelegate: AnyObject {
     func didSubmitReview(_ review: Review)
-    func didCancelReview()
 }
 
 class CreateReviewViewController: UIViewController {
@@ -111,7 +110,6 @@ class CreateReviewViewController: UIViewController {
 
     // MARK: - Actions
     @objc private func cancelTapped() {
-        delegate?.didCancelReview()
         dismiss(animated: true)
     }
 
