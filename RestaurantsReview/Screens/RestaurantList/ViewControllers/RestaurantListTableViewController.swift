@@ -1,5 +1,5 @@
 //
-//  RestaurantListingTableViewController.swift
+//  RestaurantListTableViewController.swift
 //  RestaurantsReview
 //
 //  Created by Martin Ivanov on 5/12/25.
