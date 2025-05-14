@@ -11,10 +11,10 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		ABA3C2312DD0E4B40034346C /* Exceptions for "RestaurantsReview" folder in "RestaurantsReview" target */ = {
+		AB5017CB2DD47A90007DD24F /* Exceptions for "RestaurantsReview" folder in "RestaurantsReview" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				SupportingFiles/Info.plist,
 			);
 			target = ABA3C21B2DD0E4B40034346C /* RestaurantsReview */;
 		};
@@ -24,7 +24,7 @@
 		ABA3C21E2DD0E4B40034346C /* RestaurantsReview */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				ABA3C2312DD0E4B40034346C /* Exceptions for "RestaurantsReview" folder in "RestaurantsReview" target */,
+				AB5017CB2DD47A90007DD24F /* Exceptions for "RestaurantsReview" folder in "RestaurantsReview" target */,
 			);
 			path = RestaurantsReview;
 			sourceTree = "<group>";
@@ -147,7 +147,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 33SBBLRR38;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RestaurantsReview/Info.plist;
+				INFOPLIST_FILE = RestaurantsReview/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -180,7 +180,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 33SBBLRR38;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RestaurantsReview/Info.plist;
+				INFOPLIST_FILE = RestaurantsReview/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
