@@ -1,5 +1,5 @@
 //
-//  UITableView+Extension.swift
+//  UIView+Extension.swift
 //  RestaurantsReview
 //
 //  Created by Martin Ivanov on 5/12/25.
