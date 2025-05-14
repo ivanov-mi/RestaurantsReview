@@ -418,7 +418,7 @@
                                                     <color key="baseBackgroundColor" systemColor="systemBlueColor"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <action selector="loginTapped:" destination="mse-Gx-Ck3" eventType="touchUpInside" id="0YS-9i-PCO"/>
+                                                    <action selector="loginButtonTapped:" destination="mse-Gx-Ck3" eventType="touchUpInside" id="ye4-nc-77o"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k5m-Mq-gnD" userLabel="Not Registered Yet Button">
@@ -429,7 +429,7 @@
                                                     <color key="baseForegroundColor" systemColor="systemBlueColor"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <action selector="notRegisteredYetButtonTapped:" destination="mse-Gx-Ck3" eventType="touchUpInside" id="JTm-oL-IUt"/>
+                                                    <action selector="notRegisteredYetButtonTapped:" destination="mse-Gx-Ck3" eventType="touchUpInside" id="ojx-kK-FQF"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -481,7 +481,7 @@
                         <outlet property="appLogoImageView" destination="gwY-cH-gc7" id="ukR-Wv-rcM"/>
                         <outlet property="appNameLabel" destination="WSz-XE-qVm" id="04S-qs-VAd"/>
                         <outlet property="loginButton" destination="ATD-yI-5B6" id="IMp-8k-5a5"/>
-                        <outlet property="notRegistredYetButton" destination="k5m-Mq-gnD" id="0ea-Qu-zSQ"/>
+                        <outlet property="notRegisteredYetButton" destination="k5m-Mq-gnD" id="T8q-5H-IQs"/>
                         <outlet property="welcomeToLabel" destination="jkx-fy-QPT" id="F0f-3f-TXa"/>
                     </connections>
                 </viewController>

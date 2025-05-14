@@ -10,33 +10,42 @@ import UIKit
 
 class WelcomeViewController: UIViewController {
     
-    @IBOutlet weak private var welcomeToLabel: UILabel!
-    @IBOutlet weak private var appNameLabel: UILabel!
-    @IBOutlet weak private var appLogoImageView: UIImageView!
-    @IBOutlet weak private var loginButton: UIButton!
-    @IBOutlet weak private var notRegistredYetButton: UIButton!
-    
+    // MARK: - Outlets
+    @IBOutlet private weak var welcomeToLabel: UILabel!
+    @IBOutlet private weak var appNameLabel: UILabel!
+    @IBOutlet private weak var appLogoImageView: UIImageView!
+    @IBOutlet private weak var loginButton: UIButton!
+    @IBOutlet private weak var notRegisteredYetButton: UIButton!
+
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        configureUI()
     }
-    
-    private func setupUI() {
+
+    // MARK: - UI Setup
+    private func configureUI() {
         appNameLabel.text = "Restaurants Review"
-        appLogoImageView.image = UIImage.init(named: "appLogo")
+        appLogoImageView.image = UIImage(named: "appLogo")
     }
-    
-    @IBAction func loginTapped(_ sender: Any) {
+
+    // MARK: - Actions
+    @IBAction private func loginButtonTapped(_ sender: UIButton) {
+        navigateToLogin()
+    }
+
+    @IBAction private func notRegisteredYetButtonTapped(_ sender: UIButton) {
+        
+        // TODO: Implement register user functionality
+        
+        print("Not registered yet? button tapped")
+    }
+
+    // MARK: - Navigation
+    private func navigateToLogin() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
             navigationController?.pushViewController(loginVC, animated: true)
         }
-    }
-    
-    @IBAction func notRegisteredYetButtonTapped(_ sender: Any) {
-        
-        // TODO: Implement register user functionality
-        
-        print("notRegisteredYetButtonTapped")
     }
 }
