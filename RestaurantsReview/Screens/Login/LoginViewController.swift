@@ -7,12 +7,10 @@
 
 import UIKit
 
-enum TestUser: String {
-    case email = "admin@gmail.com"
-    case password = "admin123"
-}
-
 class LoginViewController: UIViewController {
+    
+    // TODO: Remove after implementing local persistance
+    let testUser = TestDataProvider.shared.testUser
     
     @IBOutlet weak private var scrollView: UIScrollView!
     
@@ -73,7 +71,13 @@ class LoginViewController: UIViewController {
         
         // TODO: Implement forgot password functionality
         
-        print("forgotPasswordButtonTapped")
+        #if DEBUG
+        emailTextField.text = testUser.email
+        passwordTextField.text = testUser.password
+
+        emailTextFieldEditingChanged(emailTextField as Any)
+        passwordTextFieldEditingChanged(passwordTextField as Any)
+        #endif
     }
     
     // MARK: - Keyboard Handling
@@ -119,12 +123,11 @@ extension LoginViewController: UITextFieldDelegate {
 
 private extension LoginViewController {
     func checkUsernameAndPassword() {
-        if emailTextField.text == TestUser.email.rawValue && passwordTextField.text == TestUser.password.rawValue {
-            
-            // TODO: Proceed with app flow
-            
+        
+        // TODO: Implement identity check
+        
+        if emailTextField.text == testUser.email && passwordTextField.text == testUser.password {
             goToMainApp()
-            
             clearInputForm()
         } else {
             setInputFormWhenWrongPasswordOrUsername()
