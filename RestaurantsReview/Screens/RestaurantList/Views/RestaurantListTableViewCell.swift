@@ -9,30 +9,31 @@ import UIKit
 
 class RestaurantListTableViewCell: UITableViewCell {
     
-    // MARK: IBOutlets
-
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var ratingLabel: UILabel!
-    @IBOutlet weak var restaurantImageView: UIImageView!
-    @IBOutlet weak var containerView: UIView!
+    // MARK: - IBOutlets
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var ratingLabel: UILabel!
+    @IBOutlet private weak var restaurantImageView: UIImageView!
+    @IBOutlet private weak var containerView: UIView!
     
     // MARK: - View Lifecycle
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        setupRoundShadow()
+    
+        applyShadowStyling()
     }
     
-    // MARK: - Private methods
+    // MARK: - Configuration
+    func configure(name: String, rating: String, image: UIImage?) {
+        nameLabel.text = name
+        ratingLabel.text = rating
+        restaurantImageView.image = image ?? UIImage(systemName: "photo")
+    }
     
-    private func setupRoundShadow() {
-        backgroundColor = .clear
-        layer.masksToBounds = false
-        layer.shadowOpacity = 0.2
-        layer.shadowRadius = 4
-        layer.shadowOffset = CGSize(width: 0, height: 2)
-        layer.shadowColor = UIColor.black.cgColor
+
+    // MARK: - Shadow Styling
+    private func applyShadowStyling() {
+        self.applyDefaultShadow()
         
         containerView.backgroundColor = .white
         containerView.layer.cornerRadius = 16

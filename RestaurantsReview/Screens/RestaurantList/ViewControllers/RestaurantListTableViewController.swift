@@ -38,9 +38,11 @@ class RestaurantListViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: RestaurantListTableViewCell.identifier, for: indexPath) as! RestaurantListTableViewCell
         let restaurant = restaurants[indexPath.row]
         
-        cell.nameLabel.text = restaurant.name
-        cell.ratingLabel.text = restaurant.rating.map { String(format: "%.1f", $0) } ?? "Not rated"
-        cell.restaurantImageView.image = restaurant.imagePath.flatMap { UIImage(named: $0) } ?? UIImage(systemName: "photo")
+        let name = restaurant.name
+        let rating = restaurant.rating.map { String(format: "%.1f", $0) } ?? "Not rated"
+        let image = restaurant.imagePath.flatMap { UIImage(named: $0) }
+
+        cell.configure(name: name, rating: rating, image: image)
 
         return cell
     }
