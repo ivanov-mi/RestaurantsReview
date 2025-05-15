@@ -11,7 +11,7 @@ enum Role: String, Codable {
     case user, admin
 }
 
-struct User {
+struct User: Codable {
     let id: UUID
     var username: String
     var email: String
