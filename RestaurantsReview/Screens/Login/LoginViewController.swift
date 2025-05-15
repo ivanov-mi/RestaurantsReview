@@ -1,5 +1,5 @@
 //
-//  Untitled.swift
+//  LoginViewController.swift
 //  RestaurantsReview
 //
 //  Created by Martin Ivanov on 5/14/25.
@@ -26,20 +26,20 @@ class LoginViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        
+        setupDelegates()
         setupKeyboardHandling()
-        clearInputForm()
+        setupUI()
+        clearForm()
     }
 
     // MARK: - Actions
-    @IBAction private func emailTextFieldEditingChanged(_ sender: Any) {
-        validateEmail()
-        updateLoginButtonState()
+    @IBAction private func emailEditingChanged(_ sender: UITextField) {
+        updateFieldValidationState(textField: sender, errorLabel: emailErrorLabel, validation: Validator.validateEmail)
     }
 
-    @IBAction private func passwordTextFieldEditingChanged(_ sender: Any) {
-        validatePassword()
-        updateLoginButtonState()
+    @IBAction private func passwordEditingChanged(_ sender: UITextField) {
+        updateFieldValidationState(textField: sender, errorLabel: passwordErrorLabel, validation: Validator.validateLoginPassword)
     }
 
     @IBAction private func loginButtonTapped(_ sender: Any) {
@@ -53,30 +53,59 @@ class LoginViewController: UIViewController {
         #if DEBUG
         emailTextField.text = testUser.email
         passwordTextField.text = testUser.password
-        validateEmail()
-        validatePassword()
+        emailEditingChanged(emailTextField)
+        passwordEditingChanged(passwordTextField)
         updateLoginButtonState()
         #endif
     }
 
-    // MARK: - Setup
+    // MARK: - Configure Views
+    private func setupDelegates() {
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+    }
+    
     private func setupUI() {
         title = "Login"
         loginButton.setTitle("Login", for: .normal)
         forgotPasswordButton.setTitle("Forgot password?", for: .normal)
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
+        passwordTextField.isSecureTextEntry = true
+    }
+    
+    private func clearForm() {
+        emailTextField.text = ""
+        emailTextField.placeholder = "Email"
+        emailTextField.textContentType = .username
+        emailTextField.keyboardType = .emailAddress
+
+        passwordTextField.text = ""
+        passwordTextField.placeholder = "Password"
+        passwordTextField.textContentType = .password
+
+        emailErrorLabel.isHidden = true
+        passwordErrorLabel.isHidden = true
+        loginButton.isEnabled = false
+    }
+    
+    // MARK: - Validation Handling
+    private func updateFieldValidationState(textField: UITextField, errorLabel: UILabel, validation: (String) -> ValidationResult) {
+        let result = validation(textField.text ?? "")
+        errorLabel.text = result.error?.errorDescription
+        errorLabel.isHidden = result.isValid
+        updateLoginButtonState()
     }
 
-    private func setupKeyboardHandling() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)),
-                                               name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)),
-                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+    private func updateLoginButtonState() {
+        let isEmailValid = emailErrorLabel.isHidden && !(emailTextField.text ?? "").isEmpty
+        let isPasswordValid = passwordErrorLabel.isHidden && !(passwordTextField.text ?? "").isEmpty
+        loginButton.isEnabled = isEmailValid && isPasswordValid
+    }
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tapGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapGesture)
+    private func showInvalidCredentialsError() {
+        passwordErrorLabel.text = "Invalid Username or Password"
+        passwordErrorLabel.isHidden = false
+        passwordTextField.text = ""
+        updateLoginButtonState()
     }
 
     // MARK: - Authentication
@@ -92,7 +121,7 @@ class LoginViewController: UIViewController {
         }
 
         navigateToHomeScreen()
-        clearInputForm()
+        clearForm()
         #endif
     }
 
@@ -109,59 +138,16 @@ class LoginViewController: UIViewController {
         }
     }
 
-    // MARK: - Validation
-    private func validateEmail() {
-        if let email = emailTextField.text, let error = invalidEmail(email) {
-            emailErrorLabel.text = error
-            emailErrorLabel.isHidden = false
-        } else {
-            emailErrorLabel.isHidden = true
-        }
-    }
-
-    private func validatePassword() {
-        if let password = passwordTextField.text, let error = invalidPassword(password) {
-            passwordErrorLabel.text = error
-            passwordErrorLabel.isHidden = false
-        } else {
-            passwordErrorLabel.isHidden = true
-        }
-    }
-
-    private func updateLoginButtonState() {
-        let isValid =
-            emailErrorLabel.isHidden &&
-            !(emailTextField.text ?? "").isEmpty &&
-            passwordErrorLabel.isHidden &&
-            !(passwordTextField.text ?? "").isEmpty
-
-        loginButton.isEnabled = isValid
-    }
-
-    private func showInvalidCredentialsError() {
-        passwordErrorLabel.text = Errors.invalidUsernameOrPassword
-        passwordErrorLabel.isHidden = false
-        passwordTextField.text = ""
-        updateLoginButtonState()
-    }
-
-    private func clearInputForm() {
-        loginButton.isEnabled = false
-        emailErrorLabel.isHidden = true
-        passwordErrorLabel.isHidden = true
-
-        emailTextField.text = ""
-        emailTextField.placeholder = "Email"
-        emailTextField.textContentType = .username
-        emailTextField.keyboardType = .emailAddress
-
-        passwordTextField.text = ""
-        passwordTextField.placeholder = "Password"
-        passwordTextField.textContentType = .password
-        passwordTextField.isSecureTextEntry = true
-    }
-
     // MARK: - Handle keyboard
+    private func setupKeyboardHandling() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
     @objc private func keyboardWillShow(_ notification: Notification) {
         if let frame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
             scrollView.contentInset.bottom = frame.height
@@ -177,33 +163,6 @@ class LoginViewController: UIViewController {
     @objc private func dismissKeyboard() {
         view.endEditing(true)
     }
-
-    // MARK: - Validation Rules
-    private func invalidPassword(_ text: String) -> String? {
-        if text.count < Constants.passwordMinLength {
-            return Errors.passwordLength
-        }
-        if !containsDigit(text) {
-            return Errors.mustContainDigit
-        }
-        if !containsAlphabetCharacter(text) {
-            return Errors.mustContainAlphabetChar
-        }
-        return nil
-    }
-
-    private func containsDigit(_ text: String) -> Bool {
-        NSPredicate(format: Constants.regexPredicateFormat, Regexes.digit).evaluate(with: text)
-    }
-
-    private func containsAlphabetCharacter(_ text: String) -> Bool {
-        NSPredicate(format: Constants.regexPredicateFormat, Regexes.alphabetCharacter).evaluate(with: text)
-    }
-
-    private func invalidEmail(_ text: String) -> String? {
-        let isValid = NSPredicate(format: Constants.regexPredicateFormat, Regexes.email).evaluate(with: text)
-        return isValid ? nil : Errors.invalidEmail
-    }
 }
 
 // MARK: - UITextFieldDelegate
@@ -217,26 +176,3 @@ extension LoginViewController: UITextFieldDelegate {
         return true
     }
 }
-
-// MARK: - Constants
-private extension LoginViewController {
-    enum Constants {
-        static let passwordMinLength = 8
-        static let regexPredicateFormat = "SELF MATCHES %@"
-    }
-
-    enum Errors {
-        static let invalidUsernameOrPassword = "Invalid Username or Password"
-        static let passwordLength = "Password must be at least 8 characters"
-        static let mustContainDigit = "Password must contain at least 1 digit."
-        static let mustContainAlphabetChar = "Password must contain at least 1 alphabet character."
-        static let invalidEmail = "Invalid Email Address"
-    }
-
-    enum Regexes {
-        static let digit = ".*[0-9].*"
-        static let alphabetCharacter = ".*[A-Za-z].*"
-        static let email = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-    }
-}
-

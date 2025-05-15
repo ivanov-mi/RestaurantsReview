@@ -504,7 +504,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="666"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ugt-hJ-QgA" userLabel="InputView">
-                                                <rect key="frame" x="0.0" y="32" width="393" height="263.33333333333331"/>
+                                                <rect key="frame" x="0.0" y="32" width="393" height="263"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="alr-p9-vtZ" customClass="UITextFieldBorderColor" customModule="RestaurantsReview" customModuleProvider="target">
                                                         <rect key="frame" x="16" y="8" width="361" height="34"/>
@@ -522,17 +522,17 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="emailTextFieldEditingChanged:" destination="58F-1y-nNM" eventType="editingChanged" id="anr-EV-VY6"/>
+                                                            <action selector="emailEditingChanged:" destination="58F-1y-nNM" eventType="editingChanged" id="vrp-e4-u5j"/>
                                                         </connections>
                                                     </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Requered" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yPi-Rm-U38">
-                                                        <rect key="frame" x="16" y="50" width="361" height="14.666666666666671"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email Validation Error" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yPi-Rm-U38">
+                                                        <rect key="frame" x="16" y="50" width="361" height="14.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <color key="textColor" systemColor="systemRedColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sIf-f7-ZH3" customClass="UITextFieldBorderColor" customModule="RestaurantsReview" customModuleProvider="target">
-                                                        <rect key="frame" x="16" y="80.666666666666657" width="361" height="34"/>
+                                                        <rect key="frame" x="16" y="80.333333333333343" width="361" height="34"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                         <userDefinedRuntimeAttributes>
@@ -547,17 +547,17 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="passwordTextFieldEditingChanged:" destination="58F-1y-nNM" eventType="editingChanged" id="eNZ-P3-EBZ"/>
+                                                            <action selector="passwordEditingChanged:" destination="58F-1y-nNM" eventType="editingChanged" id="cgN-S1-QtN"/>
                                                         </connections>
                                                     </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Requered" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rQl-rN-wDi" userLabel="Password Error Label">
-                                                        <rect key="frame" x="16" y="122.66666666666667" width="361" height="14.333333333333329"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password Validation Error" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rQl-rN-wDi" userLabel="Password Error Label">
+                                                        <rect key="frame" x="16" y="122.3333333333333" width="361" height="14.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <color key="textColor" systemColor="systemPinkColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LOe-7P-43t">
-                                                        <rect key="frame" x="20" y="153" width="357" height="44"/>
+                                                        <rect key="frame" x="20" y="152.66666666666669" width="357" height="44"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="Tnl-g3-XIQ"/>
                                                         </constraints>
@@ -571,7 +571,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vdo-zW-t6Z">
-                                                        <rect key="frame" x="16" y="213" width="361" height="34.333333333333343"/>
+                                                        <rect key="frame" x="16" y="212.66666666666669" width="361" height="34.333333333333343"/>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" title="Forgot password?">
                                                             <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
