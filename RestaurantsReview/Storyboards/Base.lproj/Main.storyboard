@@ -648,7 +648,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wGR-O2-F1K" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1901.5267175572519" y="-985.21126760563391"/>
+            <point key="canvasLocation" x="2045" y="-985"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="muz-ty-5n3">
@@ -667,6 +667,184 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XxS-K0-Kx5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-19.083969465648853" y="-984.50704225352115"/>
+        </scene>
+        <!--Register View Controller-->
+        <scene sceneID="wLo-TH-bgd">
+            <objects>
+                <viewController storyboardIdentifier="RegisterViewController" id="GK4-Mf-BKv" customClass="RegisterViewController" customModule="RestaurantsReview" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="thY-xU-IgG">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fYb-MK-6h9">
+                                <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o3M-9D-sTv" userLabel="ContentView">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="666"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ePi-SR-cxI" userLabel="InputView">
+                                                <rect key="frame" x="0.0" y="32" width="393" height="285.66666666666669"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g0U-RX-atz" userLabel="Username" customClass="UITextFieldBorderColor" customModule="RestaurantsReview" customModuleProvider="target">
+                                                        <rect key="frame" x="16" y="8" width="361" height="34"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                <color key="value" name="LightBlue"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="0.0"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="usernameEditingChanged:" destination="GK4-Mf-BKv" eventType="editingChanged" id="Ubf-vq-SCE"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Requered" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3MQ-9R-7A2" userLabel="Username Error Label">
+                                                        <rect key="frame" x="16" y="50" width="361" height="14.666666666666671"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <color key="textColor" systemColor="systemRedColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P5R-bh-bhu" customClass="UITextFieldBorderColor" customModule="RestaurantsReview" customModuleProvider="target">
+                                                        <rect key="frame" x="16" y="80.666666666666657" width="361" height="34"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                <color key="value" name="LightBlue"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="0.0"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="emailEditingChanged:" destination="GK4-Mf-BKv" eventType="editingChanged" id="grt-YB-cra"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Requered" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Is-rw-D49" userLabel="Email Error Label">
+                                                        <rect key="frame" x="16" y="122.6666666666667" width="361" height="14.666666666666671"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <color key="textColor" systemColor="systemRedColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u6R-re-HMD" customClass="UITextFieldBorderColor" customModule="RestaurantsReview" customModuleProvider="target">
+                                                        <rect key="frame" x="16" y="153.33333333333331" width="361" height="34"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                <color key="value" name="LightBlue"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="0.0"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="passwordEditingChanged:" destination="GK4-Mf-BKv" eventType="editingChanged" id="BpB-ut-xfz"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Requered" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Opf-dB-gkx" userLabel="Password Error Label">
+                                                        <rect key="frame" x="16" y="195.33333333333331" width="361" height="14.333333333333343"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <color key="textColor" systemColor="systemPinkColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vyV-JT-T91">
+                                                        <rect key="frame" x="16" y="225.66666666666669" width="361" height="44"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="44" id="LYE-Vq-NQo"/>
+                                                        </constraints>
+                                                        <color key="tintColor" name="BlueBackground"/>
+                                                        <buttonConfiguration key="configuration" style="filled" title="Register">
+                                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="baseBackgroundColor" systemColor="systemBlueColor"/>
+                                                        </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="registerButtonTapped:" destination="GK4-Mf-BKv" eventType="touchUpInside" id="tLG-Q8-88R"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="0Is-rw-D49" secondAttribute="trailing" constant="16" id="0LK-qa-kal"/>
+                                                    <constraint firstAttribute="trailing" secondItem="3MQ-9R-7A2" secondAttribute="trailing" constant="16" id="3nU-Bj-s2V"/>
+                                                    <constraint firstItem="Opf-dB-gkx" firstAttribute="top" secondItem="u6R-re-HMD" secondAttribute="bottom" constant="8" id="4WR-kU-B8N"/>
+                                                    <constraint firstItem="vyV-JT-T91" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="4rO-Ih-rES"/>
+                                                    <constraint firstAttribute="bottom" secondItem="vyV-JT-T91" secondAttribute="bottom" constant="16" id="6ZM-jq-Tc4"/>
+                                                    <constraint firstAttribute="trailing" secondItem="vyV-JT-T91" secondAttribute="trailing" constant="16" id="7Nj-91-TL9"/>
+                                                    <constraint firstAttribute="trailing" secondItem="P5R-bh-bhu" secondAttribute="trailing" constant="16" id="EHJ-Xd-dv2"/>
+                                                    <constraint firstAttribute="trailing" secondItem="g0U-RX-atz" secondAttribute="trailing" constant="16" id="EO9-WW-5Wx"/>
+                                                    <constraint firstItem="3MQ-9R-7A2" firstAttribute="top" secondItem="g0U-RX-atz" secondAttribute="bottom" constant="8" id="Hob-MI-klH"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Opf-dB-gkx" secondAttribute="trailing" constant="16" id="HxW-P4-syg"/>
+                                                    <constraint firstItem="3MQ-9R-7A2" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="Lut-Bw-S6H"/>
+                                                    <constraint firstItem="vyV-JT-T91" firstAttribute="top" secondItem="Opf-dB-gkx" secondAttribute="bottom" constant="16" id="OOK-8u-uDm"/>
+                                                    <constraint firstItem="u6R-re-HMD" firstAttribute="top" secondItem="0Is-rw-D49" secondAttribute="bottom" constant="16" id="XDW-Ae-b66"/>
+                                                    <constraint firstItem="P5R-bh-bhu" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="XTq-vt-y26"/>
+                                                    <constraint firstItem="g0U-RX-atz" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="ZSD-W2-IbM"/>
+                                                    <constraint firstItem="Opf-dB-gkx" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="bZG-DC-JO2"/>
+                                                    <constraint firstAttribute="trailing" secondItem="u6R-re-HMD" secondAttribute="trailing" constant="16" id="deH-K7-mul"/>
+                                                    <constraint firstItem="0Is-rw-D49" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="hr2-GS-ccA"/>
+                                                    <constraint firstItem="g0U-RX-atz" firstAttribute="top" secondItem="ePi-SR-cxI" secondAttribute="top" constant="8" id="jTx-o2-Xoy"/>
+                                                    <constraint firstItem="P5R-bh-bhu" firstAttribute="top" secondItem="3MQ-9R-7A2" secondAttribute="bottom" constant="16" id="r91-Z5-NO0"/>
+                                                    <constraint firstItem="u6R-re-HMD" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="siW-rC-htC"/>
+                                                    <constraint firstItem="0Is-rw-D49" firstAttribute="top" secondItem="P5R-bh-bhu" secondAttribute="bottom" constant="8" id="yUU-hR-ZE5"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="ePi-SR-cxI" firstAttribute="top" secondItem="o3M-9D-sTv" secondAttribute="top" constant="32" id="YWs-Bj-jFO"/>
+                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ePi-SR-cxI" secondAttribute="bottom" constant="16" id="cV3-9e-brX"/>
+                                            <constraint firstAttribute="trailing" secondItem="ePi-SR-cxI" secondAttribute="trailing" id="v4X-eU-yP3"/>
+                                            <constraint firstItem="ePi-SR-cxI" firstAttribute="leading" secondItem="o3M-9D-sTv" secondAttribute="leading" id="vuJ-Rz-Z4A"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="o3M-9D-sTv" firstAttribute="height" secondItem="Pgg-eP-Hx2" secondAttribute="height" priority="750" id="9xj-jA-6lg"/>
+                                    <constraint firstItem="o3M-9D-sTv" firstAttribute="trailing" secondItem="37F-rd-3hO" secondAttribute="trailing" id="DVy-y4-Gmd"/>
+                                    <constraint firstItem="o3M-9D-sTv" firstAttribute="top" secondItem="37F-rd-3hO" secondAttribute="top" id="PTM-uc-Dsz"/>
+                                    <constraint firstItem="o3M-9D-sTv" firstAttribute="leading" secondItem="37F-rd-3hO" secondAttribute="leading" id="QVI-Jo-eKr"/>
+                                    <constraint firstItem="o3M-9D-sTv" firstAttribute="width" secondItem="Pgg-eP-Hx2" secondAttribute="width" id="jJZ-cP-MRv"/>
+                                    <constraint firstItem="o3M-9D-sTv" firstAttribute="bottom" secondItem="37F-rd-3hO" secondAttribute="bottom" id="p9P-0e-CJ2"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="37F-rd-3hO"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="Pgg-eP-Hx2"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="qwh-RX-zgY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="qwh-RX-zgY" firstAttribute="trailing" secondItem="fYb-MK-6h9" secondAttribute="trailing" id="HuI-CN-d3K"/>
+                            <constraint firstItem="qwh-RX-zgY" firstAttribute="bottom" secondItem="fYb-MK-6h9" secondAttribute="bottom" id="TDL-s7-hLL"/>
+                            <constraint firstItem="fYb-MK-6h9" firstAttribute="leading" secondItem="qwh-RX-zgY" secondAttribute="leading" id="mYM-ln-g3F"/>
+                            <constraint firstItem="fYb-MK-6h9" firstAttribute="top" secondItem="qwh-RX-zgY" secondAttribute="top" id="ySD-j4-1AB"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="emailErrorLabel" destination="0Is-rw-D49" id="Swm-iO-gNN"/>
+                        <outlet property="emailTextField" destination="P5R-bh-bhu" id="PqV-Ic-Jh0"/>
+                        <outlet property="passwordErrorLabel" destination="Opf-dB-gkx" id="kqw-e1-f5d"/>
+                        <outlet property="passwordTextField" destination="u6R-re-HMD" id="5D3-zC-TLm"/>
+                        <outlet property="registerButton" destination="vyV-JT-T91" id="sHa-qX-UBt"/>
+                        <outlet property="usernameErrorLabel" destination="3MQ-9R-7A2" id="jyL-iA-ujc"/>
+                        <outlet property="usernameTextField" destination="g0U-RX-atz" id="kkC-pc-V5T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d3A-zn-Itx" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3079" y="-985"/>
         </scene>
     </scenes>
     <resources>

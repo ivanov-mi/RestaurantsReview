@@ -35,10 +35,10 @@ class WelcomeViewController: UIViewController {
     }
 
     @IBAction private func notRegisteredYetButtonTapped(_ sender: UIButton) {
-        
-        // TODO: Implement register user functionality
-        
-        print("Not registered yet? button tapped")
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let registerVC = storyboard.instantiateViewController(withIdentifier: "RegisterViewController") as? RegisterViewController {
+            navigationController?.pushViewController(registerVC, animated: true)
+        }
     }
 
     // MARK: - Navigation
