@@ -683,7 +683,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="666"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ePi-SR-cxI" userLabel="InputView">
-                                                <rect key="frame" x="0.0" y="32" width="393" height="285.66666666666669"/>
+                                                <rect key="frame" x="0.0" y="32" width="393" height="285"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g0U-RX-atz" userLabel="Username" customClass="UITextFieldBorderColor" customModule="RestaurantsReview" customModuleProvider="target">
                                                         <rect key="frame" x="16" y="8" width="361" height="34"/>
@@ -704,14 +704,14 @@
                                                             <action selector="usernameEditingChanged:" destination="GK4-Mf-BKv" eventType="editingChanged" id="Ubf-vq-SCE"/>
                                                         </connections>
                                                     </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Requered" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3MQ-9R-7A2" userLabel="Username Error Label">
-                                                        <rect key="frame" x="16" y="50" width="361" height="14.666666666666671"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username Validation Error" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3MQ-9R-7A2" userLabel="Username Error Label">
+                                                        <rect key="frame" x="16" y="50" width="361" height="14.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <color key="textColor" systemColor="systemRedColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P5R-bh-bhu" customClass="UITextFieldBorderColor" customModule="RestaurantsReview" customModuleProvider="target">
-                                                        <rect key="frame" x="16" y="80.666666666666657" width="361" height="34"/>
+                                                        <rect key="frame" x="16" y="80.333333333333343" width="361" height="34"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                         <userDefinedRuntimeAttributes>
@@ -729,14 +729,14 @@
                                                             <action selector="emailEditingChanged:" destination="GK4-Mf-BKv" eventType="editingChanged" id="grt-YB-cra"/>
                                                         </connections>
                                                     </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Requered" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Is-rw-D49" userLabel="Email Error Label">
-                                                        <rect key="frame" x="16" y="122.6666666666667" width="361" height="14.666666666666671"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email Validation Error" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Is-rw-D49" userLabel="Email Error Label">
+                                                        <rect key="frame" x="16" y="122.3333333333333" width="361" height="14.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <color key="textColor" systemColor="systemRedColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u6R-re-HMD" customClass="UITextFieldBorderColor" customModule="RestaurantsReview" customModuleProvider="target">
-                                                        <rect key="frame" x="16" y="153.33333333333331" width="361" height="34"/>
+                                                        <rect key="frame" x="16" y="152.66666666666669" width="361" height="34"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                         <userDefinedRuntimeAttributes>
@@ -754,14 +754,14 @@
                                                             <action selector="passwordEditingChanged:" destination="GK4-Mf-BKv" eventType="editingChanged" id="BpB-ut-xfz"/>
                                                         </connections>
                                                     </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Requered" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Opf-dB-gkx" userLabel="Password Error Label">
-                                                        <rect key="frame" x="16" y="195.33333333333331" width="361" height="14.333333333333343"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password Validation Error" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Opf-dB-gkx" userLabel="Password Error Label">
+                                                        <rect key="frame" x="16" y="194.66666666666669" width="361" height="14.333333333333343"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <color key="textColor" systemColor="systemPinkColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vyV-JT-T91">
-                                                        <rect key="frame" x="16" y="225.66666666666669" width="361" height="44"/>
+                                                        <rect key="frame" x="16" y="225" width="361" height="44"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="LYE-Vq-NQo"/>
                                                         </constraints>

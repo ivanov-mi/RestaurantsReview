@@ -18,26 +18,29 @@ class RegisterViewController: UIViewController {
     @IBOutlet private weak var passwordErrorLabel: UILabel!
     @IBOutlet private weak var registerButton: UIButton!
 
-    // MARK: - Lifecycle
+    // MARK: - VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Register"
+
+        setupNavigation()
+        setupDelegates()
+        setupSecureFields()
         clearForm()
     }
 
     // MARK: - Actions
     @IBAction private func usernameEditingChanged(_ sender: UITextField) {
-        validateField(textField: sender, label: usernameErrorLabel, validator: invalidUsername)
+        updateFieldValidationState(textField: sender, errorLabel: usernameErrorLabel, validation: Validator.validateUsername)
     }
 
     @IBAction private func emailEditingChanged(_ sender: UITextField) {
-        validateField(textField: sender, label: emailErrorLabel, validator: invalidEmail)
+        updateFieldValidationState(textField: sender, errorLabel: emailErrorLabel, validation: Validator.validateEmail)
     }
 
     @IBAction private func passwordEditingChanged(_ sender: UITextField) {
-        validateField(textField: sender, label: passwordErrorLabel, validator: invalidPassword)
+        updateFieldValidationState(textField: sender, errorLabel: passwordErrorLabel, validation: Validator.validatePasswordCreation)
     }
-
+    
     @IBAction private func registerButtonTapped(_ sender: UIButton) {
         guard let username = usernameTextField.text,
               let email = emailTextField.text,
@@ -46,14 +49,31 @@ class RegisterViewController: UIViewController {
         let user = User(name: username, email: email, password: password)
 
         // TODO: Implement create user functionality
+        
         print("User registered: \(user)")
+    }
+    
+    // MARK: - Configure Views
+    private func setupNavigation() {
+        title = "Register"
+    }
+
+    private func setupDelegates() {
+        usernameTextField.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+    }
+
+    private func setupSecureFields() {
+        passwordTextField.isSecureTextEntry = true
     }
 
     // MARK: - Validation Logic
-    private func validateField(textField: UITextField, label: UILabel, validator: (String) -> String?) {
+    private func updateFieldValidationState(textField: UITextField, errorLabel: UILabel, validation: (String) -> ValidationResult) {
         let text = textField.text ?? ""
-        label.text = validator(text)
-        label.isHidden = label.text == nil
+        let result = validation(text)
+        errorLabel.text = result.error?.errorDescription
+        errorLabel.isHidden = result.isValid
         updateRegisterButtonState()
     }
 
@@ -77,31 +97,19 @@ class RegisterViewController: UIViewController {
 
         registerButton.isEnabled = false
     }
+}
 
-    // MARK: - Validation Rules
-    private func invalidUsername(_ username: String) -> String? {
-        let regex = "^[A-Za-z0-9._]{3,}$"
-        let isValid = NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: username)
-        return isValid ? nil : "Username can contain only letters, numbers, dots, or underscores"
-    }
-
-    private func invalidEmail(_ email: String) -> String? {
-        let regex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let isValid = NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: email)
-        return isValid ? nil : "Invalid Email"
-    }
-
-    private func invalidPassword(_ password: String) -> String? {
-        if password.count < 8 {
-            return "Password must be at least 8 characters"
+// MARK: - UITextFieldDelegate
+extension RegisterViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == usernameTextField {
+            emailTextField.becomeFirstResponder()
+        } else if textField == emailTextField {
+            passwordTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
         }
-        if !password.contains(where: \.isNumber) {
-            return "Password must contain at least one digit"
-        }
-        if !password.contains(where: \.isLetter) {
-            return "Password must contain at least one letter"
-        }
-        return nil
+        return true
     }
 }
 
