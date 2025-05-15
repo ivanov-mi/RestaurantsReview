@@ -129,12 +129,8 @@ class RestaurantDetailsViewController: UIViewController {
     private func addReviewViews(for roles: [Review: Set<ReviewListItemType>]) {
         for (review, tags) in roles {
             let view = ReviewListItemView()
-            view.configure(with: ReviewListItemViewModel(
-                tags: tags,
-                rating: review.rating,
-                comment: review.comment
-            ))
-            
+            let ratingFormatted = "\(review.rating) / 5"
+            view.configure(tags: tags, ratingFormatted: ratingFormatted, comment: review.comment)
             reviewsStackView.addArrangedSubview(view)
         }
     }
