@@ -48,8 +48,10 @@
 - MVC
 - Manually writen code (not AI generated)
 - Delegation pattern
+- Singleton pattern
 - Coordinator pattern
-- Keychain and CoreData integration
+- Keychain and UserDefaults integration
+- Session/Identity manager
 - Good code practices
 
 ## To be implemented
@@ -57,7 +59,6 @@
   - Additional screens e.g. ForgotPassword, Review Detail/Update
   - Enhance UI to add ability to logout, edit/delete reviews, restaurants and users
 - Local persistence (CoreData) with CRUD operations
-- Session/Identity manager
 
 ## Screens current state
 ## Testing info - tap on Forgot Password an it will automatically fillin a testing user password and username
