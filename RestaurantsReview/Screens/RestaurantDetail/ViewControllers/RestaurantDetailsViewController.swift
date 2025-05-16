@@ -7,18 +7,18 @@
 
 import UIKit
 
+// MARK: - RestaurantDetailsViewControllerDelegate
 protocol RestaurantDetailsViewControllerDelegate: AnyObject {
     func didUpdateRestaurant(_ restaurant: Restaurant)
 }
 
+// MARK: - RestaurantDetailsViewControllerCoordinator
 protocol RestaurantDetailsViewControllerCoordinator: AnyObject {
     func didTapAddReview(_ controller: RestaurantDetailsViewController, for restaurant: Restaurant)
 }
 
+// MARK: - RestaurantDetailsViewController
 class RestaurantDetailsViewController: UIViewController {
-    
-    // MARK: - Properties
-    var restaurant: Restaurant?
     
     // MARK: - IBOutlets
     @IBOutlet weak private var restaurantImageView: UIImageView!
@@ -35,6 +35,9 @@ class RestaurantDetailsViewController: UIViewController {
 
     @IBOutlet weak private var emptyRatingLabel: UILabel!
     @IBOutlet weak private var reviewsStackView: UIStackView!
+    
+    // MARK: - Properties
+    var restaurant: Restaurant?
     
     weak var coordinator: RestaurantDetailsViewControllerCoordinator?
     weak var delegate: RestaurantDetailsViewControllerDelegate?
@@ -141,8 +144,6 @@ class RestaurantDetailsViewController: UIViewController {
             reviewsStackView.addArrangedSubview(view)
         }
     }
-    
-    // MARK: - Navigation
 }
 
 // MARK: - CreateReviewViewControllerDelegate

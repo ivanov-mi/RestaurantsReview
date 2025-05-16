@@ -7,11 +7,13 @@
 
 import UIKit
 
+// MARK: - WelcomeViewControllerDelegate
 protocol WelcomeViewControllerDelegate: AnyObject {
     func didSelectLogin()
     func didSelectRegister()
 }
 
+// MARK: - WelcomeViewController
 class WelcomeViewController: UIViewController {
     
     // MARK: - Outlets
@@ -21,9 +23,10 @@ class WelcomeViewController: UIViewController {
     @IBOutlet private weak var loginButton: UIButton!
     @IBOutlet private weak var notRegisteredYetButton: UIButton!
     
+    // MARK: - Properties
     weak var delegate: WelcomeViewControllerDelegate?
 
-    // MARK: - Lifecycle
+    // MARK: - VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -37,18 +40,10 @@ class WelcomeViewController: UIViewController {
 
     // MARK: - Actions
     @IBAction private func loginButtonTapped(_ sender: UIButton) {
-        navigateToLogin()
+        delegate?.didSelectLogin()
     }
 
     @IBAction private func notRegisteredYetButtonTapped(_ sender: UIButton) {
-        
         delegate?.didSelectRegister()
-        
-    }
-
-    // MARK: - Navigation
-    private func navigateToLogin() {
-        
-        delegate?.didSelectLogin()
     }
 }

@@ -7,25 +7,30 @@
 
 import UIKit
 
+// MARK: - Coordinator Protocol
 protocol Coordinator: AnyObject {
     func start()
 }
 
 class AppCoordinator: Coordinator {
     
+    // MARK: - Properties
     var navigationController: UINavigationController
-
+    
     private var loginCoordinator: LoginCoordinator?
     private var mainCoordinator: MainCoordinator?
 
+    // MARK: - Init
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 
+    // MARK: - Public methods
     func start() {
         showLoginFlow()
     }
 
+    // MARK: - Private methods
     private func showLoginFlow() {
         let coordinator = LoginCoordinator(navigationController: navigationController)
         coordinator.delegate = self
@@ -42,6 +47,7 @@ class AppCoordinator: Coordinator {
     }
 }
 
+// MARK: - LoginCoordinatorDelegate
 extension AppCoordinator: LoginCoordinatorDelegate {
     func loginCoordinatorDidFinish(_ coordinator: LoginCoordinator) {
         showMainFlow()

@@ -7,41 +7,38 @@
 
 import UIKit
 
+// MARK: - LoginCoordinatorDelegate
 protocol LoginCoordinatorDelegate: AnyObject {
     func loginCoordinatorDidFinish(_ coordinator: LoginCoordinator)
 }
 
 class LoginCoordinator: Coordinator {
-    var navigationController: UINavigationController
+    
+    // MARK: - Properties
     weak var delegate: LoginCoordinatorDelegate?
+    var navigationController: UINavigationController
 
+    // MARK: - Init
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 
+    // MARK: - Public methods
     func start() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let welcomeVC = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as? WelcomeViewController else {
-            fatalError("WelcomeViewController not found in Main storyboard.")
-        }
+        let welcomeVC = AppStoryboard.main.viewController(ofType: WelcomeViewController.self)
         welcomeVC.delegate = self
         navigationController.setViewControllers([welcomeVC], animated: false)
     }
 
+    // MARK: - Private methods
     private func showLogin() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else {
-            fatalError("LoginViewController not found in Main storyboard.")
-        }
+        let loginVC = AppStoryboard.main.viewController(ofType: LoginViewController.self)
         loginVC.delegate = self
         navigationController.pushViewController(loginVC, animated: true)
     }
 
     private func showRegister() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let registerVC = storyboard.instantiateViewController(withIdentifier: "RegisterViewController") as? RegisterViewController else {
-            fatalError("RegisterViewController not found in Main storyboard.")
-        }
+        let registerVC = AppStoryboard.main.viewController(ofType: RegisterViewController.self)
         registerVC.delegate = self
         navigationController.pushViewController(registerVC, animated: true)
     }
@@ -51,6 +48,7 @@ class LoginCoordinator: Coordinator {
     }
 }
 
+// MARK: - WelcomeViewControllerDelegate
 extension LoginCoordinator: WelcomeViewControllerDelegate {
     func didSelectLogin() {
         showLogin()
@@ -61,13 +59,14 @@ extension LoginCoordinator: WelcomeViewControllerDelegate {
     }
 }
 
-
+// MARK: - LoginViewControllerDelegate
 extension LoginCoordinator: LoginViewControllerDelegate {
     func didFinishLogin(with user: User) {
         finishLoginFlow(with: user)
     }
 }
 
+// MARK: - RegisterViewControllerDelegate
 extension LoginCoordinator: RegisterViewControllerDelegate {
     func didFinishRegistration(with user: User) {
         finishLoginFlow(with: user)

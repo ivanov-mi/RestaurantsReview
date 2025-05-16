@@ -7,10 +7,12 @@
 
 import UIKit
 
+// MARK: - LoginViewControllerDelegate
 protocol LoginViewControllerDelegate: AnyObject {
     func didFinishLogin(with user: User)
 }
 
+// MARK - LoginViewController
 class LoginViewController: UIViewController {
     
     // MARK: - IBOutlets
@@ -22,6 +24,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak private var loginButton: UIButton!
     @IBOutlet weak private var forgotPasswordButton: UIButton!
     
+    // MARK: - Properties
     weak var delegate: LoginViewControllerDelegate?
     
     // TODO: Remove after implementing local peristence
@@ -29,7 +32,7 @@ class LoginViewController: UIViewController {
     let testUser = TestDataProvider.shared.testUser
     #endif
 
-    // MARK: - Lifecycle
+    // MARK: - VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         

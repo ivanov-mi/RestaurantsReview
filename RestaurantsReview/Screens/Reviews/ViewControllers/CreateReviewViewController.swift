@@ -7,15 +7,18 @@
 
 import UIKit
 
+// MARK: - CreateReviewViewControllerDelegate
 protocol CreateReviewViewControllerDelegate: AnyObject {
     func didSubmitReview(_ review: Review)
 }
 
+// MARK: - CreateReviewViewControllerCoordinator
 protocol CreateReviewViewControllerCoordinator: AnyObject {
     func didFinishCreatingReview(_ controller: CreateReviewViewController, review: Review)
     func didCancelReviewCreation(_ controller: CreateReviewViewController)
 }
 
+// MARK: - CreateReviewViewController
 class CreateReviewViewController: UIViewController {
 
     // MARK: - IBOutlets
@@ -30,11 +33,11 @@ class CreateReviewViewController: UIViewController {
     @IBOutlet weak private var datePickerLabel: UILabel!
     @IBOutlet weak private var datePicker: UIDatePicker!
 
-    weak var coordinator: CreateReviewViewControllerCoordinator?
-    weak var delegate: CreateReviewViewControllerDelegate?
-    
     // MARK: - Properties
     var userId: UUID!
+    
+    weak var coordinator: CreateReviewViewControllerCoordinator?
+    weak var delegate: CreateReviewViewControllerDelegate?
 
     // MARK: - VC Lifecycle
     override func viewDidLoad() {
@@ -117,7 +120,6 @@ class CreateReviewViewController: UIViewController {
 
     // MARK: - Actions
     @objc private func cancelTapped() {
-//        dismiss(animated: true)
         coordinator?.didCancelReviewCreation(self)
     }
 

@@ -7,10 +7,13 @@
 
 import UIKit
 
+// MARK: - RegisterViewControllerDelegate
 protocol RegisterViewControllerDelegate: AnyObject {
     func didFinishRegistration(with user: User)
 }
 
+
+// MARK: - RegisterViewController
 class RegisterViewController: UIViewController {
 
     // MARK: - IBOutlets
@@ -22,6 +25,7 @@ class RegisterViewController: UIViewController {
     @IBOutlet private weak var passwordErrorLabel: UILabel!
     @IBOutlet private weak var registerButton: UIButton!
     
+    // MARK: - Properties
     weak var delegate: RegisterViewControllerDelegate?
 
     // MARK: - VC Lifecycle

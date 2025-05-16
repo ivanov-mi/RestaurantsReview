@@ -7,20 +7,21 @@
 
 import UIKit
 
+// MARK: - RestaurantListViewControllerCoordinator
 protocol RestaurantListViewControllerCoordinator: AnyObject {
     func didSelectRestaurant(_ controller: RestaurantListViewController, restaurant: Restaurant)
 }
 
+// MARK: - RestaurantListViewController
 class RestaurantListViewController: UITableViewController {
     
     // TODO: Update after adding local persistance
-    
-    weak var coordinator: RestaurantListViewControllerCoordinator?
     
     // MARK: - Properties
     lazy var restaurants: [Restaurant] = {
         TestDataProvider.shared.sampleRestaurants
     }()
+    weak var coordinator: RestaurantListViewControllerCoordinator?
 
     // MARK: VC Lifecycle
     override func viewDidLoad() {
@@ -58,8 +59,6 @@ class RestaurantListViewController: UITableViewController {
         let restaurant = restaurants[indexPath.row]
         coordinator?.didSelectRestaurant(self, restaurant: restaurant)
     }
-    
-    // MARK: - Navigation
 }
 
 // MARK: - RestaurantDetailsViewControllerDelegate
