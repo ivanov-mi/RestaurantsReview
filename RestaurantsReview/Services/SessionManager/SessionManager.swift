@@ -18,7 +18,7 @@ class SessionManager {
     private let keychain = UserIDKeychainStore()
     
     var isAuthenticated: Bool {
-        currentUser != nil
+        keychain.loadUserId() != nil
     }
 
     var isAdmin: Bool {
@@ -27,23 +27,25 @@ class SessionManager {
 
     // MARK: - Public methods
     func login(user: User) {
-        currentUser = user
         keychain.saveUserId(user.id)
+        currentUser = user
         SessionManager.user = user
     }
 
     func logout() {
-        currentUser = nil
         keychain.clearUserId()
+        currentUser = nil
         SessionManager.user = nil
     }
     
     // MARK: - Init
     private init() {
         if let userId = keychain.loadUserId(),
-           let user = SessionManager.user,
-           user.id == userId {
-            currentUser = user
+           let storedUser = SessionManager.user,
+           storedUser.id == userId {
+            currentUser = storedUser
+        } else {
+            currentUser = nil
         }
     }
 }

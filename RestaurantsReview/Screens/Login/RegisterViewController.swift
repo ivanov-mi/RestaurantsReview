@@ -135,8 +135,6 @@ class RegisterViewController: UIViewController {
         // TODO: Add check for already existing user
 
         let user = User(name: username, email: email, password: password)
-        SessionManager.shared.login(user: user)
-        
         coordinator?.didFinishRegistration(with: user)
     }
 }
