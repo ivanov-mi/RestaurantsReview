@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - LoginViewControllerDelegate
-protocol LoginViewControllerDelegate: AnyObject {
+protocol LoginViewControllerCoordinator: AnyObject {
     func didFinishLogin(with user: User)
 }
 
@@ -25,7 +25,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak private var forgotPasswordButton: UIButton!
     
     // MARK: - Properties
-    weak var delegate: LoginViewControllerDelegate?
+    weak var coordinator: LoginViewControllerCoordinator?
     
     // TODO: Remove after implementing local peristence
     #if DEBUG
@@ -129,7 +129,7 @@ class LoginViewController: UIViewController {
             return
         }
 
-        delegate?.didFinishLogin(with: testUser)
+        coordinator?.didFinishLogin(with: testUser)
         clearForm()
         #endif
 

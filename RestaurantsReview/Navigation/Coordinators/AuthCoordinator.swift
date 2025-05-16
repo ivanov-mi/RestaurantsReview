@@ -27,20 +27,20 @@ class AuthCoordinator: Coordinator {
     // MARK: - Public methods
     func start() {
         let welcomeVC = AppStoryboard.main.viewController(ofType: WelcomeViewController.self)
-        welcomeVC.delegate = self
+        welcomeVC.coordinator = self
         navigationController.setViewControllers([welcomeVC], animated: true)
     }
 
     // MARK: - Private methods
     private func showLogin() {
         let loginVC = AppStoryboard.main.viewController(ofType: LoginViewController.self)
-        loginVC.delegate = self
+        loginVC.coordinator = self
         navigationController.pushViewController(loginVC, animated: true)
     }
 
     private func showRegister() {
         let registerVC = AppStoryboard.main.viewController(ofType: RegisterViewController.self)
-        registerVC.delegate = self
+        registerVC.coordinator = self
         navigationController.pushViewController(registerVC, animated: true)
     }
 
@@ -50,8 +50,8 @@ class AuthCoordinator: Coordinator {
     }
 }
 
-// MARK: - WelcomeViewControllerDelegate
-extension AuthCoordinator: WelcomeViewControllerDelegate {
+// MARK: - WelcomeViewControllerCoordinator
+extension AuthCoordinator: WelcomeViewControllerCoordinator {
     func didSelectLogin() {
         showLogin()
     }
@@ -61,15 +61,15 @@ extension AuthCoordinator: WelcomeViewControllerDelegate {
     }
 }
 
-// MARK: - LoginViewControllerDelegate
-extension AuthCoordinator: LoginViewControllerDelegate {
+// MARK: - LoginViewControllerCoordinator
+extension AuthCoordinator: LoginViewControllerCoordinator {
     func didFinishLogin(with user: User) {
         finishAuthFlow(with: user)
     }
 }
 
-// MARK: - RegisterViewControllerDelegate
-extension AuthCoordinator: RegisterViewControllerDelegate {
+// MARK: - RegisterViewControllerCoordinator
+extension AuthCoordinator: RegisterViewControllerCoordinator {
     func didFinishRegistration(with user: User) {
         finishAuthFlow(with: user)
     }

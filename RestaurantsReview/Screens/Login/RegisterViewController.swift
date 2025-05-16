@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - RegisterViewControllerDelegate
-protocol RegisterViewControllerDelegate: AnyObject {
+protocol RegisterViewControllerCoordinator: AnyObject {
     func didFinishRegistration(with user: User)
 }
 
@@ -26,7 +26,7 @@ class RegisterViewController: UIViewController {
     @IBOutlet private weak var registerButton: UIButton!
     
     // MARK: - Properties
-    weak var delegate: RegisterViewControllerDelegate?
+    weak var coordinator: RegisterViewControllerCoordinator?
 
     // MARK: - VC Lifecycle
     override func viewDidLoad() {
@@ -59,7 +59,7 @@ class RegisterViewController: UIViewController {
         // TODO: Implement create user functionality
         
         let user = User(name: username, email: email, password: password)
-        delegate?.didFinishRegistration(with: user)
+        coordinator?.didFinishRegistration(with: user)
     }
     
     // MARK: - Configure Views

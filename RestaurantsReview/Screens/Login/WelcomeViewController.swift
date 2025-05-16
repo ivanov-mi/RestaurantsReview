@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - WelcomeViewControllerDelegate
-protocol WelcomeViewControllerDelegate: AnyObject {
+protocol WelcomeViewControllerCoordinator: AnyObject {
     func didSelectLogin()
     func didSelectRegister()
 }
@@ -24,7 +24,7 @@ class WelcomeViewController: UIViewController {
     @IBOutlet private weak var notRegisteredYetButton: UIButton!
     
     // MARK: - Properties
-    weak var delegate: WelcomeViewControllerDelegate?
+    weak var coordinator: WelcomeViewControllerCoordinator?
 
     // MARK: - VC Lifecycle
     override func viewDidLoad() {
@@ -40,10 +40,10 @@ class WelcomeViewController: UIViewController {
 
     // MARK: - Actions
     @IBAction private func loginButtonTapped(_ sender: UIButton) {
-        delegate?.didSelectLogin()
+        coordinator?.didSelectLogin()
     }
 
     @IBAction private func notRegisteredYetButtonTapped(_ sender: UIButton) {
-        delegate?.didSelectRegister()
+        coordinator?.didSelectRegister()
     }
 }
