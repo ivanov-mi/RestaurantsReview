@@ -11,6 +11,11 @@ protocol CreateReviewViewControllerDelegate: AnyObject {
     func didSubmitReview(_ review: Review)
 }
 
+protocol CreateReviewViewControllerCoordinator: AnyObject {
+    func didFinishCreatingReview(_ controller: CreateReviewViewController, review: Review)
+    func didCancelReviewCreation(_ controller: CreateReviewViewController)
+}
+
 class CreateReviewViewController: UIViewController {
 
     // MARK: - IBOutlets
@@ -25,8 +30,10 @@ class CreateReviewViewController: UIViewController {
     @IBOutlet weak private var datePickerLabel: UILabel!
     @IBOutlet weak private var datePicker: UIDatePicker!
 
-    // MARK: - Properties
+    weak var coordinator: CreateReviewViewControllerCoordinator?
     weak var delegate: CreateReviewViewControllerDelegate?
+    
+    // MARK: - Properties
     var userId: UUID!
 
     // MARK: - VC Lifecycle
@@ -110,7 +117,8 @@ class CreateReviewViewController: UIViewController {
 
     // MARK: - Actions
     @objc private func cancelTapped() {
-        dismiss(animated: true)
+//        dismiss(animated: true)
+        coordinator?.didCancelReviewCreation(self)
     }
 
     @objc private func submitTapped() {
@@ -129,9 +137,9 @@ class CreateReviewViewController: UIViewController {
             dateOfVisit: datePicker.date,
             dateCreated: Date()
         )
-
+        
         delegate?.didSubmitReview(review)
-        dismiss(animated: true)
+        coordinator?.didFinishCreatingReview(self, review: review)
     }
 
     private func showAlert(title: String, message: String) {

@@ -11,6 +11,10 @@ protocol RestaurantDetailsViewControllerDelegate: AnyObject {
     func didUpdateRestaurant(_ restaurant: Restaurant)
 }
 
+protocol RestaurantDetailsViewControllerCoordinator: AnyObject {
+    func didTapAddReview(_ controller: RestaurantDetailsViewController, for restaurant: Restaurant)
+}
+
 class RestaurantDetailsViewController: UIViewController {
     
     // MARK: - Properties
@@ -32,6 +36,7 @@ class RestaurantDetailsViewController: UIViewController {
     @IBOutlet weak private var emptyRatingLabel: UILabel!
     @IBOutlet weak private var reviewsStackView: UIStackView!
     
+    weak var coordinator: RestaurantDetailsViewControllerCoordinator?
     weak var delegate: RestaurantDetailsViewControllerDelegate?
     
     // MARK: - VC Lifecycle
@@ -43,7 +48,9 @@ class RestaurantDetailsViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction private func rateAndReviewButtonTapped(_ sender: Any) {
-        presentReviewForm()
+        guard let restaurant = restaurant else { return }
+        
+        coordinator?.didTapAddReview(self, for: restaurant)
     }
 
     // MARK: - Populate Data
@@ -136,18 +143,6 @@ class RestaurantDetailsViewController: UIViewController {
     }
     
     // MARK: - Navigation
-    private func presentReviewForm() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let createReviewVC = storyboard.instantiateViewController(withIdentifier: "CreateReviewViewController") as? CreateReviewViewController {
-            
-            // TODO: Fix user identity
-            
-            createReviewVC.userId = UUID()
-            createReviewVC.delegate = self
-            let navController = UINavigationController(rootViewController: createReviewVC)
-            present(navController, animated: true)
-        }
-    }
 }
 
 // MARK: - CreateReviewViewControllerDelegate

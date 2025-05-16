@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol RegisterViewControllerDelegate: AnyObject {
+    func didFinishRegistration(with user: User)
+}
+
 class RegisterViewController: UIViewController {
 
     // MARK: - IBOutlets
@@ -17,6 +21,8 @@ class RegisterViewController: UIViewController {
     @IBOutlet private weak var passwordTextField: UITextField!
     @IBOutlet private weak var passwordErrorLabel: UILabel!
     @IBOutlet private weak var registerButton: UIButton!
+    
+    weak var delegate: RegisterViewControllerDelegate?
 
     // MARK: - VC Lifecycle
     override func viewDidLoad() {
@@ -46,11 +52,10 @@ class RegisterViewController: UIViewController {
               let email = emailTextField.text,
               let password = passwordTextField.text else { return }
 
-        let user = User(name: username, email: email, password: password)
-
         // TODO: Implement create user functionality
         
-        print("User registered: \(user)")
+        let user = User(name: username, email: email, password: password)
+        delegate?.didFinishRegistration(with: user)
     }
     
     // MARK: - Configure Views

@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol RestaurantListViewControllerCoordinator: AnyObject {
+    func didSelectRestaurant(_ controller: RestaurantListViewController, restaurant: Restaurant)
+}
+
 class RestaurantListViewController: UITableViewController {
     
     // TODO: Update after adding local persistance
+    
+    weak var coordinator: RestaurantListViewControllerCoordinator?
     
     // MARK: - Properties
     lazy var restaurants: [Restaurant] = {
@@ -49,18 +55,11 @@ class RestaurantListViewController: UITableViewController {
 
     // MARK: - Table View Delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        navigateToRestaurantDetails(for: restaurants[indexPath.row])
+        let restaurant = restaurants[indexPath.row]
+        coordinator?.didSelectRestaurant(self, restaurant: restaurant)
     }
     
     // MARK: - Navigation
-    func navigateToRestaurantDetails(for restaurant: Restaurant) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let detailsVC = storyboard.instantiateViewController(withIdentifier: "RestaurantDetailsViewController") as? RestaurantDetailsViewController {
-            detailsVC.restaurant = restaurant
-            detailsVC.delegate = self
-            navigationController?.pushViewController(detailsVC, animated: true)
-        }
-    }
 }
 
 // MARK: - RestaurantDetailsViewControllerDelegate

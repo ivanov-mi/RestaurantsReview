@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol LoginViewControllerDelegate: AnyObject {
+    func didFinishLogin(with user: User)
+}
+
 class LoginViewController: UIViewController {
     
     // MARK: - IBOutlets
@@ -17,6 +21,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak private var passwordErrorLabel: UILabel!
     @IBOutlet weak private var loginButton: UIButton!
     @IBOutlet weak private var forgotPasswordButton: UIButton!
+    
+    weak var delegate: LoginViewControllerDelegate?
     
     // TODO: Remove after implementing local peristence
     #if DEBUG
@@ -120,9 +126,10 @@ class LoginViewController: UIViewController {
             return
         }
 
-        navigateToHomeScreen()
+        delegate?.didFinishLogin(with: testUser)
         clearForm()
         #endif
+
     }
 
     private func navigateToHomeScreen() {

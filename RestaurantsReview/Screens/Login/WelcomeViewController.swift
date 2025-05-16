@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol WelcomeViewControllerDelegate: AnyObject {
+    func didSelectLogin()
+    func didSelectRegister()
+}
 
 class WelcomeViewController: UIViewController {
     
@@ -16,6 +20,8 @@ class WelcomeViewController: UIViewController {
     @IBOutlet private weak var appLogoImageView: UIImageView!
     @IBOutlet private weak var loginButton: UIButton!
     @IBOutlet private weak var notRegisteredYetButton: UIButton!
+    
+    weak var delegate: WelcomeViewControllerDelegate?
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -35,17 +41,14 @@ class WelcomeViewController: UIViewController {
     }
 
     @IBAction private func notRegisteredYetButtonTapped(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let registerVC = storyboard.instantiateViewController(withIdentifier: "RegisterViewController") as? RegisterViewController {
-            navigationController?.pushViewController(registerVC, animated: true)
-        }
+        
+        delegate?.didSelectRegister()
+        
     }
 
     // MARK: - Navigation
     private func navigateToLogin() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-            navigationController?.pushViewController(loginVC, animated: true)
-        }
+        
+        delegate?.didSelectLogin()
     }
 }
