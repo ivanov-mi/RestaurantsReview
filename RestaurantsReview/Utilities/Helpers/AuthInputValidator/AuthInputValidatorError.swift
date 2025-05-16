@@ -1,5 +1,5 @@
 //
-//  ValidationError.swift
+//  AuthInputValidatorError.swift
 //  RestaurantsReview
 //
 //  Created by Martin Ivanov on 5/15/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ValidationError: LocalizedError, Equatable {
+enum AuthInputValidatorError: LocalizedError, Equatable {
     case invalidUsername
     case invalidEmail
     case passwordTooShort(minLength: Int)

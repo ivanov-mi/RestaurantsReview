@@ -12,12 +12,13 @@ protocol Coordinator: AnyObject {
     func start()
 }
 
+// MARK: - AppCoordinator
 class AppCoordinator: Coordinator {
     
     // MARK: - Properties
     var navigationController: UINavigationController
     
-    private var loginCoordinator: LoginCoordinator?
+    private var authCoordinator: AuthCoordinator?
     private var mainCoordinator: MainCoordinator?
 
     // MARK: - Init
@@ -27,15 +28,15 @@ class AppCoordinator: Coordinator {
 
     // MARK: - Public methods
     func start() {
-        showLoginFlow()
+        showAuthFlow()
     }
 
     // MARK: - Private methods
-    private func showLoginFlow() {
-        let coordinator = LoginCoordinator(navigationController: navigationController)
+    private func showAuthFlow() {
+        let coordinator = AuthCoordinator(navigationController: navigationController)
         coordinator.delegate = self
         coordinator.start()
-        loginCoordinator = coordinator
+        authCoordinator = coordinator
         mainCoordinator = nil
     }
 
@@ -43,13 +44,13 @@ class AppCoordinator: Coordinator {
         let coordinator = MainCoordinator(navigationController: navigationController)
         coordinator.start()
         mainCoordinator = coordinator
-        loginCoordinator = nil
+        authCoordinator = nil
     }
 }
 
 // MARK: - LoginCoordinatorDelegate
-extension AppCoordinator: LoginCoordinatorDelegate {
-    func loginCoordinatorDidFinish(_ coordinator: LoginCoordinator) {
+extension AppCoordinator: AuthCoordinatorDelegate {
+    func authCoordinatorDidFinish(_ coordinator: AuthCoordinator) {
         showMainFlow()
     }
 }

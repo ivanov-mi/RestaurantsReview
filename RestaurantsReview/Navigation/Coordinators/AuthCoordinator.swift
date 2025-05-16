@@ -1,5 +1,5 @@
 //
-//  LoginCoordinator.swift
+//  AuthCoordinator.swift
 //  RestaurantsReview
 //
 //  Created by Martin Ivanov on 5/15/25.
@@ -7,15 +7,16 @@
 
 import UIKit
 
-// MARK: - LoginCoordinatorDelegate
-protocol LoginCoordinatorDelegate: AnyObject {
-    func loginCoordinatorDidFinish(_ coordinator: LoginCoordinator)
+// MARK: - AuthCoordinatorDelegate
+protocol AuthCoordinatorDelegate: AnyObject {
+    func authCoordinatorDidFinish(_ coordinator: AuthCoordinator)
 }
 
-class LoginCoordinator: Coordinator {
+// MARK: - AuthCoordinator
+class AuthCoordinator: Coordinator {
     
     // MARK: - Properties
-    weak var delegate: LoginCoordinatorDelegate?
+    weak var delegate: AuthCoordinatorDelegate?
     var navigationController: UINavigationController
 
     // MARK: - Init
@@ -27,7 +28,7 @@ class LoginCoordinator: Coordinator {
     func start() {
         let welcomeVC = AppStoryboard.main.viewController(ofType: WelcomeViewController.self)
         welcomeVC.delegate = self
-        navigationController.setViewControllers([welcomeVC], animated: false)
+        navigationController.setViewControllers([welcomeVC], animated: true)
     }
 
     // MARK: - Private methods
@@ -43,13 +44,13 @@ class LoginCoordinator: Coordinator {
         navigationController.pushViewController(registerVC, animated: true)
     }
 
-    private func finishLoginFlow(with user: User) {
-        delegate?.loginCoordinatorDidFinish(self)
+    private func finishAuthFlow(with user: User) {
+        delegate?.authCoordinatorDidFinish(self)
     }
 }
 
 // MARK: - WelcomeViewControllerDelegate
-extension LoginCoordinator: WelcomeViewControllerDelegate {
+extension AuthCoordinator: WelcomeViewControllerDelegate {
     func didSelectLogin() {
         showLogin()
     }
@@ -60,15 +61,15 @@ extension LoginCoordinator: WelcomeViewControllerDelegate {
 }
 
 // MARK: - LoginViewControllerDelegate
-extension LoginCoordinator: LoginViewControllerDelegate {
+extension AuthCoordinator: LoginViewControllerDelegate {
     func didFinishLogin(with user: User) {
-        finishLoginFlow(with: user)
+        finishAuthFlow(with: user)
     }
 }
 
 // MARK: - RegisterViewControllerDelegate
-extension LoginCoordinator: RegisterViewControllerDelegate {
+extension AuthCoordinator: RegisterViewControllerDelegate {
     func didFinishRegistration(with user: User) {
-        finishLoginFlow(with: user)
+        finishAuthFlow(with: user)
     }
 }

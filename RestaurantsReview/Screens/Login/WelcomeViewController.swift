@@ -1,5 +1,5 @@
 //
-//  LoginViewController.swift
+//  WelcomeViewController.swift
 //  RestaurantsReview
 //
 //  Created by Martin Ivanov on 5/14/25.

@@ -1,5 +1,5 @@
 //
-//  Validator.swift
+//  AuthInputValidator.swift
 //  RestaurantsReview
 //
 //  Created by Martin Ivanov on 5/15/25.
@@ -7,21 +7,21 @@
 
 import Foundation
 
-struct Validator {
+struct AuthInputValidator {
 
-    static func validateUsername(_ username: String) -> ValidationResult {
+    static func validateUsername(_ username: String) -> AuthInputValidatorResult {
         let isValid = NSPredicate(format: "SELF MATCHES %@", Configuration.Regex.username).evaluate(with: username)
 
         return isValid ? .success : .failure(.invalidUsername)
     }
 
-    static func validateEmail(_ email: String) -> ValidationResult {
+    static func validateEmail(_ email: String) -> AuthInputValidatorResult {
         let isValid = NSPredicate(format: "SELF MATCHES %@", Configuration.Regex.email).evaluate(with: email)
 
         return isValid ? .success : .failure(.invalidEmail)
     }
 
-    static func validatePasswordCreation(_ password: String) -> ValidationResult {
+    static func validatePasswordCreation(_ password: String) -> AuthInputValidatorResult {
         if password.count < Configuration.Rules.passwordMinLength {
             return .failure(.passwordTooShort(minLength: Configuration.Rules.passwordMinLength))
         }
@@ -34,7 +34,7 @@ struct Validator {
         return .success
     }
     
-    static func validateLoginPassword(_ password: String) -> ValidationResult {
+    static func validateLoginPassword(_ password: String) -> AuthInputValidatorResult {
         if password.count < Configuration.Rules.passwordMinLength {
             return .failure(.passwordTooShort(minLength: Configuration.Rules.passwordMinLength))
         }
@@ -42,7 +42,7 @@ struct Validator {
     }
 }
 
-extension Validator {
+extension AuthInputValidator {
     enum Configuration {
         enum Regex {
             static let username = "^[A-Za-z0-9._]+$"

@@ -44,11 +44,11 @@ class LoginViewController: UIViewController {
 
     // MARK: - Actions
     @IBAction private func emailEditingChanged(_ sender: UITextField) {
-        updateFieldValidationState(textField: sender, errorLabel: emailErrorLabel, validation: Validator.validateEmail)
+        updateFieldValidationState(textField: sender, errorLabel: emailErrorLabel, validation: AuthInputValidator.validateEmail)
     }
 
     @IBAction private func passwordEditingChanged(_ sender: UITextField) {
-        updateFieldValidationState(textField: sender, errorLabel: passwordErrorLabel, validation: Validator.validateLoginPassword)
+        updateFieldValidationState(textField: sender, errorLabel: passwordErrorLabel, validation: AuthInputValidator.validateLoginPassword)
     }
 
     @IBAction private func loginButtonTapped(_ sender: Any) {
@@ -97,7 +97,7 @@ class LoginViewController: UIViewController {
     }
     
     // MARK: - Validation Handling
-    private func updateFieldValidationState(textField: UITextField, errorLabel: UILabel, validation: (String) -> ValidationResult) {
+    private func updateFieldValidationState(textField: UITextField, errorLabel: UILabel, validation: (String) -> AuthInputValidatorResult) {
         let result = validation(textField.text ?? "")
         errorLabel.text = result.error?.errorDescription
         errorLabel.isHidden = result.isValid
@@ -133,19 +133,6 @@ class LoginViewController: UIViewController {
         clearForm()
         #endif
 
-    }
-
-    private func navigateToHomeScreen() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let restaurantListVC = storyboard.instantiateViewController(withIdentifier: "RestaurantListViewController")
-        let navigationVC = UINavigationController(rootViewController: restaurantListVC)
-
-        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = scene.windows.first {
-            window.rootViewController = navigationVC
-            window.applyPushTransition()
-            window.makeKeyAndVisible()
-        }
     }
 
     // MARK: - Handle keyboard

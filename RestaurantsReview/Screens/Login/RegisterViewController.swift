@@ -40,15 +40,15 @@ class RegisterViewController: UIViewController {
 
     // MARK: - Actions
     @IBAction private func usernameEditingChanged(_ sender: UITextField) {
-        updateFieldValidationState(textField: sender, errorLabel: usernameErrorLabel, validation: Validator.validateUsername)
+        updateFieldValidationState(textField: sender, errorLabel: usernameErrorLabel, validation: AuthInputValidator.validateUsername)
     }
 
     @IBAction private func emailEditingChanged(_ sender: UITextField) {
-        updateFieldValidationState(textField: sender, errorLabel: emailErrorLabel, validation: Validator.validateEmail)
+        updateFieldValidationState(textField: sender, errorLabel: emailErrorLabel, validation: AuthInputValidator.validateEmail)
     }
 
     @IBAction private func passwordEditingChanged(_ sender: UITextField) {
-        updateFieldValidationState(textField: sender, errorLabel: passwordErrorLabel, validation: Validator.validatePasswordCreation)
+        updateFieldValidationState(textField: sender, errorLabel: passwordErrorLabel, validation: AuthInputValidator.validatePasswordCreation)
     }
     
     @IBAction private func registerButtonTapped(_ sender: UIButton) {
@@ -78,7 +78,7 @@ class RegisterViewController: UIViewController {
     }
 
     // MARK: - Validation Logic
-    private func updateFieldValidationState(textField: UITextField, errorLabel: UILabel, validation: (String) -> ValidationResult) {
+    private func updateFieldValidationState(textField: UITextField, errorLabel: UILabel, validation: (String) -> AuthInputValidatorResult) {
         let text = textField.text ?? ""
         let result = validation(text)
         errorLabel.text = result.error?.errorDescription

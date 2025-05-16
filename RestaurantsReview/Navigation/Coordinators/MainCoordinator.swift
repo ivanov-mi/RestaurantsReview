@@ -21,11 +21,11 @@ class MainCoordinator: Coordinator {
     func start() {
         let restaurantListVC = AppStoryboard.main.viewController(ofType: RestaurantListViewController.self)
         restaurantListVC.coordinator = self
-        navigationController.setViewControllers([restaurantListVC], animated: false)
+        navigationController.setViewControllers([restaurantListVC], animated: true)
     }
 }
 
-// MARK: - RestaurantListViewControllerCoordinato
+// MARK: - RestaurantListViewControllerCoordinator
 extension MainCoordinator: RestaurantListViewControllerCoordinator {
     func didSelectRestaurant(_ source: RestaurantListViewController, restaurant: Restaurant) {
         let restaurantDetailsVC = AppStoryboard.main.viewController(ofType: RestaurantDetailsViewController.self)
