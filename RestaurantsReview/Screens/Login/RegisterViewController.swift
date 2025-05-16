@@ -55,9 +55,25 @@ class RegisterViewController: UIViewController {
         registerUser()
     }
     
+    #if DEBUG
+    @IBAction private func addTestUserTapped(_ sender: UIButton) {
+        usernameTextField.text = TestDataProvider.shared.testUser.username
+        emailTextField.text = TestDataProvider.shared.testUser.email
+        passwordTextField.text = TestDataProvider.shared.testUser.password
+        usernameEditingChanged(usernameTextField)
+        emailEditingChanged(emailTextField)
+        passwordEditingChanged(passwordTextField)
+        updateRegisterButtonState()
+    }
+    #endif
+    
     // MARK: - Configure Views
     private func setupNavigation() {
         title = "Register"
+        
+    #if DEBUG
+        addLogoutBarButton()
+    #endif
     }
 
     private func setupDelegates() {
@@ -69,7 +85,18 @@ class RegisterViewController: UIViewController {
     private func setupSecureFields() {
         passwordTextField.isSecureTextEntry = true
     }
-
+    
+    #if DEBUG
+    private func addLogoutBarButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Add test user",
+            style: .plain,
+            target: self,
+            action: #selector(addTestUserTapped)
+        )
+    }
+    #endif
+    
     // MARK: - Validation Logic
     private func updateFieldValidationState(textField: UITextField, errorLabel: UILabel, validation: (String) -> AuthInputValidatorResult) {
         let text = textField.text ?? ""
