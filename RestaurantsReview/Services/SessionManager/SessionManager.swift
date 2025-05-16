@@ -7,23 +7,16 @@
 
 
 class SessionManager {
-    static let shared = SessionManager()
 
+    // MARK: - Properties
+    static let shared = SessionManager()
+    private(set) var currentUser: User?
+    
     @UserDefaultOptional(key: .currentUser)
     private(set) static var user: User?
-
+    
     private let keychain = UserIDKeychainStore()
-
-    private init() {
-        if let userId = keychain.loadUserId(),
-           let user = SessionManager.user,
-           user.id == userId {
-            currentUser = user
-        }
-    }
-
-    private(set) var currentUser: User?
-
+    
     var isAuthenticated: Bool {
         currentUser != nil
     }
@@ -32,6 +25,7 @@ class SessionManager {
         currentUser?.role == .admin
     }
 
+    // MARK: - Public methods
     func login(user: User) {
         currentUser = user
         keychain.saveUserId(user.id)
@@ -42,5 +36,14 @@ class SessionManager {
         currentUser = nil
         keychain.clearUserId()
         SessionManager.user = nil
+    }
+    
+    // MARK: - Init
+    private init() {
+        if let userId = keychain.loadUserId(),
+           let user = SessionManager.user,
+           user.id == userId {
+            currentUser = user
+        }
     }
 }
