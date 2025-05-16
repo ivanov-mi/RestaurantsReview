@@ -28,7 +28,7 @@ class AppCoordinator: Coordinator {
 
     // MARK: - Public methods
     func start() {
-        showAuthFlow()
+        SessionManager.shared.isAuthenticated ? showMainFlow() : showAuthFlow()
     }
 
     // MARK: - Private methods
@@ -52,5 +52,13 @@ class AppCoordinator: Coordinator {
 extension AppCoordinator: AuthCoordinatorDelegate {
     func authCoordinatorDidFinish(_ coordinator: AuthCoordinator) {
         showMainFlow()
+    }
+}
+
+// MARK: - MainCoordinatorDelegate
+extension AppCoordinator: MainCoordinatorDelegate {
+    func didRequestLogout(from coordinator: MainCoordinator) {
+        SessionManager.shared.logout()
+        showAuthFlow()
     }
 }

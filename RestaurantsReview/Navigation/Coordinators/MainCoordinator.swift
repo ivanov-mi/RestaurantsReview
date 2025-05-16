@@ -7,6 +7,12 @@
 
 import UIKit
 
+// MARK: - MainCoordinatorDelegate
+protocol MainCoordinatorDelegate: AnyObject {
+    func didRequestLogout(from coordinator: MainCoordinator)
+}
+
+// MARK: - MainCoordinator
 class MainCoordinator: Coordinator {
     
     // MARK: - Properties

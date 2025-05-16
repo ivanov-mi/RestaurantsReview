@@ -45,6 +45,7 @@ class AuthCoordinator: Coordinator {
     }
 
     private func finishAuthFlow(with user: User) {
+        SessionManager.shared.login(user: user)
         delegate?.authCoordinatorDidFinish(self)
     }
 }
