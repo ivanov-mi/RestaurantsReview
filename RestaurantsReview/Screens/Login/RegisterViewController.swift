@@ -52,14 +52,7 @@ class RegisterViewController: UIViewController {
     }
     
     @IBAction private func registerButtonTapped(_ sender: UIButton) {
-        guard let username = usernameTextField.text,
-              let email = emailTextField.text,
-              let password = passwordTextField.text else { return }
-
-        // TODO: Implement create user functionality
-        
-        let user = User(name: username, email: email, password: password)
-        coordinator?.didFinishRegistration(with: user)
+        registerUser()
     }
     
     // MARK: - Configure Views
@@ -105,6 +98,19 @@ class RegisterViewController: UIViewController {
         }
 
         registerButton.isEnabled = false
+    }
+    
+    private func registerUser() {
+        guard let username = usernameTextField.text,
+              let email = emailTextField.text,
+              let password = passwordTextField.text else { return }
+        
+        // TODO: Add check for already existing user
+
+        let user = User(name: username, email: email, password: password)
+        SessionManager.shared.login(user: user)
+        
+        coordinator?.didFinishRegistration(with: user)
     }
 }
 
