@@ -16,6 +16,7 @@ protocol MainCoordinatorDelegate: AnyObject {
 class MainCoordinator: Coordinator {
     
     // MARK: - Properties
+    weak var delegate: MainCoordinatorDelegate?
     var navigationController: UINavigationController
 
     // MARK: - Init
@@ -39,6 +40,11 @@ extension MainCoordinator: RestaurantListViewControllerCoordinator {
         restaurantDetailsVC.coordinator = self
         restaurantDetailsVC.delegate = source
         navigationController.pushViewController(restaurantDetailsVC, animated: true)
+    }
+    
+    func didTapLogout(_ controller: RestaurantListViewController) {
+        SessionManager.shared.logout()
+        delegate?.didRequestLogout(from: self)
     }
 }
 

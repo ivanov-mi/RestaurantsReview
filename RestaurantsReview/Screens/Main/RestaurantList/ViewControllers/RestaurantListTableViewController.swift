@@ -10,29 +10,51 @@ import UIKit
 // MARK: - RestaurantListViewControllerCoordinator
 protocol RestaurantListViewControllerCoordinator: AnyObject {
     func didSelectRestaurant(_ controller: RestaurantListViewController, restaurant: Restaurant)
+    func didTapLogout(_ controller: RestaurantListViewController)
 }
 
 // MARK: - RestaurantListViewController
 class RestaurantListViewController: UITableViewController {
     
+    // MARK: - Properties
+    weak var coordinator: RestaurantListViewControllerCoordinator?
+    
     // TODO: Update after adding local persistance
     
-    // MARK: - Properties
     lazy var restaurants: [Restaurant] = {
         TestDataProvider.shared.sampleRestaurants
     }()
-    weak var coordinator: RestaurantListViewControllerCoordinator?
 
-    // MARK: VC Lifecycle
+    // MARK: - VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
     }
     
+    // MARK: - Setup UI
     private func configureView() {
         title = "Restaurants"
+        
+        // TODO: Remove after adding a proper logout UX
+        
+        addLogoutBarButton()
+        
         tableView.separatorStyle = .none
         tableView.register(RestaurantListTableViewCell.nib, forCellReuseIdentifier: RestaurantListTableViewCell.identifier)
+    }
+    
+    private func addLogoutBarButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Logout",
+            style: .plain,
+            target: self,
+            action: #selector(logoutTapped)
+        )
+    }
+    
+    // MARK: - Actions
+    @objc private func logoutTapped() {
+        coordinator?.didTapLogout(self)
     }
     
     // MARK: - Table View Data Source

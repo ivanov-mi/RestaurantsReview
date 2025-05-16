@@ -42,6 +42,7 @@ class AppCoordinator: Coordinator {
 
     private func showMainFlow() {
         let coordinator = MainCoordinator(navigationController: navigationController)
+        coordinator.delegate = self
         coordinator.start()
         mainCoordinator = coordinator
         authCoordinator = nil
@@ -58,7 +59,6 @@ extension AppCoordinator: AuthCoordinatorDelegate {
 // MARK: - MainCoordinatorDelegate
 extension AppCoordinator: MainCoordinatorDelegate {
     func didRequestLogout(from coordinator: MainCoordinator) {
-        SessionManager.shared.logout()
         showAuthFlow()
     }
 }
