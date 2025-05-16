@@ -48,15 +48,16 @@
 - MVC
 - Manually writen code (not AI generated)
 - Delegation pattern
+- Coordinator pattern
+- Keychain and CoreData integration
 - Good code practices
 
 ## To be implemented
 - UI
-  - Additional screens for RegisterUser, ForgotPassword, ReviewDetail/Update
+  - Additional screens e.g. ForgotPassword, Review Detail/Update
   - Enhance UI to add ability to logout, edit/delete reviews, restaurants and users
 - Local persistence (CoreData) with CRUD operations
 - Session/Identity manager
-- Coordinator for navigation
 
 ## Screens current state
 ## Testing info - tap on Forgot Password an it will automatically fillin a testing user password and username
@@ -65,6 +66,8 @@
 <img src="https://github.com/user-attachments/assets/94fd8481-4c43-4772-9260-7ae9cb67fbcf" width="300">
 <img src="https://github.com/user-attachments/assets/e63ce7e2-0419-4ac7-a436-4927b0c5fd6c" width="300">
 <img src="https://github.com/user-attachments/assets/26beb061-e133-4518-a9b8-3177f68a6182" width="300"> 
+<img src="https://github.com/user-attachments/assets/c4ae29de-7475-4d74-9b3a-4f588a728cd1" width="300">
+<img src="https://github.com/user-attachments/assets/03cfdb7b-6a2b-4b0e-b50b-5ce1d4bd8d0d" width="300"> 
 
 <br>  </br>
 - Restasurants Listing
