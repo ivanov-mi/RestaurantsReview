@@ -23,7 +23,7 @@ struct User: Codable {
         self.username = name
         self.email = email
         self.password = password
-        self.role = .user
+        self.role = .admin
     }
     
     func authenticate(inputPassword: String) -> Bool {
