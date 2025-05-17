@@ -31,7 +31,6 @@
         <!--Profile View Controller-->
         <scene sceneID="mgT-yY-k4q">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9Fe-TL-quc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="ProfileViewController" id="mn5-dF-oej" customClass="ProfileViewController" customModule="RestaurantsReview" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zxW-Dz-eYQ">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
@@ -40,8 +39,24 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Fe-TL-quc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2044" y="-209"/>
+        </scene>
+        <!--Admin View Controller-->
+        <scene sceneID="TNP-KW-dwZ">
+            <objects>
+                <viewController storyboardIdentifier="AdminViewController" id="akd-m6-bQ7" customClass="AdminViewController" customModule="RestaurantsReview" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gFO-dg-Pqz">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="A8H-kY-TUS"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r6Q-4R-lTY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3079" y="-209"/>
         </scene>
         <!--Create Review View Controller-->
         <scene sceneID="BO2-jO-46l">

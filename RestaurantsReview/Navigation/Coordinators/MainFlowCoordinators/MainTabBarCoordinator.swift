@@ -47,7 +47,6 @@ class MainTabBarCoordinator: Coordinator {
         restaurantNav.tabBarItem = UITabBarItem(title: "Restaurants", image: UIImage(systemName: "fork.knife"), tag: 0)
         tabs.append(restaurantNav)
         coordinators.append(restaurantCoordinator)
-    
         
         let profileNav = UINavigationController()
         let profileCoordinator = ProfileCoordinator(navigationController: profileNav)
@@ -55,6 +54,15 @@ class MainTabBarCoordinator: Coordinator {
         profileNav.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), tag: 1)
         tabs.append(profileNav)
         coordinators.append(profileCoordinator)
+        
+        if let user = SessionManager.shared.currentUser, user.role == .admin {
+            let adminNav = UINavigationController()
+            let adminCoordinator = AdminCoordinator(navigationController: adminNav)
+            adminCoordinator.start()
+            adminNav.tabBarItem = UITabBarItem(title: "Admin", image: UIImage(systemName: "gearshape"), tag: 2)
+            tabs.append(adminNav)
+            coordinators.append(adminCoordinator)
+        }
         
         tabBarController.viewControllers = tabs
         childCoordinators = coordinators
