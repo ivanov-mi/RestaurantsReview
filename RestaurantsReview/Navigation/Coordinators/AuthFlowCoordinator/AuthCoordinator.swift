@@ -28,6 +28,7 @@ class AuthCoordinator: Coordinator {
     func start() {
         let welcomeVC = AppStoryboard.main.viewController(ofType: WelcomeViewController.self)
         welcomeVC.coordinator = self
+        navigationController.setNavigationBarHidden(false, animated: false)
         navigationController.setViewControllers([welcomeVC], animated: true)
     }
 
