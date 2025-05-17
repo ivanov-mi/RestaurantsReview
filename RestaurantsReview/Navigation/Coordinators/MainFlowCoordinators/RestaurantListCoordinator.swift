@@ -57,17 +57,19 @@ extension RestaurantListCoordinator: RestaurantDetailsViewControllerCoordinator 
         createReviewVC.userId = UUID()
         createReviewVC.coordinator = self
         createReviewVC.delegate = controller
-        navigationController.pushViewController(createReviewVC, animated: true)
+        
+        let navigationController = UINavigationController(rootViewController: createReviewVC)
+        controller.present(navigationController, animated: true)
     }
 }
 
 // MARK: - CreateReviewViewControllerCoordinator
 extension RestaurantListCoordinator: CreateReviewViewControllerCoordinator {
     func didFinishCreatingReview(_ controller: CreateReviewViewController, review: Review) {
-        navigationController.popViewController(animated: true)
+        controller.dismiss(animated: true)
     }
-
+    
     func didCancelReviewCreation(_ controller: CreateReviewViewController) {
-        navigationController.popViewController(animated: true)
+        controller.dismiss(animated: true)
     }
 }
