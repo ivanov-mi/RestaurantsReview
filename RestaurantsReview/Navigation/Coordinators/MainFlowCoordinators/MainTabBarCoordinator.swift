@@ -19,7 +19,7 @@ class MainTabBarCoordinator: Coordinator {
     weak var delegate: MainTabBarCoordinatorDelegate?
     
     private(set) var navigationController: UINavigationController
-    let tabBarController = UITabBarController()
+    private let tabBarController = MainTabViewController()
 
     private var childCoordinators: [Coordinator] = []
 
@@ -30,42 +30,57 @@ class MainTabBarCoordinator: Coordinator {
 
     // MARK: - Coordinator
     func start() {
-        setupTabs()
+        let availableTabs = availableTabs()
+        let tabItems = setupTabViewControllers(for: availableTabs)
+
+        tabBarController.configureTabs(tabItems)
         navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.setViewControllers([tabBarController], animated: true)
     }
-
-    // MARK: - Private Methods
-    private func setupTabs() {
-        var tabs: [UIViewController] = []
-        var coordinators: [Coordinator] = []
+    
+    // MARK: - Private methods
+    private func availableTabs() -> [MainTabItem] {
+        var tabs: [MainTabItem] = [.restaurants, .profile]
         
-        let restaurantNav = UINavigationController()
-        let restaurantCoordinator = RestaurantListCoordinator(navigationController: restaurantNav)
-        restaurantCoordinator.delegate = self
-        restaurantCoordinator.start()
-        restaurantNav.tabBarItem = UITabBarItem(title: "Restaurants", image: UIImage(systemName: "fork.knife"), tag: 0)
-        tabs.append(restaurantNav)
-        coordinators.append(restaurantCoordinator)
-        
-        let profileNav = UINavigationController()
-        let profileCoordinator = ProfileCoordinator(navigationController: profileNav)
-        profileCoordinator.start()
-        profileNav.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), tag: 1)
-        tabs.append(profileNav)
-        coordinators.append(profileCoordinator)
-        
-        if let user = SessionManager.shared.currentUser, user.role == .admin {
-            let adminNav = UINavigationController()
-            let adminCoordinator = AdminCoordinator(navigationController: adminNav)
-            adminCoordinator.start()
-            adminNav.tabBarItem = UITabBarItem(title: "Admin", image: UIImage(systemName: "gearshape"), tag: 2)
-            tabs.append(adminNav)
-            coordinators.append(adminCoordinator)
+        if SessionManager.shared.currentUser?.role == .admin {
+            tabs.append(.admin)
         }
-        
-        tabBarController.viewControllers = tabs
-        childCoordinators = coordinators
+        return tabs
+    }
+
+    private func setupTabViewControllers(for tabs: [MainTabItem]) -> [(MainTabItem, UIViewController)] {
+        var tabItems: [(MainTabItem, UIViewController)] = []
+        var activeCoordinators: [Coordinator] = []
+
+        for tab in tabs {
+            let (coordinator, navigationController) = configureCoordinator(for: tab)
+            activeCoordinators.append(coordinator)
+            tabItems.append((tab, navigationController))
+        }
+
+        childCoordinators = activeCoordinators
+        return tabItems
+    }
+
+    private func configureCoordinator(for tab: MainTabItem) -> (Coordinator, UINavigationController) {
+        let navController = UINavigationController()
+        let coordinator: Coordinator
+
+        switch tab {
+        case .restaurants:
+            let restaurantCoordinator = RestaurantListCoordinator(navigationController: navController)
+            restaurantCoordinator.delegate = self
+            coordinator = restaurantCoordinator
+
+        case .profile:
+            coordinator = ProfileCoordinator(navigationController: navController)
+
+        case .admin:
+            coordinator = AdminCoordinator(navigationController: navController)
+        }
+
+        coordinator.start()
+        return (coordinator, navController)
     }
 }
 
