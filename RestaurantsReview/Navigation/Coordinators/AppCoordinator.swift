@@ -7,11 +7,6 @@
 
 import UIKit
 
-// MARK: - Coordinator Protocol
-protocol Coordinator: AnyObject {
-    func start()
-}
-
 // MARK: - AppCoordinator
 class AppCoordinator: Coordinator {
     
