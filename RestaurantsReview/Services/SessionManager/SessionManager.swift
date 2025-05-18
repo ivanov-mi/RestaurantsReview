@@ -12,13 +12,10 @@ class SessionManager {
     static let shared = SessionManager()
     private(set) var currentUser: User?
     
-    @UserDefaultOptional(key: .currentUser)
-    private(set) static var user: User?
-    
     private let keychain = UserIDKeychainStore()
     
     var isAuthenticated: Bool {
-        keychain.loadUserId() != nil
+        keychain.loadUserId() != nil && currentUser != nil
     }
 
     var isAdmin: Bool {
@@ -29,21 +26,18 @@ class SessionManager {
     func login(user: User) {
         keychain.saveUserId(user.id)
         currentUser = user
-        SessionManager.user = user
     }
 
     func logout() {
         keychain.clearUserId()
         currentUser = nil
-        SessionManager.user = nil
     }
     
     // MARK: - Init
     private init() {
         if let userId = keychain.loadUserId(),
-           let storedUser = SessionManager.user,
-           storedUser.id == userId {
-            currentUser = storedUser
+           let user = PersistenceManager.shared.users.fetch(by: userId) {
+            currentUser = user
         } else {
             currentUser = nil
         }
