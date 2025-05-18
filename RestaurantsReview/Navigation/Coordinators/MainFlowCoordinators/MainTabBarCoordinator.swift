@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - MainTabBarCoordinatorDelegate
 protocol MainTabBarCoordinatorDelegate: AnyObject {
-    func didRequestLogout(from coordinator: MainTabBarCoordinator)
+    func didRequestLogout(from coordinator: Coordinator)
 }
 
 // MARK: - MainTabBarCoordinator
@@ -74,13 +74,28 @@ class MainTabBarCoordinator: Coordinator {
             coordinator = restaurantCoordinator
 
         case .profile:
-            coordinator = ProfileCoordinator(navigationController: navController, persistenceManager: persistenceManager)
+            let profileCoordinator = ProfileCoordinator(navigationController: navController, persistenceManager: persistenceManager)
+            profileCoordinator.delegate = self
+            coordinator = profileCoordinator
 
         case .admin:
-            coordinator = AdminCoordinator(navigationController: navController, persistenceManager: persistenceManager)
+            let adminCoordinator = AdminCoordinator(navigationController: navController, persistenceManager: persistenceManager)
+            coordinator = adminCoordinator
         }
 
         coordinator.start()
         return (coordinator, navController)
+    }
+}
+
+// MARK: - ProfileCoordinatorDelegate
+extension MainTabBarCoordinator: ProfileCoordinatorDelegate {
+    func didRequestLogout(from coordinator: ProfileCoordinator) {
+        delegate?.didRequestLogout(from: self)
+    }
+    
+    func didChangeAdminStatus(from coordinator: ProfileCoordinator) {
+        SessionManager.shared.updateCurrentUser()
+        start()
     }
 }

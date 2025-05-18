@@ -14,7 +14,7 @@ protocol PersistenceManaging {
     func login(email: String, password: String) -> User?
     func fetchAllUsers() -> [User]
     func fetchUser(by id: UUID) -> User?
-    func updateAdminStatus(for userId: UUID, isAdmin: Bool) -> (user: User?, error: String?)
+    func changeAdminStatus(for userId: UUID, to isAdmin: Bool) -> User?
     func deleteAllUsers()
     func deleteUser(userId: UUID)
 

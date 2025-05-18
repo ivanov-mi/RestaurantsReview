@@ -106,13 +106,14 @@ extension CoreDataManager {
         }
     }
     
-    func updateAdminStatus(for userId: UUID, isAdmin: Bool) -> (user: User?, error: String?) {
+    func changeAdminStatus(for userId: UUID, to isAdmin: Bool) -> User? {
         let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", userId as CVarArg)
         
         do {
             guard let userEntity = try context.fetch(request).first else {
-                return (nil, "User not found.")
+                print("User not found.")
+                return nil
             }
             
             userEntity.isAdmin = isAdmin
@@ -121,15 +122,18 @@ extension CoreDataManager {
             guard let id = userEntity.id,
                   let email = userEntity.email,
                   let username = userEntity.username else {
-                return (nil, "Invalid user data.")
+                print("Invalid user data.")
+                return nil
             }
             
             let updatedUser = User(id: id, email: email, username: username, isAdmin: isAdmin)
-            return (updatedUser, nil)
+            return updatedUser
             
         } catch {
-            return (nil, "Unexpected error: \(error.localizedDescription)")
+            print("Unexpected error: \(error.localizedDescription)")
         }
+        
+        return nil
     }
     
     func deleteUser(userId: UUID) {

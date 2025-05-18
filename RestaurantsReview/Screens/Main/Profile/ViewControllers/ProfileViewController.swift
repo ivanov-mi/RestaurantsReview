@@ -10,8 +10,7 @@ import UIKit
 // MARK: - ProfileViewControllerCoordinator
 protocol ProfileViewControllerCoordinator: AnyObject {
     func didRequestLogout(from controller: ProfileViewController)
-    func didRequestAccountDeletion(from controller: ProfileViewController)
-    func didToggleAdminStatus(to isAdmin: Bool)
+    func didChangeAdminStatus(from controller: ProfileViewController)
 }
 
 
@@ -20,6 +19,7 @@ class ProfileViewController: UIViewController {
 
     // MARK: - Properties
     weak var coordinator: ProfileViewControllerCoordinator?
+    var persistenceManager: PersistenceManaging!
     var user: User!
 
     @IBOutlet weak private var tableView: UITableView!
@@ -46,12 +46,13 @@ class ProfileViewController: UIViewController {
     }
 
     // MARK: - Actions
+    @IBAction private func deleteTapped(_ sender: Any) {
+        presentDeleteConfirmationAlert()
+    }
+    
+    // MARK: - Private functions
     private func logoutTapped() {
         coordinator?.didRequestLogout(from: self)
-    }
-
-    @objc private func deleteTapped() {
-        presentDeleteConfirmationAlert()
     }
     
     private func presentDeleteConfirmationAlert() {
@@ -63,7 +64,9 @@ class ProfileViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { [weak self] _ in
             guard let self else { return }
-            self.coordinator?.didRequestAccountDeletion(from: self)
+            
+            persistenceManager.deleteUser(userId: user.id)
+            coordinator?.didRequestLogout(from: self)
         })
         present(alert, animated: true)
     }
@@ -130,8 +133,13 @@ extension ProfileViewController: UITableViewDelegate {
 // MARK: - ProfileSwitchTableViewCellDelegate
 extension ProfileViewController: ProfileSwitchTableViewCellDelegate {
     func profileSwitchCell(_ cell: ProfileSwitchTableViewCell, didChangeValue isOn: Bool) {
-        print("Toggle admin status to \(isOn)")
-        coordinator?.didToggleAdminStatus(to: isOn)
+        guard let updatedUser = persistenceManager.changeAdminStatus(for: user.id, to: isOn) else {
+            return
+        }
+        
+        self.user = updatedUser
+        tableView.reloadData()
+        coordinator?.didChangeAdminStatus(from: self)
     }
 }
 

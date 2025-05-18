@@ -34,6 +34,11 @@ class SessionManager {
         currentUser = nil
     }
     
+    func updateCurrentUser() {
+        guard let userId = keychain.loadUserId() else { return }
+        currentUser = persistenceManager.fetchUser(by: userId)
+    }
+    
     // MARK: - Init
     private init(persistenceManager: PersistenceManaging = CoreDataManager.shared) {
         self.persistenceManager = persistenceManager

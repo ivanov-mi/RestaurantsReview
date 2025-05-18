@@ -54,6 +54,9 @@
                                             </backgroundConfiguration>
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="deleteTapped:" destination="JHD-mR-41q" eventType="touchUpInside" id="X0g-q2-gsf"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>

@@ -7,24 +7,46 @@
 
 import UIKit
 
+// MARK: - ProfileCoordinatorDelegate
+protocol ProfileCoordinatorDelegate: AnyObject {
+    func didRequestLogout(from coordinator: ProfileCoordinator)
+    func didChangeAdminStatus(from coordinator: ProfileCoordinator)
+}
+ 
+// MARK: - ProfileCoordinator
 class ProfileCoordinator: Coordinator {
+    
+    // MARK: - Properties
     var navigationController: UINavigationController
     private let persistenceManager: PersistenceManaging
+    weak var delegate: ProfileCoordinatorDelegate?
 
+    // MARK: - Init
     init(navigationController: UINavigationController, persistenceManager: PersistenceManaging) {
         self.navigationController = navigationController
         self.persistenceManager = persistenceManager
     }
 
+    // MARK: - Public methods
     func start() {
-        
-        // TODO: Implement ProfileViewController
-        
         let profileVC = AppStoryboard.main.viewController(ofType: ProfileViewController.self)
         navigationController.setViewControllers([profileVC], animated: false)
         profileVC.user = SessionManager.shared.currentUser
-//        profileVC.coordinator = self
-//        profileVC.delegate = delegate
+        profileVC.coordinator = self
+        profileVC.persistenceManager = persistenceManager
         navigationController.setViewControllers([profileVC], animated: false)
     }
+}
+
+
+// MARK: - ProfileViewControllerCoordinator
+extension ProfileCoordinator: ProfileViewControllerCoordinator {
+    func didRequestLogout(from controller: ProfileViewController) {
+        delegate?.didRequestLogout(from: self)
+    }
+    
+    func didChangeAdminStatus(from controller: ProfileViewController) {
+        delegate?.didChangeAdminStatus(from: self)
+    }
+    
 }

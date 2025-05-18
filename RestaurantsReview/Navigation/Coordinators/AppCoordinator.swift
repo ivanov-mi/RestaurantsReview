@@ -55,7 +55,7 @@ extension AppCoordinator: AuthCoordinatorDelegate {
 
 // MARK: - MainCoordinatorDelegate
 extension AppCoordinator: MainTabBarCoordinatorDelegate {
-    func didRequestLogout(from coordinator: MainTabBarCoordinator) {
+    func didRequestLogout(from coordinator: Coordinator) {
         SessionManager.shared.logout()
         showAuthFlow()
     }
