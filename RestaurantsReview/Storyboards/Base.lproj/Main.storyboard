@@ -55,7 +55,7 @@
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <action selector="deleteTapped:" destination="JHD-mR-41q" eventType="touchUpInside" id="X0g-q2-gsf"/>
+                                            <action selector="deleteTapped:" destination="JHD-mR-41q" eventType="touchUpInside" id="bMg-Tt-RnG"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -68,7 +68,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Aam-Sq-b9U"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Wmz-Wh-81Z" firstAttribute="leading" secondItem="Aam-Sq-b9U" secondAttribute="leading" id="HlQ-k9-iu2"/>
                             <constraint firstItem="bDO-9l-xl1" firstAttribute="leading" secondItem="Aam-Sq-b9U" secondAttribute="leading" id="IxF-tz-CZP"/>
@@ -90,17 +90,19 @@
             <point key="canvasLocation" x="2044" y="-209"/>
         </scene>
         <!--Admin View Controller-->
-        <scene sceneID="TNP-KW-dwZ">
+        <scene sceneID="7s1-4N-Cvo">
             <objects>
-                <viewController storyboardIdentifier="AdminViewController" id="akd-m6-bQ7" customClass="AdminViewController" customModule="RestaurantsReview" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="gFO-dg-Pqz">
+                <tableViewController storyboardIdentifier="AdminViewController" id="DXx-C0-a0U" customClass="AdminViewController" customModule="RestaurantsReview" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="rf4-RZ-Zs2">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="A8H-kY-TUS"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="r6Q-4R-lTY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <connections>
+                            <outlet property="dataSource" destination="DXx-C0-a0U" id="g0b-Zz-DW4"/>
+                            <outlet property="delegate" destination="DXx-C0-a0U" id="CDk-7O-xsm"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hfj-ah-UXm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3079" y="-209"/>
         </scene>
@@ -908,6 +910,9 @@
             <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGroupedBackgroundColor">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPinkColor">
