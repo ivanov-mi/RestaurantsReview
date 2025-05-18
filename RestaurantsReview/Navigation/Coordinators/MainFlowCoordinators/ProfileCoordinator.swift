@@ -17,7 +17,7 @@ protocol ProfileCoordinatorDelegate: AnyObject {
 class ProfileCoordinator: Coordinator {
     
     // MARK: - Properties
-    var navigationController: UINavigationController
+    private let navigationController: UINavigationController
     private let persistenceManager: PersistenceManaging
     weak var delegate: ProfileCoordinatorDelegate?
 

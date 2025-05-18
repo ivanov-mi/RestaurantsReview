@@ -18,7 +18,7 @@ class MainTabBarCoordinator: Coordinator {
     // MARK: - Properties
     weak var delegate: MainTabBarCoordinatorDelegate?
 
-    private(set) var navigationController: UINavigationController
+    private var navigationController: UINavigationController
     private let tabBarController = MainTabViewController()
     private let persistenceManager: PersistenceManaging
 

@@ -17,7 +17,7 @@ class AuthCoordinator: Coordinator {
     
     // MARK: - Properties
     weak var delegate: AuthCoordinatorDelegate?
-    var navigationController: UINavigationController
+    private let navigationController: UINavigationController
     private let persistenceManager: PersistenceManaging
 
     // MARK: - Init

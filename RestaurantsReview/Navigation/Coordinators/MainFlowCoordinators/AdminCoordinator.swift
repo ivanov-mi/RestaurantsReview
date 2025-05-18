@@ -8,7 +8,7 @@
 import UIKit
 
 class AdminCoordinator: Coordinator {
-    var navigationController: UINavigationController
+    private let navigationController: UINavigationController
     private let persistenceManager: PersistenceManaging
 
     init(navigationController: UINavigationController, persistenceManager: PersistenceManaging) {

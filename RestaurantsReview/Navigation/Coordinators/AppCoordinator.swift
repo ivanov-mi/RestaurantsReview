@@ -12,7 +12,7 @@ class AppCoordinator: Coordinator {
     private let persistenceManager: PersistenceManaging
     
     // MARK: - Properties
-    var navigationController: UINavigationController
+    private let navigationController: UINavigationController
     
     private var authCoordinator: AuthCoordinator?
     private var mainCoordinator: MainTabBarCoordinator?
