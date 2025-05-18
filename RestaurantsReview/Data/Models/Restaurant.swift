@@ -8,10 +8,19 @@
 import Foundation
 
 struct Restaurant {
+    let id: UUID
     let name: String
     let cuisine: String
     let imagePath: String?
     var reviews: [Review]
+
+    init(name: String, cuisine: String, imagePath: String? = nil) {
+        self.id = UUID()
+        self.name = name
+        self.cuisine = cuisine
+        self.imagePath = imagePath
+        self.reviews = []
+    }
     
     var rating: Double? {
         guard !reviews.isEmpty else {
