@@ -7,7 +7,7 @@
 
 import Foundation
 
-class TestDataProvider {
+final class TestDataProvider {
     
     static let shared = TestDataProvider()
     
@@ -20,37 +20,47 @@ class TestDataProvider {
         role: .admin
     )
 
-    // MARK: - Generate 10 sample reviews
-    private func generateSampleReviews() -> [Review] {
-        var reviews: [Review] = []
+    // Generate 10 sample restaurants
+    lazy var sampleRestaurants: [Restaurant] = {
+        (1...10).map { index in
+            Restaurant(
+                name: "Restaurant \(index)",
+                cuisine: ["Italian", "Japanese", "American", "Mexican", "Thai", "Chinese", "French", "Greek", "Indian", "Spanish"][index % 10],
+                imagePath: "image\(index)"
+            )
+        }
+    }()
+
+    // Generate 30 reviews across restaurants and user
+    lazy var sampleReviews: [Review] = {
+        var allReviews: [Review] = []
         let now = Date()
         let oneDay: TimeInterval = 86400
 
-        for i in 0..<10 {
+        for i in 0..<30 {
+            let restaurant = sampleRestaurants.randomElement()!
             let review = Review(
                 userId: testUser.id,
+                restaurantId: restaurant.id,
                 comment: "Sample review \(i + 1)",
                 rating: Int.random(in: 1...5),
                 dateOfVisit: now.addingTimeInterval(-TimeInterval((i + 1) * Int(oneDay))),
                 dateCreated: now.addingTimeInterval(-TimeInterval((i + 1) * Int(oneDay / 2)))
             )
-            reviews.append(review)
+            allReviews.append(review)
         }
 
-        return reviews
-    }
+        return allReviews
+    }()
 
-    // MARK: - Generate 10 sample restaurants
-    lazy var sampleRestaurants: [Restaurant] = {
-        let reviews = generateSampleReviews()
-
-        return (1...10).map { index in
-            Restaurant(
-                name: "Restaurant \(index)",
-                cuisine: ["Italian", "Japanese", "American", "Mexican", "Thai", "Chinese", "French", "Greek", "Indian", "Spanish"][index % 10],
-                imagePath: "image\(index)",
-                reviews: Array(reviews.shuffled().prefix(Int.random(in: 0...5)))
-            )
+    // Restaurants with embedded reviews
+    lazy var restaurantsWithReviews: [Restaurant] = {
+        sampleRestaurants.map { restaurant in
+            let reviews = sampleReviews.filter { $0.restaurantId == restaurant.id }
+            var updatedRestaurant = restaurant
+            updatedRestaurant.reviews = reviews
+            return updatedRestaurant
         }
     }()
 }
+
