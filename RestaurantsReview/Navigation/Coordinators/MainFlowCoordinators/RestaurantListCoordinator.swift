@@ -7,16 +7,10 @@
 
 import UIKit
 
-// MARK: - RestaurantListCoordinatorDelegate
-protocol RestaurantListCoordinatorDelegate: AnyObject {
-    func didRequestLogout(from coordinator: RestaurantListCoordinator)
-}
-
 // MARK: - RestaurantListCoordinator
 class RestaurantListCoordinator: Coordinator {
 
     // MARK: - Properties
-    weak var delegate: RestaurantListCoordinatorDelegate?
     var navigationController: UINavigationController
     private let persistenceManager: PersistenceManaging
 
@@ -37,10 +31,6 @@ class RestaurantListCoordinator: Coordinator {
 
 // MARK: - RestaurantListViewControllerCoordinator
 extension RestaurantListCoordinator: RestaurantListViewControllerCoordinator {
-    func didTapLogout(_ controller: RestaurantListViewController) {
-        delegate?.didRequestLogout(from: self)
-    }
-
     func didSelectRestaurant(_ controller: RestaurantListViewController, restaurant: Restaurant) {
         let restaurantDetailsVC = AppStoryboard.main.viewController(ofType: RestaurantDetailsViewController.self)
         restaurantDetailsVC.configure(wtih: restaurant)

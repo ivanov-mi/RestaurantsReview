@@ -71,7 +71,6 @@ class MainTabBarCoordinator: Coordinator {
         switch tab {
         case .restaurants:
             let restaurantCoordinator = RestaurantListCoordinator(navigationController: navController, persistenceManager: persistenceManager)
-            restaurantCoordinator.delegate = self
             coordinator = restaurantCoordinator
 
         case .profile:
@@ -85,11 +84,3 @@ class MainTabBarCoordinator: Coordinator {
         return (coordinator, navController)
     }
 }
-
-// MARK: - RestaurantListCoordinatorDelegate
-extension MainTabBarCoordinator: RestaurantListCoordinatorDelegate {
-    func didRequestLogout(from coordinator: RestaurantListCoordinator) {
-        delegate?.didRequestLogout(from: self)
-    }
-}
-

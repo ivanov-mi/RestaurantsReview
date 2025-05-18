@@ -10,7 +10,6 @@ import UIKit
 // MARK: - RestaurantListViewControllerCoordinator
 protocol RestaurantListViewControllerCoordinator: AnyObject {
     func didSelectRestaurant(_ controller: RestaurantListViewController, restaurant: Restaurant)
-    func didTapLogout(_ controller: RestaurantListViewController)
 }
 
 // MARK: - RestaurantListViewController
