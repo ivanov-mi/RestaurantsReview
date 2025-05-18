@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - CreateReviewViewControllerDelegate
 protocol CreateReviewViewControllerDelegate: AnyObject {
-    func didSubmitReview(_ review: Review)
+    func didSubmitReview()
 }
 
 // MARK: - CreateReviewViewControllerCoordinator
@@ -39,6 +39,7 @@ class CreateReviewViewController: UIViewController {
     
     weak var coordinator: CreateReviewViewControllerCoordinator?
     weak var delegate: CreateReviewViewControllerDelegate?
+    var persistenceManager: PersistenceManaging!
 
     // MARK: - VC Lifecycle
     override func viewDidLoad() {
@@ -138,17 +139,21 @@ class CreateReviewViewController: UIViewController {
             showAlert(title: "Incomplete", message: "Please provide both a rating and a comment.")
             return
         }
-
-        let review = Review(
-            userId: userId,
+        
+        guard let review = persistenceManager.addReview(
             restaurantId: restaurantId,
+            userId: userId,
             comment: comment,
             rating: rating,
-            dateOfVisit: datePicker.date,
-            dateCreated: Date()
-        )
+            dateOfVisit: datePicker.date
+        ) else {
+            
+            // TODO: Implement general error
+            
+            return
+        }
         
-        delegate?.didSubmitReview(review)
+        delegate?.didSubmitReview()
         coordinator?.didFinishCreatingReview(self, review: review)
     }
 

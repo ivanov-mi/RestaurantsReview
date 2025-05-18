@@ -17,15 +17,17 @@ class MainTabBarCoordinator: Coordinator {
 
     // MARK: - Properties
     weak var delegate: MainTabBarCoordinatorDelegate?
-    
+
     private(set) var navigationController: UINavigationController
     private let tabBarController = MainTabViewController()
+    private let persistenceManager: PersistenceManaging
 
     private var childCoordinators: [Coordinator] = []
 
     // MARK: - Init
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, persistenceManager: PersistenceManaging) {
         self.navigationController = navigationController
+        self.persistenceManager = persistenceManager
     }
 
     // MARK: - Coordinator
@@ -41,10 +43,10 @@ class MainTabBarCoordinator: Coordinator {
     // MARK: - Private methods
     private func availableTabs() -> [MainTabItem] {
         var tabs: [MainTabItem] = [.restaurants, .profile]
-        
-        if SessionManager.shared.currentUser?.role == .admin {
+        if SessionManager.shared.currentUser?.isAdmin ?? false {
             tabs.append(.admin)
         }
+        
         return tabs
     }
 
@@ -68,15 +70,15 @@ class MainTabBarCoordinator: Coordinator {
 
         switch tab {
         case .restaurants:
-            let restaurantCoordinator = RestaurantListCoordinator(navigationController: navController)
+            let restaurantCoordinator = RestaurantListCoordinator(navigationController: navController, persistenceManager: persistenceManager)
             restaurantCoordinator.delegate = self
             coordinator = restaurantCoordinator
 
         case .profile:
-            coordinator = ProfileCoordinator(navigationController: navController)
+            coordinator = ProfileCoordinator(navigationController: navController, persistenceManager: persistenceManager)
 
         case .admin:
-            coordinator = AdminCoordinator(navigationController: navController)
+            coordinator = AdminCoordinator(navigationController: navController, persistenceManager: persistenceManager)
         }
 
         coordinator.start()

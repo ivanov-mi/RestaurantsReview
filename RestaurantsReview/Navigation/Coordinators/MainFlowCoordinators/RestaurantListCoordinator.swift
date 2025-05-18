@@ -18,16 +18,19 @@ class RestaurantListCoordinator: Coordinator {
     // MARK: - Properties
     weak var delegate: RestaurantListCoordinatorDelegate?
     var navigationController: UINavigationController
+    private let persistenceManager: PersistenceManaging
 
     // MARK: - Init
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, persistenceManager: PersistenceManaging) {
         self.navigationController = navigationController
+        self.persistenceManager = persistenceManager
     }
 
     // MARK: - Coordinator
     func start() {
         let listVC = AppStoryboard.main.viewController(ofType: RestaurantListViewController.self)
         listVC.coordinator = self
+        listVC.persistenceManager = persistenceManager
         navigationController.setViewControllers([listVC], animated: false)
     }
 }
@@ -42,6 +45,7 @@ extension RestaurantListCoordinator: RestaurantListViewControllerCoordinator {
         let restaurantDetailsVC = AppStoryboard.main.viewController(ofType: RestaurantDetailsViewController.self)
         restaurantDetailsVC.configure(wtih: restaurant)
         restaurantDetailsVC.coordinator = self
+        restaurantDetailsVC.persistenceManager = persistenceManager
         restaurantDetailsVC.delegate = controller
         navigationController.pushViewController(restaurantDetailsVC, animated: true)
     }
@@ -60,6 +64,7 @@ extension RestaurantListCoordinator: RestaurantDetailsViewControllerCoordinator 
         
         createReviewVC.configure(with: user.id, for: controller.restaurant.id)
         createReviewVC.coordinator = self
+        createReviewVC.persistenceManager = persistenceManager
         createReviewVC.delegate = controller
         
         let navigationController = UINavigationController(rootViewController: createReviewVC)

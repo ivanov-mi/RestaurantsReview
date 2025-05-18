@@ -26,11 +26,7 @@ class LoginViewController: UIViewController {
     
     // MARK: - Properties
     weak var coordinator: LoginViewControllerCoordinator?
-    
-    // TODO: Remove after implementing local peristence
-    #if DEBUG
-    let testUser = TestDataProvider.shared.testUser
-    #endif
+    var persistenceManager: PersistenceManaging!
 
     // MARK: - VC Lifecycle
     override func viewDidLoad() {
@@ -60,8 +56,8 @@ class LoginViewController: UIViewController {
         // TODO: Implement forgot password functionality
         
         #if DEBUG
-        emailTextField.text = testUser.email
-        passwordTextField.text = testUser.password
+        emailTextField.text = TestData.User.admin.email
+        passwordTextField.text = TestData.User.admin.password
         emailEditingChanged(emailTextField)
         passwordEditingChanged(passwordTextField)
         updateLoginButtonState()
@@ -119,20 +115,15 @@ class LoginViewController: UIViewController {
 
     // MARK: - Authentication
     private func authenticate() {
-        
-        // TODO: Implement authentication
-        
-        #if DEBUG
-        guard emailTextField.text == testUser.email,
-              passwordTextField.text == testUser.password else {
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text,
+              let user = persistenceManager.login(email: email, password: password) else {
             showInvalidCredentialsError()
             return
         }
-
-        coordinator?.didFinishLogin(with: testUser)
+        
+        coordinator?.didFinishLogin(with: user)
         clearForm()
-        #endif
-
     }
 
     // MARK: - Handle keyboard

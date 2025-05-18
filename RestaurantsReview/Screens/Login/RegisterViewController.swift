@@ -27,6 +27,7 @@ class RegisterViewController: UIViewController {
     
     // MARK: - Properties
     weak var coordinator: RegisterViewControllerCoordinator?
+    var persistenceManager: PersistenceManaging!
 
     // MARK: - VC Lifecycle
     override func viewDidLoad() {
@@ -57,9 +58,9 @@ class RegisterViewController: UIViewController {
     
     #if DEBUG
     @IBAction private func addTestUserTapped(_ sender: UIButton) {
-        usernameTextField.text = TestDataProvider.shared.testUser.username
-        emailTextField.text = TestDataProvider.shared.testUser.email
-        passwordTextField.text = TestDataProvider.shared.testUser.password
+        usernameTextField.text = TestData.User.admin.username
+        emailTextField.text = TestData.User.admin.email
+        passwordTextField.text = TestData.User.admin.password
         usernameEditingChanged(usernameTextField)
         emailEditingChanged(emailTextField)
         passwordEditingChanged(passwordTextField)
@@ -132,9 +133,19 @@ class RegisterViewController: UIViewController {
               let email = emailTextField.text,
               let password = passwordTextField.text else { return }
         
-        // TODO: Add check for already existing user
-
-        let user = User(name: username, email: email, password: password)
+        // TODO: Add check for already existing user and admin rights
+        
+        let user = persistenceManager.registerUser(
+            username: username,
+            email: email,
+            password: password,
+            isAdmin: true)
+        
+        guard let user else {
+            print("Failed to register user.")
+            return
+        }
+        
         coordinator?.didFinishRegistration(with: user)
     }
 }

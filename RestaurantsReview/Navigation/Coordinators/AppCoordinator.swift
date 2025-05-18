@@ -9,6 +9,7 @@ import UIKit
 
 // MARK: - AppCoordinator
 class AppCoordinator: Coordinator {
+    private let persistenceManager: PersistenceManaging
     
     // MARK: - Properties
     var navigationController: UINavigationController
@@ -17,8 +18,9 @@ class AppCoordinator: Coordinator {
     private var mainCoordinator: MainTabBarCoordinator?
 
     // MARK: - Init
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, persistenceManager: PersistenceManaging) {
         self.navigationController = navigationController
+        self.persistenceManager = persistenceManager
     }
 
     // MARK: - Public methods
@@ -28,7 +30,7 @@ class AppCoordinator: Coordinator {
 
     // MARK: - Private methods
     private func showAuthFlow() {
-        let coordinator = AuthCoordinator(navigationController: navigationController)
+        let coordinator = AuthCoordinator(navigationController: navigationController, persistenceManager: persistenceManager)
         coordinator.delegate = self
         coordinator.start()
         authCoordinator = coordinator
@@ -36,7 +38,7 @@ class AppCoordinator: Coordinator {
     }
 
     private func showMainFlow() {
-        let coordinator = MainTabBarCoordinator(navigationController: navigationController)
+        let coordinator = MainTabBarCoordinator(navigationController: navigationController, persistenceManager: persistenceManager)
         coordinator.delegate = self
         coordinator.start()
         mainCoordinator = coordinator

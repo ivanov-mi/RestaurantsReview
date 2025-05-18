@@ -11,6 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var appCoordinator: AppCoordinator?
+    let persistenceManager: PersistenceManaging = CoreDataManager.shared
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -20,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
 
         let navigationController = UINavigationController()
-        let coordinator = AppCoordinator(navigationController: navigationController)
+        let coordinator = AppCoordinator(navigationController: navigationController, persistenceManager: persistenceManager )
         coordinator.start()
 
         self.window = UIWindow(windowScene: windowScene)

@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - RestaurantDetailsViewControllerDelegate
 protocol RestaurantDetailsViewControllerDelegate: AnyObject {
-    func didUpdateRestaurant(_ restaurant: Restaurant)
+    func didUpdateRestaurant()
 }
 
 // MARK: - RestaurantDetailsViewControllerCoordinator
@@ -38,6 +38,7 @@ class RestaurantDetailsViewController: UIViewController {
     
     // MARK: - Properties
     private(set) var restaurant: Restaurant!
+    var persistenceManager: PersistenceManaging!
     
     weak var coordinator: RestaurantDetailsViewControllerCoordinator?
     weak var delegate: RestaurantDetailsViewControllerDelegate?
@@ -63,12 +64,14 @@ class RestaurantDetailsViewController: UIViewController {
 
     // MARK: - Populate Data
     private func populateData() {
-        guard let restaurant = restaurant else { return }
-
         configureImage(from: restaurant.imagePath)
-        configureRating(restaurant.rating, reviewCount: restaurant.reviews.count)
         configureText(name: restaurant.name, cuisine: restaurant.cuisine)
-        configureReviews(from: restaurant)
+        
+        let reviews = persistenceManager.fetchReviews(for: restaurant.id)
+        configureReviews(for: reviews)
+        
+        let averageRating = persistenceManager.averageRating(for: restaurant.id)
+        configureRating(averageRating, reviewCount: reviews.count)
     }
 
     // MARK: - Image
@@ -109,32 +112,32 @@ class RestaurantDetailsViewController: UIViewController {
     }
 
     // MARK: - Reviews
-    private func configureReviews(from restaurant: Restaurant) {
+    private func configureReviews(for reviews: [Review]) {
         reviewsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
-        guard !restaurant.reviews.isEmpty else {
+        guard !reviews.isEmpty else {
             reviewsStackView.isHidden = true
             return
         }
 
         reviewsStackView.isHidden = false
 
-        let roles = determineReviewRoles(from: restaurant)
+        let roles = determineReviewRoles(for: reviews)
         addReviewViews(for: roles)
     }
 
-    private func determineReviewRoles(from restaurant: Restaurant) -> [Review: Set<ReviewListItemType>] {
+    private func determineReviewRoles(for reviews: [Review]) -> [Review: Set<ReviewListItemType>] {
         var roles: [Review: Set<ReviewListItemType>] = [:]
 
-        if let mostRecent = restaurant.latestReview {
+        if let mostRecent = reviews.max(by: { $0.dateCreated < $1.dateCreated }) {
             roles[mostRecent, default: []].insert(.mostRecent)
         }
 
-        if let lowest = restaurant.lowestRated {
+        if let lowest = reviews.min(by: { $0.rating < $1.rating }) {
             roles[lowest, default: []].insert(.lowestRated)
         }
 
-        if let highest = restaurant.highestRated {
+        if let highest = reviews.max(by: { $0.rating < $1.rating }) {
             roles[highest, default: []].insert(.highestRated)
         }
 
@@ -153,13 +156,8 @@ class RestaurantDetailsViewController: UIViewController {
 
 // MARK: - CreateReviewViewControllerDelegate
 extension RestaurantDetailsViewController: CreateReviewViewControllerDelegate {
-    
-    func didSubmitReview(_ review: Review) {
-        restaurant?.reviews.append(review)
+    func didSubmitReview() {
         populateData()
-        
-        if let restaurant {
-            delegate?.didUpdateRestaurant(restaurant)
-        }
+        delegate?.didUpdateRestaurant()
     }
 }

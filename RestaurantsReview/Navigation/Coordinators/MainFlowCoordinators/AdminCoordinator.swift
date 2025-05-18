@@ -9,9 +9,11 @@ import UIKit
 
 class AdminCoordinator: Coordinator {
     var navigationController: UINavigationController
+    private let persistenceManager: PersistenceManaging
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, persistenceManager: PersistenceManaging) {
         self.navigationController = navigationController
+        self.persistenceManager = persistenceManager
     }
 
     func start() {

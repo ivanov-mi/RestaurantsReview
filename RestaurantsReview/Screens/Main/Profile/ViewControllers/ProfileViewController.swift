@@ -94,7 +94,7 @@ extension ProfileViewController: UITableViewDataSource {
 
         case .adminToggle:
             let cell = tableView.dequeueReusableCell(withIdentifier: row.cellIdentifier, for: indexPath) as! ProfileSwitchTableViewCell
-            cell.configure(title: row.title, isOn: user.role == .admin)
+            cell.configure(title: row.title, isOn: user.isAdmin)
             cell.delegate = self
             cell.selectionStyle = .none
             return cell

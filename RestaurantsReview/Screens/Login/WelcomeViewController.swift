@@ -25,25 +25,60 @@ class WelcomeViewController: UIViewController {
     
     // MARK: - Properties
     weak var coordinator: WelcomeViewControllerCoordinator?
-
+    
     // MARK: - VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
-
+    
     // MARK: - UI Setup
     private func configureUI() {
         appNameLabel.text = "Restaurants Review"
         appLogoImageView.image = UIImage(named: "appLogo")
+        
+        #if DEBUG
+        setupDebugBarButton()
+        #endif
     }
-
+    
     // MARK: - Actions
     @IBAction private func loginButtonTapped(_ sender: UIButton) {
         coordinator?.didSelectLogin()
     }
-
+    
     @IBAction private func notRegisteredYetButtonTapped(_ sender: UIButton) {
         coordinator?.didSelectRegister()
     }
 }
+
+#if DEBUG
+private extension WelcomeViewController {
+
+    func setupDebugBarButton() {
+        let isPopulated = TestDataProvider.isTestingDataAvailable(using: CoreDataManager.shared)
+        
+        let debugButton = UIBarButtonItem(
+            title: isPopulated ? "Clear Test Data" : "Populate Test Data",
+            style: .plain,
+            target: self,
+            action: isPopulated ? #selector(clearTestData) : #selector(populateTestData)
+        )
+
+        navigationItem.rightBarButtonItem = debugButton
+    }
+
+    @objc func populateTestData() {
+        TestDataProvider.populateTestData(using: CoreDataManager.shared)
+        print("Populated test data.")
+        setupDebugBarButton()
+    }
+
+    @objc func clearTestData() {
+        TestDataProvider.clearData(using: CoreDataManager.shared)
+        print("Cleared all test data.")
+        setupDebugBarButton()
+    }
+}
+#endif
+

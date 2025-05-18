@@ -19,8 +19,8 @@ class RestaurantListViewController: UITableViewController {
     // MARK: - Properties
     weak var coordinator: RestaurantListViewControllerCoordinator?
     
-    private(set) var persistenceManager = PersistenceManager.shared
     private var restaurants: [Restaurant] = []
+    var persistenceManager: PersistenceManaging!
 
     // MARK: - VC Lifecycle
     override func viewDidLoad() {
@@ -71,9 +71,8 @@ class RestaurantListViewController: UITableViewController {
         let restaurant = restaurants[indexPath.row]
         
         let name = restaurant.name
-        let rating = restaurant.rating.map { String(format: "%.1f", $0) } ?? "Not rated"
+        let rating = persistenceManager.averageRating(for: restaurant.id).map { String(format: "%.1f", $0) } ?? "Not rated"
         let image = restaurant.imagePath.flatMap { UIImage(named: $0) }
-
         cell.configure(name: name, rating: rating, image: image)
 
         return cell
@@ -88,10 +87,7 @@ class RestaurantListViewController: UITableViewController {
 
 // MARK: - RestaurantDetailsViewControllerDelegate
 extension RestaurantListViewController: RestaurantDetailsViewControllerDelegate {
-    func didUpdateRestaurant(_ restaurant: Restaurant) {
-        if let index = restaurants.firstIndex(where: { $0.name == restaurant.name }) {
-            restaurants[index] = restaurant
-            tableView.reloadData()
-        }
+    func didUpdateRestaurant() {
+        loadData()
     }
 }

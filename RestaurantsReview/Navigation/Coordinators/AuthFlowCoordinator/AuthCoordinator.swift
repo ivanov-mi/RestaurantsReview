@@ -18,10 +18,12 @@ class AuthCoordinator: Coordinator {
     // MARK: - Properties
     weak var delegate: AuthCoordinatorDelegate?
     var navigationController: UINavigationController
+    private let persistenceManager: PersistenceManaging
 
     // MARK: - Init
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, persistenceManager: PersistenceManaging) {
         self.navigationController = navigationController
+        self.persistenceManager = persistenceManager
     }
 
     // MARK: - Public methods
@@ -36,12 +38,14 @@ class AuthCoordinator: Coordinator {
     private func showLogin() {
         let loginVC = AppStoryboard.main.viewController(ofType: LoginViewController.self)
         loginVC.coordinator = self
+        loginVC.persistenceManager = persistenceManager
         navigationController.pushViewController(loginVC, animated: true)
     }
 
     private func showRegister() {
         let registerVC = AppStoryboard.main.viewController(ofType: RegisterViewController.self)
         registerVC.coordinator = self
+        registerVC.persistenceManager = persistenceManager
         navigationController.pushViewController(registerVC, animated: true)
     }
 

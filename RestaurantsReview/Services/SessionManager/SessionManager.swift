@@ -13,13 +13,14 @@ class SessionManager {
     private(set) var currentUser: User?
     
     private let keychain = UserIDKeychainStore()
+    private let persistenceManager: PersistenceManaging
     
     var isAuthenticated: Bool {
         keychain.loadUserId() != nil && currentUser != nil
     }
 
     var isAdmin: Bool {
-        currentUser?.role == .admin
+        currentUser?.isAdmin ?? false
     }
 
     // MARK: - Public methods
@@ -34,12 +35,11 @@ class SessionManager {
     }
     
     // MARK: - Init
-    private init() {
-        if let userId = keychain.loadUserId(),
-           let user = PersistenceManager.shared.users.fetch(by: userId) {
-            currentUser = user
-        } else {
-            currentUser = nil
+    private init(persistenceManager: PersistenceManaging = CoreDataManager.shared) {
+        self.persistenceManager = persistenceManager
+        
+        if let userId = keychain.loadUserId() {
+            currentUser = persistenceManager.fetchUser(by: userId)
         }
     }
 }
