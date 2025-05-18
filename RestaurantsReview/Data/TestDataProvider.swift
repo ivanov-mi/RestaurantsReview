@@ -17,6 +17,7 @@ class TestDataProvider {
         name: "john_doe",
         email: "test@example.com",
         password: "Test1234",
+        role: .admin
     )
 
     // MARK: - Generate 10 sample reviews
