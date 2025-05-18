@@ -37,10 +37,15 @@ class RestaurantDetailsViewController: UIViewController {
     @IBOutlet weak private var reviewsStackView: UIStackView!
     
     // MARK: - Properties
-    var restaurant: Restaurant?
+    private(set) var restaurant: Restaurant!
     
     weak var coordinator: RestaurantDetailsViewControllerCoordinator?
     weak var delegate: RestaurantDetailsViewControllerDelegate?
+    
+    // MARK: - Public methods
+    func configure(wtih restaurant: Restaurant) {
+        self.restaurant = restaurant
+    }
     
     // MARK: - VC Lifecycle
     override func viewDidLoad() {

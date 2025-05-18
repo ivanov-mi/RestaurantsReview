@@ -19,16 +19,19 @@ class RestaurantListViewController: UITableViewController {
     // MARK: - Properties
     weak var coordinator: RestaurantListViewControllerCoordinator?
     
-    // TODO: Update after adding local persistance
-    
-    lazy var restaurants: [Restaurant] = {
-        TestDataProvider.shared.sampleRestaurants
-    }()
+    private(set) var persistenceManager = PersistenceManager.shared
+    private var restaurants: [Restaurant] = []
 
     // MARK: - VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
+        loadData()
+    }
+    
+    func loadData() {
+        restaurants = persistenceManager.fetchAllRestaurants()
+        tableView.reloadData()
     }
     
     // MARK: - Setup UI

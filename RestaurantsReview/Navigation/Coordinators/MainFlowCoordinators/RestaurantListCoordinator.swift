@@ -40,8 +40,8 @@ extension RestaurantListCoordinator: RestaurantListViewControllerCoordinator {
 
     func didSelectRestaurant(_ controller: RestaurantListViewController, restaurant: Restaurant) {
         let restaurantDetailsVC = AppStoryboard.main.viewController(ofType: RestaurantDetailsViewController.self)
+        restaurantDetailsVC.configure(wtih: restaurant)
         restaurantDetailsVC.coordinator = self
-        restaurantDetailsVC.restaurant = restaurant
         restaurantDetailsVC.delegate = controller
         navigationController.pushViewController(restaurantDetailsVC, animated: true)
     }
@@ -51,10 +51,14 @@ extension RestaurantListCoordinator: RestaurantListViewControllerCoordinator {
 extension RestaurantListCoordinator: RestaurantDetailsViewControllerCoordinator {
     func didTapAddReview(_ controller: RestaurantDetailsViewController, for restaurant: Restaurant) {
         let createReviewVC = AppStoryboard.main.viewController(ofType: CreateReviewViewController.self)
+        guard let user = SessionManager.shared.currentUser else {
+            
+            // TODO: Implement session error flow
+            
+            return
+        }
         
-        // TODO: Fix user identity
-
-        createReviewVC.userId = UUID()
+        createReviewVC.configure(with: user.id, for: controller.restaurant.id)
         createReviewVC.coordinator = self
         createReviewVC.delegate = controller
         

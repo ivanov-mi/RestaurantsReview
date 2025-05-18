@@ -34,7 +34,8 @@ class CreateReviewViewController: UIViewController {
     @IBOutlet weak private var datePicker: UIDatePicker!
 
     // MARK: - Properties
-    var userId: UUID!
+    private(set) var userId: UUID!
+    private(set) var restaurantId: UUID!
     
     weak var coordinator: CreateReviewViewControllerCoordinator?
     weak var delegate: CreateReviewViewControllerDelegate?
@@ -45,6 +46,12 @@ class CreateReviewViewController: UIViewController {
         setupNavigationBar()
         setupUI()
         setupKeyboardHandling()
+    }
+    
+    // MARK: - Public methods
+    func configure(with userId: UUID, for restraurantId: UUID) {
+        self.userId = userId
+        self.restaurantId = restraurantId
     }
 
     // MARK: - Setup
@@ -134,6 +141,7 @@ class CreateReviewViewController: UIViewController {
 
         let review = Review(
             userId: userId,
+            restaurantId: restaurantId,
             comment: comment,
             rating: rating,
             dateOfVisit: datePicker.date,
