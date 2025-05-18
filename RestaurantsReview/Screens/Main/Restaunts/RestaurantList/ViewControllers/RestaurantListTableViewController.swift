@@ -38,28 +38,10 @@ class RestaurantListViewController: UITableViewController {
     private func configureView() {
         title = "Restaurants"
         
-        // TODO: Remove after adding a proper logout UX
-        
-        addLogoutBarButton()
-        
         tableView.separatorStyle = .none
         tableView.register(RestaurantListTableViewCell.nib, forCellReuseIdentifier: RestaurantListTableViewCell.identifier)
     }
-    
-    private func addLogoutBarButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Logout",
-            style: .plain,
-            target: self,
-            action: #selector(logoutTapped)
-        )
-    }
-    
-    // MARK: - Actions
-    @objc private func logoutTapped() {
-        coordinator?.didTapLogout(self)
-    }
-    
+
     // MARK: - Table View Data Source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return restaurants.count
