@@ -13,17 +13,17 @@ enum Role: String, Codable {
 
 struct User: Codable {
     let id: UUID
-    var username: String
+    let username: String
     var email: String
     var password: String
     var role: Role
     
-    init(name: String, email: String, password: String) {
+    init(name: String, email: String, password: String, role: Role = .user) {
         self.id = UUID()
         self.username = name
         self.email = email
         self.password = password
-        self.role = .admin
+        self.role = role
     }
     
     func authenticate(inputPassword: String) -> Bool {
