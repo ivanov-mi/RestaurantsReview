@@ -29,17 +29,60 @@
             <point key="canvasLocation" x="909.16030534351137" y="-209.1549295774648"/>
         </scene>
         <!--Profile View Controller-->
-        <scene sceneID="mgT-yY-k4q">
+        <scene sceneID="TKp-Vy-z39">
             <objects>
-                <viewController storyboardIdentifier="ProfileViewController" id="mn5-dF-oej" customClass="ProfileViewController" customModule="RestaurantsReview" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="zxW-Dz-eYQ">
+                <viewController storyboardIdentifier="ProfileViewController" id="JHD-mR-41q" customClass="ProfileViewController" customModule="RestaurantsReview" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TId-25-78m">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="hZa-mm-vG3"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Wmz-Wh-81Z">
+                                <rect key="frame" x="0.0" y="118" width="393" height="590"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bDO-9l-xl1" userLabel="Button Background View">
+                                <rect key="frame" x="0.0" y="708" width="393" height="76"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gNg-Vi-tDh">
+                                        <rect key="frame" x="32" y="16" width="329" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Xlz-iQ-aCB"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Delete Profile" cornerStyle="large">
+                                            <backgroundConfiguration key="background">
+                                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                            </backgroundConfiguration>
+                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="gNg-Vi-tDh" firstAttribute="top" secondItem="bDO-9l-xl1" secondAttribute="top" constant="16" id="HMg-xG-ONK"/>
+                                    <constraint firstItem="gNg-Vi-tDh" firstAttribute="leading" secondItem="bDO-9l-xl1" secondAttribute="leading" constant="32" id="Qgw-om-GR4"/>
+                                    <constraint firstAttribute="trailing" secondItem="gNg-Vi-tDh" secondAttribute="trailing" constant="32" id="hCt-Mz-xKg"/>
+                                    <constraint firstAttribute="bottom" secondItem="gNg-Vi-tDh" secondAttribute="bottom" constant="16" id="moo-Vl-wS4"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Aam-Sq-b9U"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Wmz-Wh-81Z" firstAttribute="leading" secondItem="Aam-Sq-b9U" secondAttribute="leading" id="HlQ-k9-iu2"/>
+                            <constraint firstItem="bDO-9l-xl1" firstAttribute="leading" secondItem="Aam-Sq-b9U" secondAttribute="leading" id="IxF-tz-CZP"/>
+                            <constraint firstItem="Aam-Sq-b9U" firstAttribute="trailing" secondItem="bDO-9l-xl1" secondAttribute="trailing" id="b3c-ND-Lr6"/>
+                            <constraint firstItem="Aam-Sq-b9U" firstAttribute="trailing" secondItem="Wmz-Wh-81Z" secondAttribute="trailing" id="biq-zY-XNg"/>
+                            <constraint firstItem="Aam-Sq-b9U" firstAttribute="bottom" secondItem="bDO-9l-xl1" secondAttribute="bottom" id="om4-H3-wFJ"/>
+                            <constraint firstItem="Wmz-Wh-81Z" firstAttribute="top" secondItem="Aam-Sq-b9U" secondAttribute="top" id="tQu-oY-Neg"/>
+                            <constraint firstItem="bDO-9l-xl1" firstAttribute="top" secondItem="Wmz-Wh-81Z" secondAttribute="bottom" id="wRN-bJ-vTV"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="deleteBackgroundView" destination="bDO-9l-xl1" id="gGr-HM-3RH"/>
+                        <outlet property="deleteProfileButton" destination="gNg-Vi-tDh" id="rly-yG-vQ6"/>
+                        <outlet property="tableView" destination="Wmz-Wh-81Z" id="8c4-3Z-tfb"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9Fe-TL-quc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yPN-Dt-aL5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2044" y="-209"/>
         </scene>

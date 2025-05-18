@@ -20,5 +20,9 @@ class ProfileCoordinator: Coordinator {
         
         let profileVC = AppStoryboard.main.viewController(ofType: ProfileViewController.self)
         navigationController.setViewControllers([profileVC], animated: false)
+        profileVC.user = SessionManager.shared.currentUser
+//        profileVC.coordinator = self
+//        profileVC.delegate = delegate
+        navigationController.setViewControllers([profileVC], animated: false)
     }
 }
