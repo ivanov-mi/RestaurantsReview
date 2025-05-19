@@ -33,7 +33,7 @@ class RestaurantDetailsViewController: UIViewController {
     @IBOutlet weak private var starRatingView: StarRatingView!
     @IBOutlet weak private var totalRatesLabel: UILabel!
 
-    @IBOutlet weak private var createReviewButton: UIButton!
+    @IBOutlet weak private var ReviewDetailsButton: UIButton!
 
     @IBOutlet weak private var emptyRatingLabel: UILabel!
     @IBOutlet weak private var reviewsStackView: UIStackView!
@@ -199,8 +199,8 @@ class RestaurantDetailsViewController: UIViewController {
     }
 }
 
-// MARK: - CreateReviewViewControllerDelegate
-extension RestaurantDetailsViewController: CreateReviewViewControllerDelegate {
+// MARK: - ReviewDetailsViewControllerDelegate
+extension RestaurantDetailsViewController: ReviewDetailsViewControllerDelegate {
     func didSubmitReview() {
         updateData()
         delegate?.didUpdateRestaurant()

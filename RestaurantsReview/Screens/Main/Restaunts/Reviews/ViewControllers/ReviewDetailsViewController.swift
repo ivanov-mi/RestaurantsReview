@@ -1,5 +1,5 @@
 //
-//  CreateReviewViewController.swift
+//  ReviewDetailsViewController.swift
 //  RestaurantsReview
 //
 //  Created by Martin Ivanov on 5/13/25.
@@ -13,19 +13,19 @@ enum ReviewScreenMode {
     case editing
 }
 
-// MARK: - CreateReviewViewControllerDelegate
-protocol CreateReviewViewControllerDelegate: AnyObject {
+// MARK: - ReviewDetailsViewControllerDelegate
+protocol ReviewDetailsViewControllerDelegate: AnyObject {
     func didSubmitReview()
 }
 
-// MARK: - CreateReviewViewControllerCoordinator
-protocol CreateReviewViewControllerCoordinator: AnyObject {
-    func didFinishCreatingReview(_ controller: CreateReviewViewController, review: Review)
-    func didCancelReviewCreation(_ controller: CreateReviewViewController)
+// MARK: - ReviewDetailsViewControllerCoordinator
+protocol ReviewDetailsViewControllerCoordinator: AnyObject {
+    func didFinishCreatingReview(_ controller: ReviewDetailsViewController, review: Review)
+    func didCancelReviewCreation(_ controller: ReviewDetailsViewController)
 }
 
-// MARK: - CreateReviewViewController
-class CreateReviewViewController: UIViewController {
+// MARK: - ReviewDetailsViewController
+class ReviewDetailsViewController: UIViewController {
     
     // MARK: - IBOutlets
     @IBOutlet private weak var scrollView: UIScrollView!
@@ -44,15 +44,15 @@ class CreateReviewViewController: UIViewController {
     private(set) var reviewToEdit: Review?
     
     var persistenceManager: PersistenceManaging!
-    weak var coordinator: CreateReviewViewControllerCoordinator?
-    weak var delegate: CreateReviewViewControllerDelegate?
+    weak var coordinator: ReviewDetailsViewControllerCoordinator?
+    weak var delegate: ReviewDetailsViewControllerDelegate?
     
     var sessionManager: SessionManaging = SessionManager.shared
     
     private var authorName: String?
     private var mode: ReviewScreenMode = .viewing {
         didSet {
-            updateNavigationBar()
+            updateUIState()
         }
     }
     
@@ -101,16 +101,18 @@ class CreateReviewViewController: UIViewController {
         
         let isEditing = (mode == .editing)
         enableFields(isEditing)
-        updateNavigationBar()
+        updateUIState()
     }
     
     private func enableFields(_ enabled: Bool) {
         starRatingView.isUserInteractionEnabled = enabled
         commentTextView.isEditable = enabled
         datePicker.isEnabled = enabled
+        
+        starRatingLabel.text = "Tap to rate"
     }
     
-    private func updateNavigationBar() {
+    private func updateUIState() {
         updateLeftBarButton()
         updateRightBarButton()
 
@@ -225,6 +227,8 @@ class CreateReviewViewController: UIViewController {
         starRatingView.setRating(Double(review.rating))
         commentTextView.text = review.comment
         datePicker.date = review.dateOfVisit
+        
+        starRatingLabel.text = "Rating (\(review.rating)/5)"
     }
     
     // MARK: - Keyboard

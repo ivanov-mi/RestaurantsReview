@@ -74,28 +74,28 @@ func didSelectUser(_ controller: UserListingViewController, user: User) {
 // MARK: - ReviewsListingViewControllerCoordinator
 extension AdminCoordinator: ReviewsListingViewControllerCoordinator {
     func didSelectReview(_ controller: ReviewsListingViewController, review: Review) {
-        let createReviewVC = AppStoryboard.main.viewController(ofType: CreateReviewViewController.self)
-        createReviewVC.configure(
+        let ReviewDetailsVC = AppStoryboard.main.viewController(ofType: ReviewDetailsViewController.self)
+        ReviewDetailsVC.configure(
             with: review.userId,
             for: review.restaurantId,
             review: review
         )
         
-        createReviewVC.persistenceManager = persistenceManager
-        createReviewVC.coordinator = self
-        createReviewVC.delegate = controller
+        ReviewDetailsVC.persistenceManager = persistenceManager
+        ReviewDetailsVC.coordinator = self
+        ReviewDetailsVC.delegate = controller
 
-        let navigationController = UINavigationController(rootViewController: createReviewVC)
+        let navigationController = UINavigationController(rootViewController: ReviewDetailsVC)
         controller.present(navigationController, animated: true)
     }
 }
 
-extension AdminCoordinator: CreateReviewViewControllerCoordinator {
-    func didFinishCreatingReview(_ controller: CreateReviewViewController, review: Review) {
+extension AdminCoordinator: ReviewDetailsViewControllerCoordinator {
+    func didFinishCreatingReview(_ controller: ReviewDetailsViewController, review: Review) {
         controller.dismiss(animated: true)
     }
 
-    func didCancelReviewCreation(_ controller: CreateReviewViewController) {
+    func didCancelReviewCreation(_ controller: ReviewDetailsViewController) {
         controller.dismiss(animated: true)
     }
 }

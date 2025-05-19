@@ -163,7 +163,7 @@ class ReviewsListingViewController: UITableViewController {
     }
 }
 
-extension ReviewsListingViewController: CreateReviewViewControllerDelegate {
+extension ReviewsListingViewController: ReviewDetailsViewControllerDelegate {
     func didSubmitReview() {
         reloadReviews()
     }

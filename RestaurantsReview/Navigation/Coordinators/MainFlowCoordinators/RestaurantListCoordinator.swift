@@ -35,7 +35,7 @@ class RestaurantListCoordinator: Coordinator {
         navigationController.pushViewController(listVC, animated: true)
     }
     
-    func presentCreateReviewScreen(from controller: RestaurantDetailsViewController, for restaurant: Restaurant) {
+    func presentReviewDetailsScreen(from controller: RestaurantDetailsViewController, for restaurant: Restaurant) {
         guard let user = SessionManager.shared.currentUser else {
             
             // TODO: Implement session error flow
@@ -43,13 +43,13 @@ class RestaurantListCoordinator: Coordinator {
             return
         }
 
-        let createReviewVC = AppStoryboard.main.viewController(ofType: CreateReviewViewController.self)
-        createReviewVC.configure(with: user.id, for: restaurant.id)
-        createReviewVC.coordinator = self
-        createReviewVC.persistenceManager = persistenceManager
-        createReviewVC.delegate = controller
+        let ReviewDetailsVC = AppStoryboard.main.viewController(ofType: ReviewDetailsViewController.self)
+        ReviewDetailsVC.configure(with: user.id, for: restaurant.id)
+        ReviewDetailsVC.coordinator = self
+        ReviewDetailsVC.persistenceManager = persistenceManager
+        ReviewDetailsVC.delegate = controller
 
-        let nav = UINavigationController(rootViewController: createReviewVC)
+        let nav = UINavigationController(rootViewController: ReviewDetailsVC)
         controller.present(nav, animated: true)
     }
     
@@ -84,13 +84,13 @@ class RestaurantListCoordinator: Coordinator {
     }
     
     func presentReviewDetails(_ review: Review, _ controller: RestaurantDetailsViewController) {
-        let createReviewVC = AppStoryboard.main.viewController(ofType: CreateReviewViewController.self)
-        createReviewVC.configure(with: review.userId, for: review.restaurantId, review: review)
-        createReviewVC.persistenceManager = persistenceManager
-        createReviewVC.delegate = controller
-        createReviewVC.coordinator = self
+        let ReviewDetailsVC = AppStoryboard.main.viewController(ofType: ReviewDetailsViewController.self)
+        ReviewDetailsVC.configure(with: review.userId, for: review.restaurantId, review: review)
+        ReviewDetailsVC.persistenceManager = persistenceManager
+        ReviewDetailsVC.delegate = controller
+        ReviewDetailsVC.coordinator = self
         
-        let navigationController = UINavigationController(rootViewController: createReviewVC)
+        let navigationController = UINavigationController(rootViewController: ReviewDetailsVC)
         controller.present(navigationController, animated: true)
     }
 }
@@ -109,7 +109,7 @@ extension RestaurantListCoordinator: RestaurantListViewControllerCoordinator {
 // MARK: - RestaurantDetailsViewControllerCoordinator
 extension RestaurantListCoordinator: RestaurantDetailsViewControllerCoordinator {
     func didTapAddReview(_ controller: RestaurantDetailsViewController, for restaurant: Restaurant) {
-        presentCreateReviewScreen(from: controller, for: restaurant)
+        presentReviewDetailsScreen(from: controller, for: restaurant)
     }
     
     func didTapEditRestaurant(_ controller: RestaurantDetailsViewController, restaurant: Restaurant) {
@@ -121,13 +121,13 @@ extension RestaurantListCoordinator: RestaurantDetailsViewControllerCoordinator 
     }
 }
 
-// MARK: - CreateReviewViewControllerCoordinator
-extension RestaurantListCoordinator: CreateReviewViewControllerCoordinator {
-    func didFinishCreatingReview(_ controller: CreateReviewViewController, review: Review) {
+// MARK: - ReviewDetailsViewControllerCoordinator
+extension RestaurantListCoordinator: ReviewDetailsViewControllerCoordinator {
+    func didFinishCreatingReview(_ controller: ReviewDetailsViewController, review: Review) {
         controller.dismiss(animated: true)
     }
     
-    func didCancelReviewCreation(_ controller: CreateReviewViewController) {
+    func didCancelReviewCreation(_ controller: ReviewDetailsViewController) {
         controller.dismiss(animated: true)
     }
 }
