@@ -8,6 +8,7 @@
 import UIKit
 
 class AdminCoordinator: Coordinator {
+    
     private let navigationController: UINavigationController
     private let persistenceManager: PersistenceManaging
 
@@ -31,10 +32,20 @@ extension AdminCoordinator: AdminViewControllerCoordinator {
     }
     
     func didSelectUsers(from controller: AdminViewController) {
-        print("Users tapped")
+        let usersVC = AppStoryboard.main.viewController(ofType: UserListingViewController.self)
+        usersVC.coordinator = self
+        usersVC.persistenceManager = persistenceManager
+        navigationController.pushViewController(usersVC, animated: true)
     }
     
     func didSelectReviews(from controller: AdminViewController) {
         print("Reviews tapped")
+    }
+}
+
+// MARK: - UserListingViewControllerCoordinator
+extension AdminCoordinator: UserListingViewControllerCoordinator {
+    func didSelectUser(_ user: User, from controller: UserListingViewController) {
+        print("User tapped")
     }
 }
