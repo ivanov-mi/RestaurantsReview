@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ReviewsListingTableViewCell" customModule="RestaurantsReview" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Nu9-B2-PTn">
+                        <rect key="frame" x="16" y="8" width="288" height="64"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restaurant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z30-FA-pAn" userLabel="Restaurant Label">
+                                <rect key="frame" x="0.0" y="0.0" width="288" height="15"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="QZ0-Yi-dgt" userLabel="ContentView">
+                                <rect key="frame" x="0.0" y="14.999999999999996" width="288" height="36.666666666666657"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Un-aB-C8K" userLabel="Rating Label">
+                                        <rect key="frame" x="0.0" y="8.0000000000000018" width="53" height="20.666666666666671"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Comment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F4k-iQ-Q4e" userLabel="Comment Label">
+                                        <rect key="frame" x="69" y="8.0000000000000018" width="74.666666666666686" height="20.666666666666671"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="F4k-iQ-Q4e" secondAttribute="bottom" constant="8" id="1T8-XJ-hku"/>
+                                    <constraint firstAttribute="bottom" secondItem="2Un-aB-C8K" secondAttribute="bottom" constant="8" id="9vw-RX-LYI"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="F4k-iQ-Q4e" secondAttribute="trailing" constant="16" id="DME-c4-1bu"/>
+                                    <constraint firstItem="F4k-iQ-Q4e" firstAttribute="top" secondItem="QZ0-Yi-dgt" secondAttribute="top" constant="8" id="cNT-j6-f7F"/>
+                                    <constraint firstItem="F4k-iQ-Q4e" firstAttribute="leading" secondItem="2Un-aB-C8K" secondAttribute="trailing" constant="16" id="lJj-oF-gxb"/>
+                                    <constraint firstItem="2Un-aB-C8K" firstAttribute="top" secondItem="QZ0-Yi-dgt" secondAttribute="top" constant="8" id="pRm-2q-ybS"/>
+                                    <constraint firstItem="2Un-aB-C8K" firstAttribute="leading" secondItem="QZ0-Yi-dgt" secondAttribute="leading" priority="999" id="z4v-BW-NTI"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sqj-oX-wzg" userLabel="Username Label">
+                                <rect key="frame" x="0.0" y="51.666666666666664" width="288" height="12.333333333333336"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Nu9-B2-PTn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="G4h-VC-02t"/>
+                    <constraint firstAttribute="trailing" secondItem="Nu9-B2-PTn" secondAttribute="trailing" constant="16" id="NSC-nD-dct"/>
+                    <constraint firstAttribute="bottom" secondItem="Nu9-B2-PTn" secondAttribute="bottom" constant="8" id="e11-x5-62z"/>
+                    <constraint firstItem="Nu9-B2-PTn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="qQD-Nj-g0w"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="commentLabel" destination="F4k-iQ-Q4e" id="zXn-g9-Kcp"/>
+                <outlet property="ratingLabel" destination="2Un-aB-C8K" id="NQt-Gy-91p"/>
+                <outlet property="restaurantLabel" destination="Z30-FA-pAn" id="46N-SX-b5R"/>
+                <outlet property="usernameLabel" destination="Sqj-oX-wzg" id="r5p-cH-P9z"/>
+            </connections>
+            <point key="canvasLocation" x="25.954198473282442" y="19.718309859154932"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

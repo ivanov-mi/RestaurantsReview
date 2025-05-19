@@ -39,7 +39,10 @@ extension AdminCoordinator: AdminViewControllerCoordinator {
     }
     
     func didSelectReviews(from controller: AdminViewController) {
-        print("Reviews tapped")
+        let reviewsVC = AppStoryboard.main.viewController(ofType: ReviewsListingViewController.self)
+        reviewsVC.coordinator = self
+        reviewsVC.persistenceManager = persistenceManager
+        navigationController.pushViewController(reviewsVC, animated: true)
     }
 }
 
@@ -47,5 +50,12 @@ extension AdminCoordinator: AdminViewControllerCoordinator {
 extension AdminCoordinator: UserListingViewControllerCoordinator {
     func didSelectUser(_ user: User, from controller: UserListingViewController) {
         print("User tapped")
+    }
+}
+
+// MARK: - ReviewsListingViewControllerCoordinator
+extension AdminCoordinator: ReviewsListingViewControllerCoordinator {
+    func didSelectReview(_ review: Review, from controller: ReviewsListingViewController) {
+        print("Review tapped")
     }
 }

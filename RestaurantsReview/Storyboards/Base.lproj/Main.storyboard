@@ -123,6 +123,24 @@
             </objects>
             <point key="canvasLocation" x="3079" y="523"/>
         </scene>
+        <!--Reviews Listing View Controller-->
+        <scene sceneID="W90-Ct-r0X">
+            <objects>
+                <tableViewController storyboardIdentifier="ReviewsListingViewController" id="TZs-P0-3TO" customClass="ReviewsListingViewController" customModule="RestaurantsReview" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" id="U9H-h8-6I4">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="TZs-P0-3TO" id="xmR-tU-Zpe"/>
+                            <outlet property="delegate" destination="TZs-P0-3TO" id="Uv0-4h-3JL"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R2l-uZ-deb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3079" y="1223"/>
+        </scene>
         <!--Create Review View Controller-->
         <scene sceneID="BO2-jO-46l">
             <objects>
