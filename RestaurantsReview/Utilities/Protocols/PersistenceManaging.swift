@@ -32,6 +32,7 @@ protocol PersistenceManaging {
 
     // MARK: - Reviews
     func addReview(restaurantId: UUID, userId: UUID, comment: String, rating: Int, dateOfVisit: Date) -> Review?
+    func updateReview(reviewId: UUID, newComment: String, newRating: Int, newDateOfVisit: Date) -> Review? 
     func fetchReviews(for restaurantId: UUID) -> [Review]
     func fetchReview(by id: UUID) -> Review?
     func fetchAllReviews() -> [Review]

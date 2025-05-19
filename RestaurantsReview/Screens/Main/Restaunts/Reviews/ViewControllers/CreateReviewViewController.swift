@@ -23,48 +23,56 @@ class CreateReviewViewController: UIViewController {
 
     // MARK: - IBOutlets
     @IBOutlet weak private var scrollView: UIScrollView!
-    
     @IBOutlet weak private var starRatingLabel: UILabel!
     @IBOutlet weak private var starRatingView: StarRatingView!
-    
     @IBOutlet weak private var addReviewLabel: UILabel!
     @IBOutlet weak private var commentTextView: UITextView!
-    
     @IBOutlet weak private var datePickerLabel: UILabel!
     @IBOutlet weak private var datePicker: UIDatePicker!
 
     // MARK: - Properties
     private(set) var userId: UUID!
     private(set) var restaurantId: UUID!
-    
+    var reviewToEdit: Review?
+
     weak var coordinator: CreateReviewViewControllerCoordinator?
     weak var delegate: CreateReviewViewControllerDelegate?
     var persistenceManager: PersistenceManaging!
 
-    // MARK: - VC Lifecycle
+    var sessionManager: SessionManaging = SessionManager.shared
+    
+    private var isAdmin: Bool {
+        sessionManager.currentUser?.isAdmin ?? false
+    }
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        validateEditPermissionsIfNeeded()
         setupNavigationBar()
         setupUI()
         setupKeyboardHandling()
+        populateIfEditing()
     }
-    
-    // MARK: - Public methods
-    func configure(with userId: UUID, for restraurantId: UUID) {
+
+    // MARK: - Public Methods
+    func configure(with userId: UUID, for restaurantId: UUID, review: Review? = nil) {
         self.userId = userId
-        self.restaurantId = restraurantId
+        self.restaurantId = restaurantId
+        self.reviewToEdit = review
     }
 
     // MARK: - Setup
     private func setupNavigationBar() {
-        title = "Write a Review"
+        title = reviewToEdit == nil ? "Write a Review" : "Edit Review"
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel,
             target: self,
             action: #selector(cancelTapped)
         )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Submit",
+            title: reviewToEdit == nil ? "Submit" : "Save",
             style: .done,
             target: self,
             action: #selector(submitTapped)
@@ -74,15 +82,12 @@ class CreateReviewViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .systemBackground
 
-        configureLabels()
-        configureTextView()
-        configureDatePicker()
-    }
-
-    private func configureLabels() {
         starRatingLabel.text = "Tap to rate"
         addReviewLabel.text = "Add your comment"
         datePickerLabel.text = "Date of Visit"
+
+        configureTextView()
+        configureDatePicker()
     }
 
     private func configureTextView() {
@@ -98,13 +103,20 @@ class CreateReviewViewController: UIViewController {
         datePicker.maximumDate = Date()
     }
 
+    private func populateIfEditing() {
+        guard let review = reviewToEdit else { return }
+        starRatingView.setRating(Double(review.rating))
+        commentTextView.text = review.comment
+        datePicker.date = review.dateOfVisit
+    }
+
     // MARK: - Keyboard Handling
     private func setupKeyboardHandling() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)),
                                                name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)),
                                                name: UIResponder.keyboardWillHideNotification, object: nil)
-        
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
@@ -134,33 +146,79 @@ class CreateReviewViewController: UIViewController {
     @objc private func submitTapped() {
         let comment = commentTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         let rating = Int(starRatingView.rating)
+        let dateOfVisit = datePicker.date
 
-        guard !comment.isEmpty, rating > 0 else {
-            showAlert(title: "Incomplete", message: "Please provide both a rating and a comment.")
+        guard validateInput(comment: comment, rating: rating) else { return }
+
+        if let reviewToEdit = reviewToEdit {
+            updateExistingReview(reviewToEdit, comment: comment, rating: rating, dateOfVisit: dateOfVisit)
+        } else {
+            createNewReview(comment: comment, rating: rating, dateOfVisit: dateOfVisit)
+        }
+    }
+
+    // MARK: - Private Helpers
+    private func validateEditPermissionsIfNeeded() {
+        guard let review = reviewToEdit else { return }
+
+        guard isAdmin || isAuthor(of: review) else {
+            showPermissionAlertAndPop()
             return
         }
-        
+    }
+    
+    private func isAuthor(of review: Review) -> Bool {
+        sessionManager.currentUser?.id == review.userId
+    }
+    
+    private func validateInput(comment: String, rating: Int) -> Bool {
+        if comment.isEmpty || rating <= 0 {
+            showAlert(title: "Incomplete", message: "Please provide both a rating and a comment.")
+            return false
+        }
+        return true
+    }
+
+    private func updateExistingReview(_ original: Review, comment: String, rating: Int, dateOfVisit: Date) {
+        guard let review = persistenceManager.updateReview(
+            reviewId: original.id,
+            newComment: comment,
+            newRating: rating,
+            newDateOfVisit: dateOfVisit
+        ) else {
+            showAlert(title: "Error", message: "Failed to update review.")
+            return
+        }
+
+        delegate?.didSubmitReview()
+        coordinator?.didFinishCreatingReview(self, review: review)
+    }
+
+    private func createNewReview(comment: String, rating: Int, dateOfVisit: Date) {
         guard let review = persistenceManager.addReview(
             restaurantId: restaurantId,
             userId: userId,
             comment: comment,
             rating: rating,
-            dateOfVisit: datePicker.date
+            dateOfVisit: dateOfVisit
         ) else {
-            
-            // TODO: Implement general error
-            
+            showAlert(title: "Error", message: "Failed to create review.")
             return
         }
-        
+
         delegate?.didSubmitReview()
         coordinator?.didFinishCreatingReview(self, review: review)
     }
 
-    private func showAlert(title: String, message: String) {
+    private func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(.init(title: "OK", style: .default))
+        alert.addAction(.init(title: "OK", style: .default, handler: { _ in completion?() }))
         present(alert, animated: true)
     }
-}
 
+    private func showPermissionAlertAndPop() {
+        showAlert(title: "Not Allowed", message: "You don't have permission to edit this review.") {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+}

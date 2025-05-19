@@ -39,11 +39,11 @@ class ReviewsListingViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadReviews()
+        reloadReviews()
     }
 
     // MARK: - Data
-    private func loadReviews() {
+    private func reloadReviews() {
         reviews = persistenceManager.fetchAllReviews()
         restaurants = persistenceManager.fetchAllRestaurants()
         users = persistenceManager.fetchAllUsers()
@@ -160,5 +160,11 @@ class ReviewsListingViewController: UITableViewController {
         persistenceManager.deleteReview(reviewId: review.id)
         reviews.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+}
+
+extension ReviewsListingViewController: CreateReviewViewControllerDelegate {
+    func didSubmitReview() {
+        reloadReviews()
     }
 }

@@ -55,6 +55,44 @@ extension CoreDataManager {
         }
     }
     
+    func updateReview(reviewId: UUID, newComment: String, newRating: Int, newDateOfVisit: Date) -> Review? {
+        let request: NSFetchRequest<ReviewEntity> = ReviewEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", reviewId as CVarArg)
+
+        do {
+            guard let entity = try context.fetch(request).first else {
+                print("Review not found for ID: \(reviewId)")
+                return nil
+            }
+
+            guard (1...5).contains(newRating) else {
+                print("Invalid rating: \(newRating). Must be between 1 and 5.")
+                return nil
+            }
+
+            entity.comment = newComment
+            entity.rating = Int64(newRating)
+            entity.dateOfVisit = newDateOfVisit
+
+            saveContext()
+
+            return Review(
+                id: entity.id!,
+                rating: Int(entity.rating),
+                comment: entity.comment ?? "",
+                dateOfVisit: entity.dateOfVisit ?? newDateOfVisit,
+                dateCreated: entity.dateCreated ?? Date(),
+                userId: entity.user?.id ?? UUID(),
+                restaurantId: entity.restaurant?.id ?? UUID()
+            )
+
+        } catch {
+            print("Failed to update review: \(error)")
+            return nil
+        }
+    }
+
+    
     func fetchAllReviews() -> [Review] {
         let request: NSFetchRequest<ReviewEntity> = ReviewEntity.fetchRequest()
 
