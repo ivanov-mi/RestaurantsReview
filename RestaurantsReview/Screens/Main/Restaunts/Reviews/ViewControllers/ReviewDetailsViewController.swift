@@ -161,8 +161,11 @@ class ReviewDetailsViewController: UIViewController {
     }
     
     @objc private func cancelTapped() {
-        mode = .viewing
-        populateWithReviewToEdit()
+        if reviewToEdit == nil {
+            coordinator?.didCancelReviewCreation(self)
+        } else {
+            coordinator?.didCancelReviewCreation(self)
+        }
     }
     
     @objc private func submitTapped() {
