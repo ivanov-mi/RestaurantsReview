@@ -21,6 +21,7 @@ protocol PersistenceManaging {
 
     // MARK: - Restaurants
     func fetchAllRestaurants() -> [Restaurant]
+    func fetchRestaurant(by restaurantId: UUID) -> Restaurant?
     func createRestaurant(name: String, cuisine: String, imagePath: String?) -> Restaurant?
     func updateRestaurant(_ restaurant: Restaurant) 
     func averageRating(for restaurantId: UUID) -> Double?

@@ -28,6 +28,32 @@ extension CoreDataManager {
         return Restaurant(id: id, name: name, cuisine: cuisine, imagePath: entity.imagePath)
     }
     
+    func fetchRestaurant(by id: UUID) -> Restaurant? {
+        let request: NSFetchRequest<RestaurantEntity> = RestaurantEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        request.fetchLimit = 1
+
+        do {
+            if let entity = try context.fetch(request).first,
+               let id = entity.id,
+               let name = entity.name,
+               let cuisine = entity.cuisine {
+                return Restaurant(
+                    id: id,
+                    name: name,
+                    cuisine: cuisine,
+                    imagePath: entity.imagePath
+                )
+            } else {
+                print("Restaurant not found for ID: \(id)")
+            }
+        } catch {
+            print("Failed to fetch restaurant: \(error)")
+        }
+
+        return nil
+    }
+    
     func fetchAllRestaurants() -> [Restaurant] {
         let request: NSFetchRequest<RestaurantEntity> = RestaurantEntity.fetchRequest()
 

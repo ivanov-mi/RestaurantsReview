@@ -15,6 +15,7 @@ protocol RestaurantDetailsViewControllerDelegate: AnyObject {
 // MARK: - RestaurantDetailsViewControllerCoordinator
 protocol RestaurantDetailsViewControllerCoordinator: AnyObject {
     func didTapAddReview(_ controller: RestaurantDetailsViewController, for restaurant: Restaurant)
+    func didTapEditRestaurant(_ controller: RestaurantDetailsViewController, restaurant: Restaurant)
 }
 
 // MARK: - RestaurantDetailsViewController
@@ -42,6 +43,11 @@ class RestaurantDetailsViewController: UIViewController {
     
     weak var coordinator: RestaurantDetailsViewControllerCoordinator?
     weak var delegate: RestaurantDetailsViewControllerDelegate?
+    var sessionManager: SessionManaging = SessionManager.shared
+    
+    private var isAdmin: Bool {
+        sessionManager.currentUser?.isAdmin ?? false
+    }
     
     // MARK: - Public methods
     func configure(wtih restaurant: Restaurant) {
@@ -51,18 +57,29 @@ class RestaurantDetailsViewController: UIViewController {
     // MARK: - VC Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupEditButtonIfNeeded()
         populateData()
     }
     
     // MARK: - Actions
-    
     @IBAction private func rateAndReviewButtonTapped(_ sender: Any) {
         guard let restaurant = restaurant else { return }
         
         coordinator?.didTapAddReview(self, for: restaurant)
     }
+    
+    @objc private func editTapped() {
+        coordinator?.didTapEditRestaurant(self, restaurant: restaurant)
+    }
 
     // MARK: - Populate Data
+    private func updateData() {
+        guard let restaurant = persistenceManager.fetchRestaurant(by: restaurant.id) else { return }
+        self.restaurant = restaurant
+        
+        populateData()
+    }
+    
     private func populateData() {
         configureImage(from: restaurant.imagePath)
         configureText(name: restaurant.name, cuisine: restaurant.cuisine)
@@ -72,6 +89,24 @@ class RestaurantDetailsViewController: UIViewController {
         
         let averageRating = persistenceManager.averageRating(for: restaurant.id)
         configureRating(averageRating, reviewCount: reviews.count)
+    }
+    
+    private func setupEditButtonIfNeeded() {
+        guard isAdmin else {
+            navigationItem.rightBarButtonItem = nil
+            return
+        }
+
+        setupEditButton()
+    }
+    
+    func setupEditButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Edit",
+            style: .plain,
+            target: self,
+            action: #selector(editTapped)
+        )
     }
 
     // MARK: - Image
@@ -157,7 +192,15 @@ class RestaurantDetailsViewController: UIViewController {
 // MARK: - CreateReviewViewControllerDelegate
 extension RestaurantDetailsViewController: CreateReviewViewControllerDelegate {
     func didSubmitReview() {
-        populateData()
+        updateData()
+        delegate?.didUpdateRestaurant()
+    }
+}
+
+// MARK: - EditRestaurantViewControllerDelegate
+extension RestaurantDetailsViewController: EditRestaurantViewControllerDelegate {
+    func editedRestaurant(_ controller: EditRestaurantViewController) {
+        updateData()
         delegate?.didUpdateRestaurant()
     }
 }

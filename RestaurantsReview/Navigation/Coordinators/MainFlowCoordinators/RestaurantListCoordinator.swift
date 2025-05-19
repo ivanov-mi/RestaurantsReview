@@ -35,19 +35,46 @@ class RestaurantListCoordinator: Coordinator {
         navigationController.pushViewController(listVC, animated: true)
     }
     
-    func showEditRestaurant(from controller: UIViewController, mode: EditRestaurantMode) {
+    func presentCreateReviewScreen(from controller: RestaurantDetailsViewController, for restaurant: Restaurant) {
+        guard let user = SessionManager.shared.currentUser else {
+            
+            // TODO: Implement session error flow
+            
+            return
+        }
+
+        let createReviewVC = AppStoryboard.main.viewController(ofType: CreateReviewViewController.self)
+        createReviewVC.configure(with: user.id, for: restaurant.id)
+        createReviewVC.coordinator = self
+        createReviewVC.persistenceManager = persistenceManager
+        createReviewVC.delegate = controller
+
+        let nav = UINavigationController(rootViewController: createReviewVC)
+        controller.present(nav, animated: true)
+    }
+    
+    func presentEditRestaurant(from controller: RestaurantDetailsViewController, restaurant: Restaurant) {
         let editVC = AppStoryboard.main.viewController(ofType: EditRestaurantViewController.self)
-        editVC.mode = mode
+        editVC.mode = .edit(existing: restaurant)
         editVC.persistenceManager = persistenceManager
-        editVC.delegate = self
+        editVC.delegate = controller
+        editVC.coordinator = self
+        
         let navigationController = UINavigationController(rootViewController: editVC)
         controller.present(navigationController, animated: true)
     }
-}
-
-// MARK: - RestaurantListViewControllerCoordinator
-extension RestaurantListCoordinator: RestaurantListViewControllerCoordinator {
-    func didSelectRestaurant(_ controller: RestaurantListViewController, restaurant: Restaurant) {
+    
+    func presentCreateRestaurant(from controller: RestaurantListViewController) {
+        let editVC = AppStoryboard.main.viewController(ofType: EditRestaurantViewController.self)
+        editVC.persistenceManager = persistenceManager
+        editVC.delegate = controller
+        editVC.coordinator = self
+        
+        let navigationController = UINavigationController(rootViewController: editVC)
+        controller.present(navigationController, animated: true)
+    }
+    
+    func pushRestaurantDetails(_ restaurant: Restaurant, _ controller: RestaurantListViewController) {
         let restaurantDetailsVC = AppStoryboard.main.viewController(ofType: RestaurantDetailsViewController.self)
         restaurantDetailsVC.configure(wtih: restaurant)
         restaurantDetailsVC.coordinator = self
@@ -55,30 +82,27 @@ extension RestaurantListCoordinator: RestaurantListViewControllerCoordinator {
         restaurantDetailsVC.delegate = controller
         navigationController.pushViewController(restaurantDetailsVC, animated: true)
     }
+}
+
+// MARK: - RestaurantListViewControllerCoordinator
+extension RestaurantListCoordinator: RestaurantListViewControllerCoordinator {
+    func didSelectRestaurant(_ controller: RestaurantListViewController, restaurant: Restaurant) {
+        pushRestaurantDetails(restaurant, controller)
+    }
     
     func didTapAddRestaurant(_ controller: RestaurantListViewController) {
-        showEditRestaurant(from: controller, mode: .create)
+        presentCreateRestaurant(from: controller)
     }
 }
 
 // MARK: - RestaurantDetailsViewControllerCoordinator
 extension RestaurantListCoordinator: RestaurantDetailsViewControllerCoordinator {
     func didTapAddReview(_ controller: RestaurantDetailsViewController, for restaurant: Restaurant) {
-        let createReviewVC = AppStoryboard.main.viewController(ofType: CreateReviewViewController.self)
-        guard let user = SessionManager.shared.currentUser else {
-            
-            // TODO: Implement session error flow
-            
-            return
-        }
-        
-        createReviewVC.configure(with: user.id, for: controller.restaurant.id)
-        createReviewVC.coordinator = self
-        createReviewVC.persistenceManager = persistenceManager
-        createReviewVC.delegate = controller
-        
-        let navigationController = UINavigationController(rootViewController: createReviewVC)
-        controller.present(navigationController, animated: true)
+        presentCreateReviewScreen(from: controller, for: restaurant)
+    }
+    
+    func didTapEditRestaurant(_ controller: RestaurantDetailsViewController, restaurant: Restaurant) {
+        presentEditRestaurant(from: controller, restaurant: restaurant)
     }
 }
 
@@ -93,13 +117,9 @@ extension RestaurantListCoordinator: CreateReviewViewControllerCoordinator {
     }
 }
 
-// MARK: - EditRestaurantViewControllerDelegate
-extension RestaurantListCoordinator: EditRestaurantViewControllerDelegate {
-    func didSaveRestaurant(_ restaurant: Restaurant, from controller: EditRestaurantViewController) {
-        controller.dismiss(animated: true) {
-            if let listVC = self.navigationController.viewControllers.first(where: { $0 is RestaurantListViewController }) as? RestaurantListViewController {
-                listVC.reloadRestaurantList()
-            }
-        }
+// MARK: - EditRestaurantViewControllerCoordinator
+extension RestaurantListCoordinator: EditRestaurantViewControllerCoordinator {
+    func didFinishEditingRestaurant(_ controller: EditRestaurantViewController) {
+        controller.dismiss(animated: true)
     }
 }

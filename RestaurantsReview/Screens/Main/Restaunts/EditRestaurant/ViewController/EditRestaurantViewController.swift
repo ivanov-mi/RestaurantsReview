@@ -20,9 +20,14 @@ enum EditRestaurantMode {
     }
 }
 
+// MARK: - EditRestaurantViewControllerCoordinator
+protocol EditRestaurantViewControllerCoordinator: AnyObject {
+    func didFinishEditingRestaurant(_ controller: EditRestaurantViewController)
+}
+
 // MARK: - EditRestaurantViewControllerDelegate
 protocol EditRestaurantViewControllerDelegate: AnyObject {
-    func didSaveRestaurant(_ restaurant: Restaurant, from controller: EditRestaurantViewController)
+    func editedRestaurant(_ controller: EditRestaurantViewController)
 }
 
 // MARK: - EditRestaurantViewController
@@ -36,6 +41,7 @@ class EditRestaurantViewController: UIViewController {
     // MARK: - Properties
     var persistenceManager: PersistenceManaging!
     weak var delegate: EditRestaurantViewControllerDelegate?
+    weak var coordinator: EditRestaurantViewControllerCoordinator?
     var mode: EditRestaurantMode = .create
 
     // MARK: - VC Lifecycle
@@ -58,18 +64,21 @@ class EditRestaurantViewController: UIViewController {
     }
 
     private func setupForm() {
-        restaurantNameField?.text = ""
-        restaurantNameField?.placeholder = "Name"
-        
-        cuisineField?.text = ""
-        cuisineField?.placeholder = "Cuisine"
-        
-        imagePathField?.text = ""
-        imagePathField?.placeholder = "Image name (optional)"
-        
-        for field in [restaurantNameField, cuisineField, imagePathField] {
-            field?.borderStyle = .roundedRect
+        configureField(restaurantNameField, placeholder: "Name")
+        configureField(cuisineField, placeholder: "Cuisine")
+        configureField(imagePathField, placeholder: "Image name (optional)")
+
+        if case let .edit(existing) = mode {
+            restaurantNameField?.text = existing.name
+            cuisineField?.text = existing.cuisine
+            imagePathField?.text = existing.imagePath
         }
+    }
+
+    private func configureField(_ field: UITextField?, placeholder: String) {
+        field?.placeholder = placeholder
+        field?.borderStyle = .roundedRect
+        field?.text = ""
     }
 
     private func populateFields() {
@@ -89,12 +98,13 @@ class EditRestaurantViewController: UIViewController {
             return
         }
         
-        guard let restaurant = createOrUpdateRestaurant(name: name, cuisine: cuisine) else {
+        guard let _ = createOrUpdateRestaurant(name: name, cuisine: cuisine) else {
             showAlert(message: "Failed to create restaurant.")
             return
         }
 
-        delegate?.didSaveRestaurant(restaurant, from: self)
+        delegate?.editedRestaurant(self)
+        coordinator?.didFinishEditingRestaurant(self)
     }
     
     // MARK: - Private helpers

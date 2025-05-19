@@ -184,6 +184,13 @@ class RestaurantListViewController: UITableViewController {
 // MARK: - RestaurantDetailsViewControllerDelegate
 extension RestaurantListViewController: RestaurantDetailsViewControllerDelegate {
     func didUpdateRestaurant() {
-        reloadRestaurantList() 
+        reloadRestaurantList()
+    }
+}
+
+// MARK: - EditRestaurantViewControllerDelegate
+extension RestaurantListViewController: EditRestaurantViewControllerDelegate {
+    func editedRestaurant(_ controller: EditRestaurantViewController) {
+        reloadRestaurantList()
     }
 }
