@@ -7,35 +7,52 @@
 
 import UIKit
 
+// MARK: - ProfileViewControllerDelegate
+protocol ProfileViewControllerDelegate: AnyObject {
+    func profileViewController(_ controller: ProfileViewController, didUpdateUser updatedUser: User)
+}
+
 // MARK: - ProfileViewControllerCoordinator
 protocol ProfileViewControllerCoordinator: AnyObject {
     func didRequestLogout(from controller: ProfileViewController)
     func didChangeAdminStatus(from controller: ProfileViewController)
 }
 
-
 // MARK: - ProfileViewController
 class ProfileViewController: UIViewController {
 
     // MARK: - Properties
     weak var coordinator: ProfileViewControllerCoordinator?
+    weak var delegate: ProfileViewControllerDelegate?
+    
     var persistenceManager: PersistenceManaging!
+    var sessionManager: SessionManaging = SessionManager.shared
     var user: User!
-
+    
+    private var showsLogout: Bool = false
+    
+    // MARK: - IBOutlets
     @IBOutlet weak private var tableView: UITableView!
     @IBOutlet weak private var deleteProfileButton: UIButton!
     @IBOutlet weak private var deleteBackgroundView: UIView!
 
-    // MARK: - VC Lifecycle
+    // MARK: - VCLifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Account"
-
+        
+        configureViewPermissions()
         setupTableView()
         deleteBackgroundView.backgroundColor = tableView.backgroundColor
+        deleteBackgroundView.isHidden = false
     }
 
     // MARK: - Setup
+    private func configureViewPermissions() {
+        guard let currentUser = sessionManager.currentUser else { return }
+        showsLogout = currentUser.id == user.id
+    }
+    
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
@@ -50,7 +67,6 @@ class ProfileViewController: UIViewController {
         presentDeleteConfirmationAlert()
     }
     
-    // MARK: - Private functions
     private func logoutTapped() {
         coordinator?.didRequestLogout(from: self)
     }
@@ -58,7 +74,7 @@ class ProfileViewController: UIViewController {
     private func presentDeleteConfirmationAlert() {
         let alert = UIAlertController(
             title: "Delete Account",
-            message: "Are you sure you want to delete your account? This action cannot be undone.",
+            message: "Are you sure you want to delete this account? This action cannot be undone.",
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -70,6 +86,10 @@ class ProfileViewController: UIViewController {
         })
         present(alert, animated: true)
     }
+    
+    private func rows(for section: ProfileSection) -> [ProfileRow] {
+        section.rows(showsLogout: showsLogout)
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -80,13 +100,14 @@ extension ProfileViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let section = ProfileSection(rawValue: section) else { return 0 }
-        return section.rows.count
+        return rows(for: section).count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let section = ProfileSection(rawValue: indexPath.section) else { return UITableViewCell() }
-        let row = section.rows[indexPath.row]
-
+        let rows = rows(for: section)
+        let row = rows[indexPath.row]
+        
         switch row {
         case .username, .email:
             let cell = tableView.dequeueReusableCell(withIdentifier: row.cellIdentifier, for: indexPath) as! ProfileDetailsTableViewCell
@@ -115,8 +136,9 @@ extension ProfileViewController: UITableViewDataSource {
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let section = ProfileSection(rawValue: indexPath.section) else { return }
-        let row = section.rows[indexPath.row]
-
+        let rows = rows(for: section)
+        let row = rows[indexPath.row]
+        
         guard row.isTappable else { return }
 
         switch row {
@@ -139,6 +161,7 @@ extension ProfileViewController: ProfileSwitchTableViewCellDelegate {
         
         self.user = updatedUser
         tableView.reloadData()
+        delegate?.profileViewController(self, didUpdateUser: updatedUser)
         coordinator?.didChangeAdminStatus(from: self)
     }
 }
@@ -148,12 +171,15 @@ enum ProfileSection: Int, CaseIterable {
     case account
     case admin
     case actions
-
-    var rows: [ProfileRow] {
+    
+    func rows(showsLogout: Bool) -> [ProfileRow] {
         switch self {
-        case .account: return [.username, .email]
-        case .admin:   return [.adminToggle]
-        case .actions: return [.logout]
+        case .account:
+            return [.username, .email]
+        case .admin:
+            return [.adminToggle]
+        case .actions:
+            return showsLogout ? [.logout] : []
         }
     }
 }
@@ -167,17 +193,23 @@ enum ProfileRow {
 
     var isTappable: Bool {
         switch self {
-        case .logout: return true
-        default: return false
+        case .logout:
+            return true
+        default:
+            return false
         }
     }
 
     var title: String {
         switch self {
-        case .username: return "Username"
-        case .email: return "Email"
-        case .adminToggle: return "Admin Role"
-        case .logout: return "Logout"
+        case .username:
+            return "Username"
+        case .email:
+            return "Email"
+        case .adminToggle:
+            return "Admin Role"
+        case .logout:
+            return "Logout"
         }
     }
 

@@ -178,3 +178,8 @@ class UserListingViewController: UITableViewController {
     }
 }
 
+extension UserListingViewController: ProfileViewControllerDelegate {
+    func profileViewController(_ controller: ProfileViewController, didUpdateUser updatedUser: User) {
+        loadUsers()
+    }
+}

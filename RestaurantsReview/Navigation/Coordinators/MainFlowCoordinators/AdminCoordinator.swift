@@ -66,8 +66,13 @@ extension AdminCoordinator: UserListingViewControllerCoordinator {
         }
     }
     
-func didSelectUser(_ controller: UserListingViewController, user: User) {
-        print("User tapped")
+    func didSelectUser(_ controller: UserListingViewController, user: User) {
+        let profileVC = AppStoryboard.main.viewController(ofType: ProfileViewController.self)
+        profileVC.persistenceManager = persistenceManager
+        profileVC.user = user
+        profileVC.delegate = controller
+ 
+        navigationController.pushViewController(profileVC, animated: true)
     }
 }
 
