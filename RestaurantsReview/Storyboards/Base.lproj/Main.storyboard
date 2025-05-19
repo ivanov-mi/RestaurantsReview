@@ -255,24 +255,33 @@
                                                     </datePicker>
                                                 </subviews>
                                             </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created by:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uVC-wd-7Vw" userLabel="Creaeted By Label">
+                                                <rect key="frame" x="270.33333333333331" y="495" width="90.666666666666686" height="20.333333333333371"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="weh-8H-txZ" secondAttribute="bottom" priority="100" constant="200" id="3WS-Kd-8Fj"/>
                                             <constraint firstItem="UrQ-cp-XHv" firstAttribute="leading" secondItem="7HL-Cg-yAE" secondAttribute="leading" constant="16" id="4AS-bH-VX4"/>
                                             <constraint firstItem="SuO-YL-g2K" firstAttribute="leading" secondItem="7HL-Cg-yAE" secondAttribute="leading" constant="40" id="D9L-Ck-Nl3"/>
                                             <constraint firstAttribute="trailing" secondItem="mDW-Uw-nK0" secondAttribute="trailing" constant="16" id="Nt1-wa-hA0"/>
                                             <constraint firstItem="UrQ-cp-XHv" firstAttribute="top" secondItem="ki0-90-qg1" secondAttribute="bottom" constant="24" id="Oby-dX-rJV"/>
                                             <constraint firstAttribute="trailing" secondItem="weh-8H-txZ" secondAttribute="trailing" constant="16" id="P43-Pk-RaM"/>
+                                            <constraint firstItem="uVC-wd-7Vw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7HL-Cg-yAE" secondAttribute="leading" constant="16" id="QTZ-0X-HdY"/>
                                             <constraint firstAttribute="height" priority="100" constant="800" id="QiS-nG-xZa"/>
                                             <constraint firstItem="weh-8H-txZ" firstAttribute="top" secondItem="SuO-YL-g2K" secondAttribute="bottom" constant="32" id="Qyr-Nb-fqQ"/>
                                             <constraint firstAttribute="trailing" secondItem="SuO-YL-g2K" secondAttribute="trailing" constant="40" id="Sw2-yF-E94"/>
                                             <constraint firstItem="mDW-Uw-nK0" firstAttribute="leading" secondItem="7HL-Cg-yAE" secondAttribute="leading" constant="16" id="Z1n-QB-3dW"/>
+                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="uVC-wd-7Vw" secondAttribute="bottom" constant="150" id="aCN-fK-ffH"/>
                                             <constraint firstItem="SuO-YL-g2K" firstAttribute="top" secondItem="UrQ-cp-XHv" secondAttribute="bottom" constant="16" id="bjB-FU-cEg"/>
                                             <constraint firstItem="ki0-90-qg1" firstAttribute="top" secondItem="mDW-Uw-nK0" secondAttribute="bottom" constant="24" id="cM7-AG-ATh"/>
                                             <constraint firstAttribute="trailing" secondItem="UrQ-cp-XHv" secondAttribute="trailing" constant="16" id="dvR-Hs-J9t"/>
+                                            <constraint firstAttribute="trailing" secondItem="uVC-wd-7Vw" secondAttribute="trailing" constant="32" id="eeg-uJ-JUj"/>
                                             <constraint firstItem="ki0-90-qg1" firstAttribute="leading" secondItem="7HL-Cg-yAE" secondAttribute="leading" constant="32" id="kB1-3B-LSa"/>
                                             <constraint firstItem="mDW-Uw-nK0" firstAttribute="top" secondItem="7HL-Cg-yAE" secondAttribute="top" id="lYv-V1-wvq"/>
+                                            <constraint firstItem="uVC-wd-7Vw" firstAttribute="top" secondItem="weh-8H-txZ" secondAttribute="bottom" constant="16" id="nuJ-Gw-VGm"/>
                                             <constraint firstItem="weh-8H-txZ" firstAttribute="leading" secondItem="7HL-Cg-yAE" secondAttribute="leading" constant="16" id="ozw-dU-uiI"/>
                                             <constraint firstAttribute="trailing" secondItem="ki0-90-qg1" secondAttribute="trailing" constant="32" id="xGP-oU-f27"/>
                                         </constraints>
@@ -299,7 +308,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="addReviewLabel" destination="UrQ-cp-XHv" id="VS8-rO-hB9"/>
+                        <outlet property="authorLabel" destination="uVC-wd-7Vw" id="RZS-mh-wVE"/>
+                        <outlet property="commentLabel" destination="UrQ-cp-XHv" id="VS8-rO-hB9"/>
                         <outlet property="commentTextView" destination="SuO-YL-g2K" id="xc7-Ld-ehx"/>
                         <outlet property="datePicker" destination="e9a-UC-U1z" id="44n-xZ-bVb"/>
                         <outlet property="datePickerLabel" destination="fZg-bn-shl" id="d29-WJ-61e"/>

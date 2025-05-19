@@ -7,6 +7,12 @@
 
 import UIKit
 
+// MARK: - ReviewScreenMode
+enum ReviewScreenMode {
+    case viewing
+    case editing
+}
+
 // MARK: - CreateReviewViewControllerDelegate
 protocol CreateReviewViewControllerDelegate: AnyObject {
     func didSubmitReview()
@@ -20,167 +26,171 @@ protocol CreateReviewViewControllerCoordinator: AnyObject {
 
 // MARK: - CreateReviewViewController
 class CreateReviewViewController: UIViewController {
-
+    
     // MARK: - IBOutlets
-    @IBOutlet weak private var scrollView: UIScrollView!
-    @IBOutlet weak private var starRatingLabel: UILabel!
-    @IBOutlet weak private var starRatingView: StarRatingView!
-    @IBOutlet weak private var addReviewLabel: UILabel!
-    @IBOutlet weak private var commentTextView: UITextView!
-    @IBOutlet weak private var datePickerLabel: UILabel!
-    @IBOutlet weak private var datePicker: UIDatePicker!
+    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var starRatingLabel: UILabel!
+    @IBOutlet private weak var starRatingView: StarRatingView!
+    @IBOutlet private weak var commentLabel: UILabel!
+    @IBOutlet private weak var commentTextView: UITextView!
+    @IBOutlet private weak var datePickerLabel: UILabel!
+    @IBOutlet private weak var datePicker: UIDatePicker!
+    @IBOutlet private weak var authorLabel: UILabel!
+    
 
     // MARK: - Properties
     private(set) var userId: UUID!
     private(set) var restaurantId: UUID!
-    var reviewToEdit: Review?
-
+    private(set) var reviewToEdit: Review?
+    
+    var persistenceManager: PersistenceManaging!
     weak var coordinator: CreateReviewViewControllerCoordinator?
     weak var delegate: CreateReviewViewControllerDelegate?
-    var persistenceManager: PersistenceManaging!
-
+    
     var sessionManager: SessionManaging = SessionManager.shared
     
-    private var isAdmin: Bool {
-        sessionManager.currentUser?.isAdmin ?? false
+    private var authorName: String?
+    private var mode: ReviewScreenMode = .viewing {
+        didSet {
+            updateNavigationBar()
+        }
     }
     
-    // MARK: - Lifecycle
+    private var isEditable: Bool {
+        guard let currentUser = sessionManager.currentUser,
+              let review = reviewToEdit else {
+            return false
+        }
+        
+        return currentUser.isAdmin || currentUser.id == review.userId
+    }
+    
+    // MARK: - VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        validateEditPermissionsIfNeeded()
-        setupNavigationBar()
         setupUI()
         setupKeyboardHandling()
-        populateIfEditing()
+        populateWithReviewToEdit()
     }
-
+    
     // MARK: - Public Methods
     func configure(with userId: UUID, for restaurantId: UUID, review: Review? = nil) {
         self.userId = userId
         self.restaurantId = restaurantId
         self.reviewToEdit = review
     }
-
-    // MARK: - Setup
-    private func setupNavigationBar() {
-        title = reviewToEdit == nil ? "Write a Review" : "Edit Review"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel,
-            target: self,
-            action: #selector(cancelTapped)
-        )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: reviewToEdit == nil ? "Submit" : "Save",
-            style: .done,
-            target: self,
-            action: #selector(submitTapped)
-        )
-    }
-
+    
+    // MARK: - UI Setup
     private func setupUI() {
-        view.backgroundColor = .systemBackground
-
-        starRatingLabel.text = "Tap to rate"
-        addReviewLabel.text = "Add your comment"
-        datePickerLabel.text = "Date of Visit"
-
-        configureTextView()
-        configureDatePicker()
+        title = reviewToEdit == nil ? "Add Review" : "Review"
+        commentLabel.text = "Comment"
+        
+        if let review = reviewToEdit {
+            let author = fetchAuthorName(for: review.userId)
+            authorLabel.text = "Author: \(author)"
+            authorLabel.isHidden = false
+        } else {
+            authorLabel.isHidden = true
+        }
+        
+        if reviewToEdit == nil {
+            mode = .editing
+        } else {
+            mode = .viewing
+        }
+        
+        let isEditing = (mode == .editing)
+        enableFields(isEditing)
+        updateNavigationBar()
     }
-
-    private func configureTextView() {
-        commentTextView.layer.cornerRadius = 10
-        commentTextView.layer.borderWidth = 0.5
-        commentTextView.layer.borderColor = UIColor.systemGray4.cgColor
-        commentTextView.font = .systemFont(ofSize: 16)
-        commentTextView.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+    
+    private func enableFields(_ enabled: Bool) {
+        starRatingView.isUserInteractionEnabled = enabled
+        commentTextView.isEditable = enabled
+        datePicker.isEnabled = enabled
     }
+    
+    private func updateNavigationBar() {
+        updateLeftBarButton()
+        updateRightBarButton()
 
-    private func configureDatePicker() {
-        datePicker.datePickerMode = .date
-        datePicker.maximumDate = Date()
+        let isEditing = (mode == .editing)
+        enableFields(isEditing)
     }
-
-    private func populateIfEditing() {
-        guard let review = reviewToEdit else { return }
-        starRatingView.setRating(Double(review.rating))
-        commentTextView.text = review.comment
-        datePicker.date = review.dateOfVisit
+    
+    private func updateLeftBarButton() {
+        switch mode {
+        case .editing:
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .cancel,
+                target: self,
+                action: #selector(cancelTapped)
+            )
+        case .viewing:
+            navigationItem.leftBarButtonItem = nil
+        }
     }
-
-    // MARK: - Keyboard Handling
-    private func setupKeyboardHandling() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)),
-                                               name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)),
-                                               name: UIResponder.keyboardWillHideNotification, object: nil)
-
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tapGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapGesture)
+    
+    private func updateRightBarButton() {
+        switch mode {
+        case .editing:
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .done,
+                target: self,
+                action: #selector(submitTapped)
+            )
+        case .viewing:
+            if reviewToEdit != nil && isEditable {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(
+                    title: "Edit",
+                    style: .plain,
+                    target: self,
+                    action: #selector(editTapped)
+                )
+            } else {
+                navigationItem.rightBarButtonItem = nil
+            }
+        }
     }
-
-    @objc private func keyboardWillShow(_ notification: Notification) {
-        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-
-        scrollView.contentInset.bottom = keyboardFrame.height
-        scrollView.verticalScrollIndicatorInsets.bottom = keyboardFrame.height
-    }
-
-    @objc private func keyboardWillHide(_ notification: Notification) {
-        scrollView.contentInset.bottom = 0
-        scrollView.verticalScrollIndicatorInsets.bottom = 0
-    }
-
-    @objc private func dismissKeyboard() {
-        view.endEditing(true)
-    }
-
+    
     // MARK: - Actions
-    @objc private func cancelTapped() {
-        coordinator?.didCancelReviewCreation(self)
+    @objc private func editTapped() {
+        mode = .editing
     }
-
+    
+    @objc private func cancelTapped() {
+        mode = .viewing
+        populateWithReviewToEdit()
+    }
+    
     @objc private func submitTapped() {
         let comment = commentTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         let rating = Int(starRatingView.rating)
         let dateOfVisit = datePicker.date
-
-        guard validateInput(comment: comment, rating: rating) else { return }
-
+        
+        guard !comment.isEmpty, rating > 0 else {
+            showAlert(title: "Incomplete", message: "Please provide both a rating and a comment.")
+            return
+        }
+        
         if let reviewToEdit = reviewToEdit {
             updateExistingReview(reviewToEdit, comment: comment, rating: rating, dateOfVisit: dateOfVisit)
         } else {
             createNewReview(comment: comment, rating: rating, dateOfVisit: dateOfVisit)
         }
     }
-
+    
     // MARK: - Private Helpers
-    private func validateEditPermissionsIfNeeded() {
-        guard let review = reviewToEdit else { return }
-
-        guard isAdmin || isAuthor(of: review) else {
-            showPermissionAlertAndPop()
-            return
-        }
+    private func fetchAuthorName(for userId: UUID) -> String {
+        return persistenceManager
+            .fetchAllUsers()
+            .first(where: { $0.id == userId })?
+            .username ?? "Unknown"
     }
     
-    private func isAuthor(of review: Review) -> Bool {
-        sessionManager.currentUser?.id == review.userId
-    }
-    
-    private func validateInput(comment: String, rating: Int) -> Bool {
-        if comment.isEmpty || rating <= 0 {
-            showAlert(title: "Incomplete", message: "Please provide both a rating and a comment.")
-            return false
-        }
-        return true
-    }
 
     private func updateExistingReview(_ original: Review, comment: String, rating: Int, dateOfVisit: Date) {
-        guard let review = persistenceManager.updateReview(
+        guard let updated = persistenceManager.updateReview(
             reviewId: original.id,
             newComment: comment,
             newRating: rating,
@@ -189,11 +199,11 @@ class CreateReviewViewController: UIViewController {
             showAlert(title: "Error", message: "Failed to update review.")
             return
         }
-
+        
         delegate?.didSubmitReview()
-        coordinator?.didFinishCreatingReview(self, review: review)
+        coordinator?.didFinishCreatingReview(self, review: updated)
     }
-
+    
     private func createNewReview(comment: String, rating: Int, dateOfVisit: Date) {
         guard let review = persistenceManager.addReview(
             restaurantId: restaurantId,
@@ -205,20 +215,33 @@ class CreateReviewViewController: UIViewController {
             showAlert(title: "Error", message: "Failed to create review.")
             return
         }
-
+        
         delegate?.didSubmitReview()
         coordinator?.didFinishCreatingReview(self, review: review)
     }
-
-    private func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
+    
+    private func populateWithReviewToEdit() {
+        guard let review = reviewToEdit else { return }
+        starRatingView.setRating(Double(review.rating))
+        commentTextView.text = review.comment
+        datePicker.date = review.dateOfVisit
+    }
+    
+    // MARK: - Keyboard
+    private func setupKeyboardHandling() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    // MARK: - Alerts
+    private func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(.init(title: "OK", style: .default, handler: { _ in completion?() }))
+        alert.addAction(.init(title: "OK", style: .default))
         present(alert, animated: true)
     }
-
-    private func showPermissionAlertAndPop() {
-        showAlert(title: "Not Allowed", message: "You don't have permission to edit this review.") {
-            self.navigationController?.popViewController(animated: true)
-        }
-    }
 }
+
