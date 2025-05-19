@@ -49,8 +49,8 @@ class RestaurantDetailsViewController: UIViewController {
     }
     
     // MARK: - VC Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         populateData()
     }
     
