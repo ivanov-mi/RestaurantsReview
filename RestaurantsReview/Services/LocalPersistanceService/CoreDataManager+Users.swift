@@ -152,6 +152,30 @@ extension CoreDataManager {
         }
     }
     
+    func deleteUsers(userIds: [UUID]) {
+        let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id IN %@", userIds)
+
+        do {
+            let usersToDelete = try context.fetch(request)
+
+            for user in usersToDelete {
+                context.delete(user)
+            }
+
+            saveContext()
+            
+            let foundIds = usersToDelete.map { $0.id }
+            let notFoundIds = userIds.filter { id in !foundIds.contains(id) }
+            if !notFoundIds.isEmpty {
+                print("Users not found for IDs: \(notFoundIds)")
+            }
+
+        } catch {
+            print("Failed to delete users: \(error)")
+        }
+    }
+    
     func deleteAllUsers() {
         deleteAllEntities(named: "UserEntity")
     }

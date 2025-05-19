@@ -16,6 +16,7 @@ protocol PersistenceManaging {
     func fetchUser(by id: UUID) -> User?
     func changeAdminStatus(for userId: UUID, to isAdmin: Bool) -> User?
     func deleteAllUsers()
+    func deleteUsers(userIds: [UUID])
     func deleteUser(userId: UUID)
 
     // MARK: - Restaurants

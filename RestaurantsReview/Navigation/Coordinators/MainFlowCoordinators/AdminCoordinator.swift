@@ -7,11 +7,19 @@
 
 import UIKit
 
+// MARK: - AdminCoordinatorDelegate
+protocol AdminCoordinatorDelegate: AnyObject {
+    func didRequestLogout(from coordinator: AdminCoordinator)
+}
+
+// MARK: - AdminCoordinator
 class AdminCoordinator: Coordinator {
     
     private let navigationController: UINavigationController
     private let persistenceManager: PersistenceManaging
     private var childCoordinators: [Coordinator] = []
+    
+    weak var delegate: AdminCoordinatorDelegate?
 
     init(navigationController: UINavigationController, persistenceManager: PersistenceManaging) {
         self.navigationController = navigationController
@@ -52,7 +60,13 @@ extension AdminCoordinator: AdminViewControllerCoordinator {
 
 // MARK: - UserListingViewControllerCoordinator
 extension AdminCoordinator: UserListingViewControllerCoordinator {
-    func didSelectUser(_ user: User, from controller: UserListingViewController) {
+    func usersDeleted(_ controller: UserListingViewController, userIds: [UUID]) {
+        if userIds.first(where: { $0 == SessionManager.shared.currentUser?.id }) != nil {
+            delegate?.didRequestLogout(from: self)
+        }
+    }
+    
+func didSelectUser(_ controller: UserListingViewController, user: User) {
         print("User tapped")
     }
 }

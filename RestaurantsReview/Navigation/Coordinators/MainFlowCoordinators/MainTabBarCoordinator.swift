@@ -81,6 +81,7 @@ class MainTabBarCoordinator: Coordinator {
 
         case .admin:
             let adminCoordinator = AdminCoordinator(navigationController: navController, persistenceManager: persistenceManager)
+            adminCoordinator.delegate = self
             coordinator = adminCoordinator
         }
 
@@ -100,3 +101,11 @@ extension MainTabBarCoordinator: ProfileCoordinatorDelegate {
         start()
     }
 }
+
+// MARK: - AdminCoordinatorDelegate
+extension MainTabBarCoordinator: AdminCoordinatorDelegate {
+    func didRequestLogout(from coordinator: AdminCoordinator) {
+        delegate?.didRequestLogout(from: self)
+    }
+}
+    
