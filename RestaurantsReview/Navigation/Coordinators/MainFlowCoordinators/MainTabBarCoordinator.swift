@@ -60,6 +60,7 @@ class MainTabBarCoordinator: Coordinator {
             tabItems.append((tab, navigationController))
         }
 
+        childCoordinators.removeAll()
         childCoordinators = activeCoordinators
         return tabItems
     }

@@ -11,6 +11,7 @@ class AdminCoordinator: Coordinator {
     
     private let navigationController: UINavigationController
     private let persistenceManager: PersistenceManaging
+    private var childCoordinators: [Coordinator] = []
 
     init(navigationController: UINavigationController, persistenceManager: PersistenceManaging) {
         self.navigationController = navigationController
@@ -28,7 +29,10 @@ class AdminCoordinator: Coordinator {
 // MARK: - AdminViewControllerCoordinator
 extension AdminCoordinator: AdminViewControllerCoordinator {
     func didSelectRestaurants(from controller: AdminViewController) {
-        print("Restaurants tapped")
+        let restaurantCoordinator = RestaurantListCoordinator(navigationController: navigationController, persistenceManager: persistenceManager)
+        restaurantCoordinator.pushRestaurantList(on: navigationController)
+        
+        childCoordinators.append(restaurantCoordinator)
     }
     
     func didSelectUsers(from controller: AdminViewController) {

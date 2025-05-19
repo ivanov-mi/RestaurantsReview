@@ -27,6 +27,13 @@ class RestaurantListCoordinator: Coordinator {
         listVC.persistenceManager = persistenceManager
         navigationController.setViewControllers([listVC], animated: false)
     }
+    
+    func pushRestaurantList(on navController: UINavigationController) {
+        let listVC = AppStoryboard.main.viewController(ofType: RestaurantListViewController.self)
+        listVC.coordinator = self
+        listVC.persistenceManager = persistenceManager
+        navigationController.pushViewController(listVC, animated: true)
+    }
 }
 
 // MARK: - RestaurantListViewControllerCoordinator
