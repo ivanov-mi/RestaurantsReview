@@ -22,10 +22,10 @@
 ## Current imaplementation
 ### Currently the app is only partially implemented. The basic UI flow is covered. Requirements marked with green are completed.
 
-- User must be able to create an account and log in. (this means that more users can use the app from the same phone). $\color{green}{\textsf{(partly done)}}$
-- Implement 2 roles with different permission levels
+- $\color{green}{\textsf{User must be able to create an account and log in. (this means that more users can use the app from the same phone).}}$
+- $\color{green}{\textsf{Implement 2 roles with different permission levels}}$
   - $\color{green}{\textsf{Regular User: Can rate and leave a comment for a restaurant}}$
-  - Admin: Can add/edit/delete, restaurants, users and reviews
+  - Admin: Can add/edit/delete, restaurants, users and reviews $\color{green}{\textsf{ (Partly done)}}$
 
 - $\color{green}{\textsf{Reviews should have:}}$
   - $\color{green}{\textsf{  5 star based rate}}$
@@ -50,39 +50,53 @@
 - Delegation pattern
 - Singleton pattern
 - Coordinator pattern
-- Keychain and UserDefaults integration
+- Keychain integration
+- Core Data integration
 - Session/Identity manager
 - Good code practices
 
 ## To be implemented
 - UI
-  - Additional screens e.g. ForgotPassword, Review Detail/Update
-  - Enhance UI to add ability to logout, edit/delete reviews, restaurants and users
-- Local persistence (CoreData) with CRUD operations
+  - Additional screens e.g. Admin panel
+  - Enhance UI to add ability to edit/delete reviews, restaurants and users
 
 ## Screens current state
 ## Testing info - tap on Forgot Password an it will automatically fillin a testing user password and username
 <br>  </br>
 - Login flow
-<img src="https://github.com/user-attachments/assets/94fd8481-4c43-4772-9260-7ae9cb67fbcf" width="300">
-<img src="https://github.com/user-attachments/assets/e63ce7e2-0419-4ac7-a436-4927b0c5fd6c" width="300">
-<img src="https://github.com/user-attachments/assets/26beb061-e133-4518-a9b8-3177f68a6182" width="300"> 
-<img src="https://github.com/user-attachments/assets/c4ae29de-7475-4d74-9b3a-4f588a728cd1" width="300">
-<img src="https://github.com/user-attachments/assets/03cfdb7b-6a2b-4b0e-b50b-5ce1d4bd8d0d" width="300"> 
+<img src="https://github.com/user-attachments/assets/850db478-094f-4915-b9c0-01f3cedbcc04" width="300">
+<img src="https://github.com/user-attachments/assets/73bfb5fa-076d-4c86-b115-007b0c98ea6b" width="300">
+<img src="https://github.com/user-attachments/assets/8b2ac3ac-100a-4e65-8f8e-679853547cab" width="300"> 
+<img src="https://github.com/user-attachments/assets/a0c25157-20dd-4fed-997b-44d2fe659554" width="300">
+<img src="https://github.com/user-attachments/assets/b56cc0d5-ccda-4a2b-9163-6656a3c53577" width="300">
+<img src="https://github.com/user-attachments/assets/e22511c1-6559-4c81-a0eb-1c8ef867f7dc" width="300"> 
+
 
 <br>  </br>
 - Restasurants Listing
-<img src="https://github.com/user-attachments/assets/7b73212c-c067-4a20-8840-fd700383369d" width="300">
-<img src="https://github.com/user-attachments/assets/399dc3ec-49a2-47a2-9768-08465c5ec351" width="300">
+<img src="https://github.com/user-attachments/assets/6cf2b467-b66c-4500-a185-4d0cc76ab5a1" width="300">
+<img src="https://github.com/user-attachments/assets/f93b4557-f000-47fa-a10f-417c81575c44" width="300"> 
+
 
 <br>  </br>
 - Restasurant Detail
-<img src="https://github.com/user-attachments/assets/55111d67-264e-4761-825c-9bfe5ae9418b" width="300">
-<img src="https://github.com/user-attachments/assets/eb5b9c69-aa6d-487f-90a7-054919db27e7" width="300">
+<img src="https://github.com/user-attachments/assets/f9b3a227-fe2e-4e8a-a7cd-af867ea6c814" width="300">
+<img src="https://github.com/user-attachments/assets/89c09ac9-601a-4c23-965a-54dfb6879efb" width="300"> 
+
 
 <br>  </br>
 - Rate & Review
-<img src="https://github.com/user-attachments/assets/f26ca5b1-9e80-4892-9497-01a69413c57c" width="300">
-<img src="https://github.com/user-attachments/assets/07f1418c-1764-48d5-9e4d-72db2d4793f6" width="300"> 
-<img src="https://github.com/user-attachments/assets/50348ad3-5976-453e-9569-cb90f03d2b7a" width="300">
+<img src="https://github.com/user-attachments/assets/200f4137-3b00-4ca7-a9ad-8e7b01f9b1b5" width="300">
+<img src="https://github.com/user-attachments/assets/a4930d04-47af-4227-9f34-237f9476cecd" width="300"> 
+
+
+<br>  </br>
+- User Profile
+<img src="https://github.com/user-attachments/assets/948b7534-e4f9-4abf-80cb-18176a4e2c61" width="300">
+<img src="https://github.com/user-attachments/assets/fe477117-1831-4037-9848-e68dda98b3d6" width="300"> 
+<img src="https://github.com/user-attachments/assets/dad6a1ff-ec27-4f93-b3ab-f24187881058" width="300">
+
+<br>  </br>
+- Admin panel
+<img src="https://github.com/user-attachments/assets/ea9c2822-5bea-4115-9b6a-64064c20b1cf" width="300">
 
