@@ -22,10 +22,11 @@ protocol PersistenceManaging {
     // MARK: - Restaurants
     func fetchAllRestaurants() -> [Restaurant]
     func createRestaurant(name: String, cuisine: String, imagePath: String?) -> Restaurant?
-    func deleteAllRestaurants()
-    func deleteRestaurant(restaurantId: UUID)
     func averageRating(for restaurantId: UUID) -> Double?
     func reviewCount(for restaurantId: UUID) -> Int
+    func deleteRestaurant(restaurantId: UUID)
+    func deleteRestaurants(restaurantIds: [UUID])
+    func deleteAllRestaurants()
 
     // MARK: - Reviews
     func addReview(restaurantId: UUID, userId: UUID, comment: String, rating: Int, dateOfVisit: Date) -> Review?

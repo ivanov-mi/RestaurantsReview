@@ -107,6 +107,30 @@ extension CoreDataManager {
         }
     }
     
+    func deleteRestaurants(restaurantIds: [UUID]) {
+        let request: NSFetchRequest<RestaurantEntity> = RestaurantEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id IN %@", restaurantIds)
+
+        do {
+            let restaurantsToDelete = try context.fetch(request)
+
+            for restaurant in restaurantsToDelete {
+                context.delete(restaurant)
+            }
+
+            saveContext()
+
+            let foundIds = restaurantsToDelete.map { $0.id }
+            let notFound = restaurantIds.filter { !foundIds.contains($0) }
+            if !notFound.isEmpty {
+                print("Restaurants not found for IDs: \(notFound)")
+            }
+
+        } catch {
+            print("Failed to batch delete restaurants: \(error)")
+        }
+    }
+    
     func deleteAllRestaurants() {
         deleteAllEntities(named: "RestaurantEntity")
     }
