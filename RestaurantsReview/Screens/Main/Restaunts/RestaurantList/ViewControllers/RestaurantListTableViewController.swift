@@ -10,6 +10,7 @@ import UIKit
 // MARK: - RestaurantListViewControllerCoordinator
 protocol RestaurantListViewControllerCoordinator: AnyObject {
     func didSelectRestaurant(_ controller: RestaurantListViewController, restaurant: Restaurant)
+    func didTapAddRestaurant(_ controller: RestaurantListViewController)
 }
 
 // MARK: - RestaurantListViewController
@@ -25,6 +26,7 @@ class RestaurantListViewController: UITableViewController {
     private var editButton: UIBarButtonItem!
     private var doneButton: UIBarButtonItem!
     private var deleteButton: UIBarButtonItem!
+    private var addButton: UIBarButtonItem!
     
     var sessionManager: SessionManaging = SessionManager.shared
     
@@ -38,7 +40,12 @@ class RestaurantListViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateNavigationButtons()
-        loadData()
+        reloadRestaurantList()
+    }
+    
+    func reloadRestaurantList() {
+        restaurants = persistenceManager.fetchAllRestaurants()
+        tableView.reloadData()
     }
     
     // MARK: - Setup UI
@@ -50,13 +57,14 @@ class RestaurantListViewController: UITableViewController {
     }
     
     private func setupAdminNavigationBar() {
+        addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(toggleEditMode))
         doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(toggleEditMode))
         deleteButton = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(deleteSelectedTapped))
         deleteButton.tintColor = .systemRed
         deleteButton.isEnabled = false
         
-        navigationItem.rightBarButtonItems = [editButton]
+        navigationItem.rightBarButtonItems = [addButton ,editButton]
     }
     
     private func updateNavigationButtons() {
@@ -72,16 +80,15 @@ class RestaurantListViewController: UITableViewController {
         if isEditing {
             navigationItem.rightBarButtonItems = [deleteButton, doneButton]
         } else {
-            navigationItem.rightBarButtonItems = [editButton]
+            navigationItem.rightBarButtonItems = [addButton, editButton]
         }
     }
     
-    func loadData() {
-        restaurants = persistenceManager.fetchAllRestaurants()
-        tableView.reloadData()
+    // MARK: - Actions
+    @objc private func addTapped() {
+        coordinator?.didTapAddRestaurant(self)
     }
     
-    // MARK: - Actions
     @objc private func toggleEditMode() {
         let updatedEditingState = !isEditing
         setEditing(updatedEditingState, animated: true)
@@ -177,6 +184,6 @@ class RestaurantListViewController: UITableViewController {
 // MARK: - RestaurantDetailsViewControllerDelegate
 extension RestaurantListViewController: RestaurantDetailsViewControllerDelegate {
     func didUpdateRestaurant() {
-        loadData()
+        reloadRestaurantList() 
     }
 }

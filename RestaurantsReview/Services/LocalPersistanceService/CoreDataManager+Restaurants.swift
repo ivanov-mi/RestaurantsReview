@@ -54,6 +54,24 @@ extension CoreDataManager {
         }
     }
     
+    func updateRestaurant(_ restaurant: Restaurant) {
+        let request: NSFetchRequest<RestaurantEntity> = RestaurantEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", restaurant.id as CVarArg)
+
+        do {
+            if let entity = try context.fetch(request).first {
+                entity.name = restaurant.name
+                entity.cuisine = restaurant.cuisine
+                entity.imagePath = restaurant.imagePath
+                saveContext()
+            } else {
+                print("Restaurant not found for ID: \(restaurant.id)")
+            }
+        } catch {
+            print("Failed to update restaurant: \(error)")
+        }
+    }
+    
     func averageRating(for restaurantId: UUID) -> Double? {
         let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "ReviewEntity")
         request.resultType = .dictionaryResultType

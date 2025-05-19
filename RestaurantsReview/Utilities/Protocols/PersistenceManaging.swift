@@ -22,6 +22,7 @@ protocol PersistenceManaging {
     // MARK: - Restaurants
     func fetchAllRestaurants() -> [Restaurant]
     func createRestaurant(name: String, cuisine: String, imagePath: String?) -> Restaurant?
+    func updateRestaurant(_ restaurant: Restaurant) 
     func averageRating(for restaurantId: UUID) -> Double?
     func reviewCount(for restaurantId: UUID) -> Int
     func deleteRestaurant(restaurantId: UUID)

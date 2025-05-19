@@ -106,6 +106,54 @@
             </objects>
             <point key="canvasLocation" x="3079" y="-209"/>
         </scene>
+        <!--Edit Restaurant View Controller-->
+        <scene sceneID="InQ-Oo-5DL">
+            <objects>
+                <viewController storyboardIdentifier="EditRestaurantViewController" id="y2R-w9-8vF" customClass="EditRestaurantViewController" customModule="RestaurantsReview" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ZA6-fB-lxB">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="R2J-qi-oIe">
+                                <rect key="frame" x="16" y="134" width="361" height="134"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Name" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cC0-4b-Dp8" userLabel="Restaurant Name">
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Cuisine" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MOT-82-Pin" userLabel="Cuisine">
+                                        <rect key="frame" x="0.0" y="50" width="361" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="ImagePath (Optional)" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RSa-e5-G9s" userLabel="Image path">
+                                        <rect key="frame" x="0.0" y="100" width="361" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="aE0-T0-bRc"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="R2J-qi-oIe" firstAttribute="top" secondItem="aE0-T0-bRc" secondAttribute="top" constant="16" id="6Uu-D5-600"/>
+                            <constraint firstItem="aE0-T0-bRc" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="R2J-qi-oIe" secondAttribute="bottom" constant="100" id="Jcp-Hj-4hz"/>
+                            <constraint firstItem="R2J-qi-oIe" firstAttribute="leading" secondItem="aE0-T0-bRc" secondAttribute="leading" constant="16" id="mPw-1V-dJn"/>
+                            <constraint firstItem="aE0-T0-bRc" firstAttribute="trailing" secondItem="R2J-qi-oIe" secondAttribute="trailing" constant="16" id="nI2-9n-I0h"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cuisineField" destination="MOT-82-Pin" id="2u0-mz-hm5"/>
+                        <outlet property="imagePathField" destination="RSa-e5-G9s" id="eaz-dg-pxO"/>
+                        <outlet property="restaurantNameField" destination="cC0-4b-Dp8" id="9Qa-bp-cnH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V88-4q-CLZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2044" y="523"/>
+        </scene>
         <!--User Listing View Controller-->
         <scene sceneID="yso-Us-J8Y">
             <objects>

@@ -34,6 +34,15 @@ class RestaurantListCoordinator: Coordinator {
         listVC.persistenceManager = persistenceManager
         navigationController.pushViewController(listVC, animated: true)
     }
+    
+    func showEditRestaurant(from controller: UIViewController, mode: EditRestaurantMode) {
+        let editVC = AppStoryboard.main.viewController(ofType: EditRestaurantViewController.self)
+        editVC.mode = mode
+        editVC.persistenceManager = persistenceManager
+        editVC.delegate = self
+        let navigationController = UINavigationController(rootViewController: editVC)
+        controller.present(navigationController, animated: true)
+    }
 }
 
 // MARK: - RestaurantListViewControllerCoordinator
@@ -45,6 +54,10 @@ extension RestaurantListCoordinator: RestaurantListViewControllerCoordinator {
         restaurantDetailsVC.persistenceManager = persistenceManager
         restaurantDetailsVC.delegate = controller
         navigationController.pushViewController(restaurantDetailsVC, animated: true)
+    }
+    
+    func didTapAddRestaurant(_ controller: RestaurantListViewController) {
+        showEditRestaurant(from: controller, mode: .create)
     }
 }
 
@@ -77,5 +90,16 @@ extension RestaurantListCoordinator: CreateReviewViewControllerCoordinator {
     
     func didCancelReviewCreation(_ controller: CreateReviewViewController) {
         controller.dismiss(animated: true)
+    }
+}
+
+// MARK: - EditRestaurantViewControllerDelegate
+extension RestaurantListCoordinator: EditRestaurantViewControllerDelegate {
+    func didSaveRestaurant(_ restaurant: Restaurant, from controller: EditRestaurantViewController) {
+        controller.dismiss(animated: true) {
+            if let listVC = self.navigationController.viewControllers.first(where: { $0 is RestaurantListViewController }) as? RestaurantListViewController {
+                listVC.reloadRestaurantList()
+            }
+        }
     }
 }
