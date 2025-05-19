@@ -43,10 +43,14 @@ class ReviewListItemView: UIView {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var containerView: UIView!
     
+    // MARK: - Properties
+    var onTap: (() -> Void)?
+    
     // MARK: - View Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        setupTapGesture()
         applyShadow()
     }
     
@@ -72,6 +76,11 @@ class ReviewListItemView: UIView {
         titleLabel.text = comment
     }
     
+    // MARK: - Actions
+    @objc private func viewTapped() {
+        onTap?()
+    }
+    
     // MARK: - Private methods
     private func loadFromNib() {
         let nib = UINib(nibName: ReviewListItemView.identifier, bundle: nil)
@@ -80,6 +89,14 @@ class ReviewListItemView: UIView {
         view.frame = self.bounds
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.addSubview(view)
+        
+        setupTapGesture()
+    }
+    
+    private func setupTapGesture() {
+        isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+        addGestureRecognizer(tapGesture)
     }
     
     private func applyShadow() {

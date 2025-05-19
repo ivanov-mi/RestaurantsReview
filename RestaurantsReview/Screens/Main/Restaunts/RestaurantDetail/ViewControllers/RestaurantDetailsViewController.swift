@@ -16,6 +16,7 @@ protocol RestaurantDetailsViewControllerDelegate: AnyObject {
 protocol RestaurantDetailsViewControllerCoordinator: AnyObject {
     func didTapAddReview(_ controller: RestaurantDetailsViewController, for restaurant: Restaurant)
     func didTapEditRestaurant(_ controller: RestaurantDetailsViewController, restaurant: Restaurant)
+    func didSelectReview(_ controller: RestaurantDetailsViewController, review: Review)
 }
 
 // MARK: - RestaurantDetailsViewController
@@ -184,8 +185,17 @@ class RestaurantDetailsViewController: UIViewController {
             let view = ReviewListItemView()
             let ratingFormatted = "\(review.rating) / 5"
             view.configure(tags: tags, ratingFormatted: ratingFormatted, comment: review.comment)
+
+            view.onTap = { [weak self] in
+                self?.didSelectReview(review)
+            }
+
             reviewsStackView.addArrangedSubview(view)
         }
+    }
+    
+    private func didSelectReview(_ review: Review) {
+        coordinator?.didSelectReview(self, review: review)
     }
 }
 

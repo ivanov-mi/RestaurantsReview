@@ -82,6 +82,17 @@ class RestaurantListCoordinator: Coordinator {
         restaurantDetailsVC.delegate = controller
         navigationController.pushViewController(restaurantDetailsVC, animated: true)
     }
+    
+    func presentReviewDetails(_ review: Review, _ controller: RestaurantDetailsViewController) {
+        let createReviewVC = AppStoryboard.main.viewController(ofType: CreateReviewViewController.self)
+        createReviewVC.configure(with: review.userId, for: review.restaurantId, review: review)
+        createReviewVC.persistenceManager = persistenceManager
+        createReviewVC.delegate = controller
+        createReviewVC.coordinator = self
+        
+        let navigationController = UINavigationController(rootViewController: createReviewVC)
+        controller.present(navigationController, animated: true)
+    }
 }
 
 // MARK: - RestaurantListViewControllerCoordinator
@@ -103,6 +114,10 @@ extension RestaurantListCoordinator: RestaurantDetailsViewControllerCoordinator 
     
     func didTapEditRestaurant(_ controller: RestaurantDetailsViewController, restaurant: Restaurant) {
         presentEditRestaurant(from: controller, restaurant: restaurant)
+    }
+    
+    func didSelectReview(_ controller: RestaurantDetailsViewController, review: Review) {
+        presentReviewDetails(review, controller)
     }
 }
 
