@@ -32,6 +32,7 @@ protocol PersistenceManaging {
     func fetchReviews(for restaurantId: UUID) -> [Review]
     func fetchReview(by id: UUID) -> Review?
     func fetchAllReviews() -> [Review]
-    func deleteAllReviews()
     func deleteReview(reviewId: UUID)
+    func deleteReviews(reviewIds: [UUID])
+    func deleteAllReviews()
 }

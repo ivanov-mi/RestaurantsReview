@@ -166,6 +166,30 @@ extension CoreDataManager {
         }
     }
     
+    func deleteReviews(reviewIds: [UUID]) {
+        let request: NSFetchRequest<ReviewEntity> = ReviewEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id IN %@", reviewIds)
+
+        do {
+            let reviewsToDelete = try context.fetch(request)
+
+            for review in reviewsToDelete {
+                context.delete(review)
+            }
+
+            saveContext()
+
+            let foundIds = reviewsToDelete.map { $0.id }
+            let notFound = reviewIds.filter { !foundIds.contains($0) }
+            if !notFound.isEmpty {
+                print("Reviews not found for IDs: \(notFound)")
+            }
+
+        } catch {
+            print("Failed to batch delete reviews: \(error)")
+        }
+    }
+    
     func deleteAllReviews() {
         deleteAllEntities(named: "ReviewEntity")
     }

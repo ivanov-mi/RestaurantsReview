@@ -73,7 +73,7 @@ func didSelectUser(_ controller: UserListingViewController, user: User) {
 
 // MARK: - ReviewsListingViewControllerCoordinator
 extension AdminCoordinator: ReviewsListingViewControllerCoordinator {
-    func didSelectReview(_ review: Review, from controller: ReviewsListingViewController) {
+    func didSelectReview(_ controller: ReviewsListingViewController, review: Review) {
         print("Review tapped")
     }
 }
