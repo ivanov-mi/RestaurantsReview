@@ -23,7 +23,6 @@ class UserListingViewController: UITableViewController {
     private var users: [User] = []
     private var selectedUsers: Set<UUID> = []
     
-    private var addButton: UIBarButtonItem!
     private var editButton: UIBarButtonItem!
     private var doneButton: UIBarButtonItem!
     private var deleteButton: UIBarButtonItem!
@@ -43,14 +42,13 @@ class UserListingViewController: UITableViewController {
     
     // MARK: - Setup
     private func setupNavigationBar() {
-        addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addUserTapped))
         editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(toggleEditMode))
         doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(toggleEditMode))
         deleteButton = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(deleteSelectedTapped))
         deleteButton.tintColor = .systemRed
         deleteButton.isEnabled = false
         
-        navigationItem.rightBarButtonItems = [addButton, editButton]
+        navigationItem.rightBarButtonItems = [editButton]
     }
     
     private func loadUsers() {
@@ -59,12 +57,6 @@ class UserListingViewController: UITableViewController {
     }
     
     // MARK: - Actions
-    @objc private func addUserTapped() {
-        
-        // TODO: Implement Add User
-        
-    }
-    
     @objc private func toggleEditMode() {
         let updatedEditingState = !isEditing
         setEditing(updatedEditingState, animated: true)
@@ -76,7 +68,7 @@ class UserListingViewController: UITableViewController {
             deleteButton.isEnabled = false
         } else {
             tableView.setEditing(false, animated: true)
-            navigationItem.rightBarButtonItems = [addButton, editButton]
+            navigationItem.rightBarButtonItems = [editButton]
         }
     }
     
