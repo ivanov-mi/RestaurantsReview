@@ -20,28 +20,10 @@
 - Functional UI design is needed. You are not required to create a unique design, however, do follow best practices to make the project as functional as possible.
 
 ## Current imaplementation
-### Currently the app is only partially implemented. The basic UI flow is covered. Requirements marked with green are completed.
-
-- $\color{green}{\textsf{User must be able to create an account and log in. (this means that more users can use the app from the same phone).}}$
-- $\color{green}{\textsf{Implement 2 roles with different permission levels}}$
-  - $\color{green}{\textsf{Regular User: Can rate and leave a comment for a restaurant}}$
-  - Admin: Can add/edit/delete, restaurants, users and reviews $\color{green}{\textsf{ (Partly done)}}$
-
-- $\color{green}{\textsf{Reviews should have:}}$
-  - $\color{green}{\textsf{  5 star based rate}}$
-  - $\color{green}{\textsf{Date of the visit}}$
-  - $\color{green}{\textsf{Comment}}$
-- $\color{green}{\textsf{When a Regular User logs in he will see a Restaurant List ordered by Rate Average. }}$
-- $\color{green}{\textsf{When a restaurant is choosen a detailed view should be presented }}$
-- 
-  - $\color{green}{\textsf{The overall average rating}}$
-  - $\color{green}{\textsf{The highest rated review}}$
-  - $\color{green}{\textsf{The lowest rated review}}$
-  - $\color{green}{\textsf{Latest review showing with rate and comment}}$
-  - $\color{green}{\textsf{Functional UI design is needed. You are not required to create a unique design, however, do follow best practices to make the project as functional as possible.}}$
+### The task implementation has been extended to improve UI/UX, introduce additional functionality, and establish a more robust and scalable app architecture.
 
 <br>  </br>
-## Demonstrated so far:
+## Technologies and methodologies applied:
 - UI/UX design and principles
 - UIKit with storyboards
 - Custom reusable UI elements
@@ -55,15 +37,41 @@
 - Session/Identity manager
 - Good code practices
 
-## To be implemented
-- UI
-  - Additional screens e.g. Admin panel
-  - Enhance UI to add ability to edit/delete reviews, restaurants and users
+## Areas of improvement 
+- Codebase
+  - From core perspective
+  - Refactor
+  - Split the storyboard
+  - Manage errors
+  - Improre CoreData local persistance
+  - Implement notifications
+  - Add build configurations
+  - Add depedancy injection
+  - Add Unit testing
+  - 
+- UI/UX
+  - Fix some UI bugs
+  - Enhance visual consistency across screens
+  - Rework some of the UX flows
+  - Improve error screens and messages
+  - Add Launch screen
+  - Add loading indicators and user feedback elements 
 
-## Screens current state
-## Testing info - tap on Forgot Password an it will automatically fillin a testing user password and username
+- Functionality
+  - Add filtering in admin panel
+  - Add sorting options to listing screens
+  - Add swipe down to refresh
+  - Improve Admin panel design 
+  - Improve Add/Edit restaurant 
+  - Implement Forgot Password functionality 
+  - Enhance user profile functionality
+  - Implement Google NearMeAPI
+
+
+## Screens
 <br>  </br>
 - Login flow
+  ## For demo purposes is integrated "Populate testing data" / "Clear test data" functionality 
 <img src="https://github.com/user-attachments/assets/850db478-094f-4915-b9c0-01f3cedbcc04" width="300">
 <img src="https://github.com/user-attachments/assets/73bfb5fa-076d-4c86-b115-007b0c98ea6b" width="300">
 <img src="https://github.com/user-attachments/assets/8b2ac3ac-100a-4e65-8f8e-679853547cab" width="300"> 
@@ -74,29 +82,77 @@
 
 <br>  </br>
 - Restasurants Listing
-<img src="https://github.com/user-attachments/assets/6cf2b467-b66c-4500-a185-4d0cc76ab5a1" width="300">
-<img src="https://github.com/user-attachments/assets/f93b4557-f000-47fa-a10f-417c81575c44" width="300"> 
+  - Regular user
+<img src="https://github.com/user-attachments/assets/3a33fe94-5833-4990-8eea-6cdfc4f4d90c" width="300">
+<br>
+  - Admin
+<br>
+<img src="https://github.com/user-attachments/assets/0735c3d5-7446-4950-813c-f7582404ef25" width="300">
+<img src="https://github.com/user-attachments/assets/3130ed35-35b7-4710-a3f0-860ae823b5d5" width="300">
+<img src="https://github.com/user-attachments/assets/bfd1ce7f-4941-462a-b416-824c18d9cfa5" width="300">
+<img src="ttps://github.com/user-attachments/assets/83c60e6a-3081-44e1-adcd-c1d191828bc0" width="300">
 
-
-<br>  </br>
-- Restasurant Detail
-<img src="https://github.com/user-attachments/assets/f9b3a227-fe2e-4e8a-a7cd-af867ea6c814" width="300">
-<img src="https://github.com/user-attachments/assets/89c09ac9-601a-4c23-965a-54dfb6879efb" width="300"> 
-
-
-<br>  </br>
-- Rate & Review
-<img src="https://github.com/user-attachments/assets/200f4137-3b00-4ca7-a9ad-8e7b01f9b1b5" width="300">
-<img src="https://github.com/user-attachments/assets/a4930d04-47af-4227-9f34-237f9476cecd" width="300"> 
 
 
 <br>  </br>
+- Restasurant Details
+  - Regular user
+<img src="https://github.com/user-attachments/assets/d5f80758-a25b-4e21-8a59-d0af03dd073a" width="300">
+<br>
+  - Admin<br>
+<img src="https://github.com/user-attachments/assets/1622cbb1-c042-49db-9b33-05a3377f60c0" width="300">
+<br>  </br>
+
+
+
+- Add/Update restrauntan (Admin only)
+<img src="https://github.com/user-attachments/assets/f70f559e-e643-40ae-bd95-f0f6fe583832" width="300">
+<img src="https://github.com/user-attachments/assets/ae8ee993-48b9-415f-aabc-7a5a667e1e4d" width="300">
+<img src="https://github.com/user-attachments/assets/088ca07f-17cf-4df8-9565-7e8f446421e7" width="300">
+<br>  </br>
+
+
+
+- Create review
+<img src="https://github.com/user-attachments/assets/504df103-9862-4cb8-8c44-b5729d2a8189" width="300">
+<img src="https://github.com/user-attachments/assets/1ad8065b-1960-4959-b474-2369968ad78d" width="300">
+<img src="https://github.com/user-attachments/assets/79228639-2986-4397-b3a2-4b55e4db187a" width="300">
+<br>  </br>
+
+
+- Review Details
+  - Regulard user (if not author)
+<img src="https://github.com/user-attachments/assets/0885439c-150c-4764-80b6-0e524d77daad" width="300">
+<br>
+  - Admin or Author<br>
+<br>
+<img src="https://github.com/user-attachments/assets/d507bc89-296f-44fc-aaeb-eb138605c6b6" width="300">
+<img src="https://github.com/user-attachments/assets/6efa3ef6-5995-4fd1-af0e-6478c3c2eaab" width="300">
+<br>  </br>
+
+
 - User Profile
+## For demo purposes the admin access is granted by a switch
 <img src="https://github.com/user-attachments/assets/948b7534-e4f9-4abf-80cb-18176a4e2c61" width="300">
 <img src="https://github.com/user-attachments/assets/fe477117-1831-4037-9848-e68dda98b3d6" width="300"> 
 <img src="https://github.com/user-attachments/assets/dad6a1ff-ec27-4f93-b3ab-f24187881058" width="300">
-
 <br>  </br>
+
 - Admin panel
-<img src="https://github.com/user-attachments/assets/ea9c2822-5bea-4115-9b6a-64064c20b1cf" width="300">
+<br>
+<img src="https://github.com/user-attachments/assets/57d79977-2782-44f8-91c8-15daec02c67a" width="300">
+<br>
+  - Users<br>
+<img src="https://github.com/user-attachments/assets/31be821e-9348-4d65-9ad6-6b84254a8138" width="300">
+<img src="https://github.com/user-attachments/assets/d2a75f97-7d38-450e-be64-3e5533eb3bf5" width="300">
+<img src="https://github.com/user-attachments/assets/fd08d6ee-139f-4e04-9c86-3db7e84b311d" width="300">
+
+- Reviews
+<img src="https://github.com/user-attachments/assets/43d6251f-1dff-4bd1-87c3-a3008713a6ff" width="300">
+<img src="https://github.com/user-attachments/assets/a3af8265-1743-402a-b6ac-b6f096128d1d" width="300">
+<img src="https://github.com/user-attachments/assets/f7ee6bc2-9b8f-4152-8d29-d28bc9bf8244" width="300">
+
+
+
+
 
