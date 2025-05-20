@@ -19,7 +19,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WV3-gA-oTY" userLabel="Container View">
                         <rect key="frame" x="8" y="4" width="304" height="128"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hB8-5Q-ktT">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="100" verticalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="hB8-5Q-ktT">
                                 <rect key="frame" x="0.0" y="0.0" width="204.66666666666666" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="hB8-5Q-ktT" secondAttribute="height" multiplier="16:10" id="TUb-Y0-PMq"/>
@@ -48,7 +48,7 @@
                             <constraint firstItem="hB8-5Q-ktT" firstAttribute="top" secondItem="WV3-gA-oTY" secondAttribute="top" id="Afe-Yy-Yc7"/>
                             <constraint firstAttribute="bottom" secondItem="aAt-lI-Dtv" secondAttribute="bottom" priority="999" constant="16" id="OIo-No-5F1"/>
                             <constraint firstItem="aAt-lI-Dtv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hB8-5Q-ktT" secondAttribute="trailing" constant="16" id="TIS-ml-cbz"/>
-                            <constraint firstAttribute="height" priority="999" constant="120" id="TK5-n6-jg9"/>
+                            <constraint firstAttribute="height" priority="998" constant="120" id="TK5-n6-jg9"/>
                             <constraint firstItem="aAt-lI-Dtv" firstAttribute="centerY" secondItem="WV3-gA-oTY" secondAttribute="centerY" id="U91-S9-sXt"/>
                             <constraint firstAttribute="bottom" secondItem="hB8-5Q-ktT" secondAttribute="bottom" id="b05-f9-dkH"/>
                             <constraint firstItem="aAt-lI-Dtv" firstAttribute="top" secondItem="WV3-gA-oTY" secondAttribute="top" constant="16" id="kJL-J2-Yrx"/>
@@ -57,9 +57,9 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="WV3-gA-oTY" secondAttribute="bottom" constant="4" id="LAg-wm-e2N"/>
+                    <constraint firstAttribute="bottom" secondItem="WV3-gA-oTY" secondAttribute="bottom" priority="999" constant="4" id="LAg-wm-e2N"/>
                     <constraint firstAttribute="trailing" secondItem="WV3-gA-oTY" secondAttribute="trailing" constant="8" id="cZG-rP-Yi0"/>
-                    <constraint firstItem="WV3-gA-oTY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="rjN-w6-TvB"/>
+                    <constraint firstItem="WV3-gA-oTY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" priority="999" constant="4" id="rjN-w6-TvB"/>
                     <constraint firstItem="WV3-gA-oTY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="wui-tF-oPr"/>
                 </constraints>
             </tableViewCellContentView>
