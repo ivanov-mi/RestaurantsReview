@@ -1,8 +1,8 @@
 # Restaurants Review Demo App
 
-  Recruitment task for iOS job application.
+  Recruitment task for iOS job application. It showcases core iOS development skills with a focus on architecture, persistence, and UI design.
 
-## Requirements
+## 1. Requirements
 - User must be able to create an account and log in. (this means that more users can use the app from the same phone).
 - Implement 2 roles with different permission levels
   - Regular User: Can rate and leave a comment for a restaurant
@@ -19,53 +19,126 @@
   - Latest review showing with rate and comment
 - Functional UI design is needed. You are not required to create a unique design, however, do follow best practices to make the project as functional as possible.
 
-## Current imaplementation
-### The task implementation has been extended to improve UI/UX, introduce additional functionality, and establish a more robust and scalable app architecture.
+## 2. Technical Solution Overview
 
-<br>  </br>
-## Technologies and methodologies applied:
-- UI/UX design and principles
-- UIKit with storyboards
-- Custom reusable UI elements
-- MVC
-- Manually writen code (not AI generated)
-- Delegation pattern
-- Singleton pattern
-- Coordinator pattern
-- Keychain integration
+The app adopts a **mobile-first, local-only architecture** to keep development efficient and focused. Instead of a server-based backend, it uses **Core Data** for local storage, simplifying testing and deployment while enabling realistic multi-user functionality.
+
+### Key Technologies & Architecture
+
+- **Xcode 16**, targeting **iOS 17.6**
+- **UIKit** with **Storyboard-based UI**
+- **MVC** pattern extended with **Coordinators** for navigation
+- **Core Data** for on-device persistence
+- **Keychain** for secure user ID storage
+- **Portrait-only orientation**
+- No support for **Dark Mode** or **Dynamic Type** (intentionally omitted for simplicity)
+
+### User Management
+
+- Supports multiple users with role-based access:
+  - **Regular User**
+  - **Admin**
+- Role restrictions apply throughout the interface (e.g., Admin tab access).
+
+### Session Handling
+
+A custom **SessionManager** manages authentication state, integrating with the Keychain for secure user identity storage.
+
+### Project Scope & Limitations
+
+- Unit testing is not included at this stage to maintain a focused scope.
+- Certain features (e.g., toggling admin status in Profile) are for demonstration only and would require refinement for production.
+
+---
+
+## 3. Technologies Used & Methodologies Applied
+
+- UIKit and Storyboards
+- Custom reusable UI components
+- MVC design pattern
+- Coordinator pattern for navigation
+- Delegation and Singleton patterns
+- Keychain integration for secure storage
 - Core Data integration
-- Session/Identity manager
-- Good code practices
+- Session and identity management
+- Manual coding (not AI-generated)
+- Good code practices and structure
 
-## Areas of improvement 
-- Codebase
-  - From core perspective
-  - Refactor
-  - Split the storyboard
-  - Manage errors
-  - Improre CoreData local persistance
-  - Implement notifications
-  - Add build configurations
-  - Add depedancy injection
-  - Add Unit testing
-  - 
-- UI/UX
-  - Fix some UI bugs
-  - Enhance visual consistency across screens
-  - Rework some of the UX flows
-  - Improve error screens and messages
-  - Add Launch screen
-  - Add loading indicators and user feedback elements 
+---
 
-- Functionality
-  - Add filtering in admin panel
-  - Add sorting options to listing screens
-  - Add swipe down to refresh
-  - Improve Admin panel design 
-  - Improve Add/Edit restaurant 
-  - Implement Forgot Password functionality 
-  - Enhance user profile functionality
-  - Implement Google NearMeAPI
+## 4. Areas for Improvement
+
+### Codebase
+- Refactor and modularize architecture
+- Split storyboards for better organization
+- Improve Core Data handling
+- Add comprehensive error handling
+- Implement build configurations
+- Integrate dependency injection
+- Add unit and UI testing
+- Support push/local notifications
+
+### UI/UX
+- Fix existing UI bugs
+- Improve visual consistency
+- Refine UX flow
+- Enhance error messaging and empty states
+- Add launch screen
+- Introduce loading indicators and user feedback
+
+### Functionality
+- Filtering and sorting in admin panel
+- Sorting options in listing views
+- Pull-to-refresh on key screens
+- Better Admin panel layout and controls
+- Improve Add/Edit Restaurant flow
+- Implement Forgot Password functionality
+- Enhance Profile features
+- Integrate Google NearMe API (future scope)
+
+---
+
+## 5. User Experience Overview
+
+The UX is structured around two main flows:
+
+### 1. Login Flow
+- Welcome Screen  
+- Login Screen  
+- Registration Screen
+
+### 2. Main Flow
+
+The app uses a `MainTabBarController` with three tabs: **Restaurants**, **Profile**, and **Admin**  
+(Admin tab is only visible to users with admin rights.)
+
+#### Restaurants Listing (Home)
+- Displays all restaurants with basic info
+- Selecting a restaurant opens:
+  - **Restaurant Details**  
+    Includes name, description, average rating, and comments.  
+    From here, users can:
+    - → **Create Review** – Add a new review
+    - → **Review Details** – View full review content (editable if admin or author)
+
+#### Profile
+- View user information
+- Update profile (limited to admin toggle in this version)
+- Logout
+- Delete account  
+  _Note: Admin toggle is for demo purposes and would not be editable in production._
+
+#### Admin
+Accessible only to admin users. It provides management interfaces for:
+- **Users**
+- **Restaurants**
+- **Reviews**
+
+Each is presented using a basic `UITableView`. Detail views reuse:
+- **Profile Screen** for user info
+- **Restaurant Details Screen** for restaurants
+- **Review Details Screen** for reviews
+
 
 
 ## Screens
