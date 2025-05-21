@@ -9,8 +9,8 @@ import UIKit
 
 // MARK: - WelcomeViewControllerDelegate
 protocol WelcomeViewControllerCoordinator: AnyObject {
-    func didSelectLogin()
-    func didSelectRegister()
+    func didSelectLogin(_ controller: WelcomeViewController)
+    func didSelectRegister(_ controller: WelcomeViewController)
 }
 
 // MARK: - WelcomeViewController
@@ -25,6 +25,7 @@ class WelcomeViewController: UIViewController {
     
     // MARK: - Properties
     weak var coordinator: WelcomeViewControllerCoordinator?
+    var sessionManager: SessionManaging = SessionManager.shared
     
     // MARK: - VC Lifecycle
     override func viewDidLoad() {
@@ -44,11 +45,11 @@ class WelcomeViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction private func loginButtonTapped(_ sender: UIButton) {
-        coordinator?.didSelectLogin()
+        coordinator?.didSelectLogin(self)
     }
     
     @IBAction private func notRegisteredYetButtonTapped(_ sender: UIButton) {
-        coordinator?.didSelectRegister()
+        coordinator?.didSelectRegister(self)
     }
 }
 
@@ -82,3 +83,16 @@ private extension WelcomeViewController {
 }
 #endif
 
+// MARK: - RegisterViewControllerDelegate
+extension WelcomeViewController: RegisterViewControllerDelegate {
+    func didRegisterUser(_ controller: RegisterViewController, didRegister user: User) {
+        SessionManager.shared.login(user: user)
+    }
+}
+
+// MARK: - RegisterViewControllerDelegate
+extension WelcomeViewController: LoginViewControllerDelegate {
+    func didRegisterUser(_ controller: LoginViewController, didRegister user: User) {
+        SessionManager.shared.login(user: user)
+    }
+}

@@ -35,54 +35,44 @@ class AuthCoordinator: Coordinator {
     }
 
     // MARK: - Private methods
-    private func showLogin() {
+    private func showLogin(from controller: WelcomeViewController) {
         let loginVC = AppStoryboard.main.viewController(ofType: LoginViewController.self)
         loginVC.coordinator = self
+        loginVC.delegate = controller
         loginVC.persistenceManager = persistenceManager
         navigationController.pushViewController(loginVC, animated: true)
     }
 
-    private func showRegister() {
+    private func showRegister(from controller: WelcomeViewController) {
         let registerVC = AppStoryboard.main.viewController(ofType: RegisterViewController.self)
         registerVC.coordinator = self
+        registerVC.delegate = controller
         registerVC.persistenceManager = persistenceManager
         navigationController.pushViewController(registerVC, animated: true)
-    }
-
-    private func finishAuthFlow(with user: User) {
-        SessionManager.shared.login(user: user)
-        delegate?.authCoordinatorDidFinish(self)
     }
 }
 
 // MARK: - WelcomeViewControllerCoordinator
 extension AuthCoordinator: WelcomeViewControllerCoordinator {
-    func didSelectLogin() {
-        showLogin()
+    func didSelectLogin(_ controller: WelcomeViewController) {
+        showLogin(from: controller)
     }
-
-    func didSelectRegister() {
-        showRegister()
+    
+    func didSelectRegister(_ controller: WelcomeViewController) {
+        showRegister(from: controller)
     }
 }
 
 // MARK: - LoginViewControllerCoordinator
 extension AuthCoordinator: LoginViewControllerCoordinator {
-    func didFinishLogin(with user: User) {
-        finishAuthFlow(with: user)
+    func didFinishLogin(_ controller: LoginViewController) {
+        delegate?.authCoordinatorDidFinish(self)
     }
 }
 
 // MARK: - RegisterViewControllerCoordinator
 extension AuthCoordinator: RegisterViewControllerCoordinator {
-    
-    // TODO: Fix AuthCoordinator
-    
     func didFinishRegistration(_ controller: RegisterViewController) {
-        print("Finish registration flow")
-    }
-    
-    func didFinishRegistration(with user: User) {
-        finishAuthFlow(with: user)
+        delegate?.authCoordinatorDidFinish(self)
     }
 }

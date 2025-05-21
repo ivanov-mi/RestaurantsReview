@@ -7,9 +7,14 @@
 
 import UIKit
 
-// MARK: - LoginViewControllerDelegate
+// MARK: - LoginViewControllerCoordinator
 protocol LoginViewControllerCoordinator: AnyObject {
-    func didFinishLogin(with user: User)
+    func didFinishLogin(_ controller: LoginViewController)
+}
+
+// MARK: - LoginViewControllerDelegate
+protocol LoginViewControllerDelegate: AnyObject {
+    func didRegisterUser(_ controller: LoginViewController, didRegister user: User)
 }
 
 // MARK - LoginViewController
@@ -26,6 +31,7 @@ class LoginViewController: UIViewController {
     
     // MARK: - Properties
     weak var coordinator: LoginViewControllerCoordinator?
+    weak var delegate: LoginViewControllerDelegate?
     var persistenceManager: PersistenceManaging!
 
     // MARK: - VC Lifecycle
@@ -122,7 +128,8 @@ class LoginViewController: UIViewController {
             return
         }
         
-        coordinator?.didFinishLogin(with: user)
+        delegate?.didRegisterUser(self, didRegister: user)
+        coordinator?.didFinishLogin(self)
         clearForm()
     }
 
