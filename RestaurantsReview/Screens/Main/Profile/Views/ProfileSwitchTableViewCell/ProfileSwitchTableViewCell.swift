@@ -21,12 +21,19 @@ class ProfileSwitchTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     weak var delegate: ProfileSwitchTableViewCellDelegate?
+    var isOn: Bool {
+        return toggleSwitch.isOn
+    }
 
     // MARK: - Configuration
     func configure(title: String, isOn: Bool) {
         titleLabel.text = title
         toggleSwitch.isOn = isOn
         toggleSwitch.addTarget(self, action: #selector(switchToggled), for: .valueChanged)
+    }
+    
+    func toggle() {
+        toggleSwitch.setOn(!toggleSwitch.isOn, animated: true)
     }
 
     // MARK: - Actions

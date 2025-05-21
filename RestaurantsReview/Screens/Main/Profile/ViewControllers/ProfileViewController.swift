@@ -94,18 +94,24 @@ class ProfileViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func presentAdminStatusChangeConfirmationAlert(for user: User, isOn: Bool) {
+    private func presentAdminStatusChangeConfirmationAlert(for user: User, switchCell: ProfileSwitchTableViewCell) {
+        let isOn = switchCell.isOn
         let alert = UIAlertController(
-            title: "Remove Admin Status",
-            message: "Are you sure you want to remove user admin privileges?",
+            title: isOn ? "Grant Admin Status" : "Remove Admin Status",
+            message: isOn
+                ? "Are you sure you want to give this user admin privileges?"
+                : "Are you sure you want to remove this user's admin privileges?",
             preferredStyle: .alert
         )
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Confirm", style: .destructive) { [weak self] _ in
-            guard let self else { return }
-            
-            self.updateAdminStatus(for: user, to: isOn)
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            switchCell.toggle()
         })
+
+        alert.addAction(UIAlertAction(title: "Confirm", style: .destructive) { [weak self] _ in
+            self?.updateAdminStatus(for: user, to: isOn)
+        })
+
         present(alert, animated: true)
     }
     
@@ -198,7 +204,7 @@ extension ProfileViewController: UITableViewDelegate {
 extension ProfileViewController: ProfileSwitchTableViewCellDelegate {
     func profileSwitchCell(_ cell: ProfileSwitchTableViewCell, didChangeValue isOn: Bool) {
         guard !user.isAdmin else {
-            presentAdminStatusChangeConfirmationAlert(for: user, isOn: isOn)
+            presentAdminStatusChangeConfirmationAlert(for: user, switchCell: cell)
             return
         }
         
