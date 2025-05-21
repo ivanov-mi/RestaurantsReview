@@ -104,6 +104,7 @@ extension AdminCoordinator: ReviewsListingViewControllerCoordinator {
     }
 }
 
+// MARK: - ReviewDetailsViewControllerCoordinator
 extension AdminCoordinator: ReviewDetailsViewControllerCoordinator {
     func didFinishCreatingReview(_ controller: ReviewDetailsViewController, review: Review) {
         controller.dismiss(animated: true)

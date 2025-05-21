@@ -7,12 +7,13 @@
 
 import UIKit
 
+// MARK: - UserListingViewControllerDelegate
 protocol UserListingViewControllerDelegate: AnyObject {
     func userListingViewControllerDidAddUser(_ controller: UserListingViewController)
 }
 
 
-// MARK: - Coordinator Protocol
+// MARK: - UserListingViewControllerCoordinator Protocol
 protocol UserListingViewControllerCoordinator: AnyObject {
     func didSelectUser(_ controller: UserListingViewController, user: User)
     func usersDeleted(_ controller: UserListingViewController, userIds: [UUID])
@@ -183,12 +184,14 @@ class UserListingViewController: UITableViewController {
     }
 }
 
+// MARK: - ProfileViewControllerDelegate
 extension UserListingViewController: ProfileViewControllerDelegate {
     func profileViewController(_ controller: ProfileViewController, didUpdateUser updatedUser: User) {
         reloadUsers()
     }
 }
 
+// MARK: - RegisterViewControllerDelegate
 extension UserListingViewController: RegisterViewControllerDelegate {
     func registerViewController(_ controller: RegisterViewController, didRegister user: User) {
         controller.dismiss(animated: true) { [weak self] in

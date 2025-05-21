@@ -48,5 +48,4 @@ extension ProfileCoordinator: ProfileViewControllerCoordinator {
     func didChangeAdminStatus(from controller: ProfileViewController) {
         delegate?.didChangeAdminStatus(from: self)
     }
-    
 }
