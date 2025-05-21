@@ -7,10 +7,16 @@
 
 import UIKit
 
+protocol UserListingViewControllerDelegate: AnyObject {
+    func userListingViewControllerDidAddUser(_ controller: UserListingViewController)
+}
+
+
 // MARK: - Coordinator Protocol
 protocol UserListingViewControllerCoordinator: AnyObject {
     func didSelectUser(_ controller: UserListingViewController, user: User)
     func usersDeleted(_ controller: UserListingViewController, userIds: [UUID])
+    func didTapAddUser(from controller: UserListingViewController)
 }
 
 // MARK: - View Controller
@@ -18,6 +24,7 @@ class UserListingViewController: UITableViewController {
     
     // MARK: - Properties
     weak var coordinator: UserListingViewControllerCoordinator?
+    weak var delegate: UserListingViewControllerDelegate?
     var persistenceManager: PersistenceManaging!
     
     private var users: [User] = []
@@ -38,7 +45,7 @@ class UserListingViewController: UITableViewController {
         tableView.register(UserListingTableViewCell.nib, forCellReuseIdentifier: UserListingTableViewCell.identifier)
         
         setupNavigationBar()
-        loadUsers()
+        reloadUsers()
     }
     
     // MARK: - Setup
@@ -53,17 +60,14 @@ class UserListingViewController: UITableViewController {
         navigationItem.rightBarButtonItems = [addButton, editButton]
     }
     
-    private func loadUsers() {
+    private func reloadUsers() {
         users = persistenceManager.fetchAllUsers()
         tableView.reloadData()
     }
     
     // MARK: - Actions
     @objc private func addUserTapped() {
-        
-        // TODO: Implement Add User
-        
-        print("Add user button tapped")
+        coordinator?.didTapAddUser(from: self)
     }
     
     @objc private func toggleEditMode() {
@@ -181,6 +185,14 @@ class UserListingViewController: UITableViewController {
 
 extension UserListingViewController: ProfileViewControllerDelegate {
     func profileViewController(_ controller: ProfileViewController, didUpdateUser updatedUser: User) {
-        loadUsers()
+        reloadUsers()
+    }
+}
+
+extension UserListingViewController: RegisterViewControllerDelegate {
+    func registerViewController(_ controller: RegisterViewController, didRegister user: User) {
+        controller.dismiss(animated: true) { [weak self] in
+            self?.reloadUsers()
+        }
     }
 }

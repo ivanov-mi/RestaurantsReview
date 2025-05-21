@@ -8,6 +8,11 @@
 import UIKit
 
 // MARK: - RegisterViewControllerDelegate
+protocol RegisterViewControllerDelegate: AnyObject {
+    func registerViewController(_ controller: RegisterViewController, didRegister user: User)
+}
+
+// MARK: - RegisterViewControllerCoordinator
 protocol RegisterViewControllerCoordinator: AnyObject {
     func didFinishRegistration(with user: User)
 }
@@ -27,6 +32,7 @@ class RegisterViewController: UIViewController {
     
     // MARK: - Properties
     weak var coordinator: RegisterViewControllerCoordinator?
+    weak var delegate: RegisterViewControllerDelegate?
     var persistenceManager: PersistenceManaging!
 
     // MARK: - VC Lifecycle
@@ -146,6 +152,7 @@ class RegisterViewController: UIViewController {
             return
         }
         
+        delegate?.registerViewController(self, didRegister: user)
         coordinator?.didFinishRegistration(with: user)
     }
 }

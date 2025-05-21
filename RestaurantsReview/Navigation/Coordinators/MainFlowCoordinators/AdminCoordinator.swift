@@ -74,6 +74,15 @@ extension AdminCoordinator: UserListingViewControllerCoordinator {
  
         navigationController.pushViewController(profileVC, animated: true)
     }
+    
+    func didTapAddUser(from controller: UserListingViewController) {
+        let registerVC = AppStoryboard.main.viewController(ofType: RegisterViewController.self)
+        registerVC.persistenceManager = persistenceManager
+        registerVC.delegate = controller
+        
+        let nav = UINavigationController(rootViewController: registerVC)
+        controller.present(nav, animated: true)
+    }
 }
 
 // MARK: - ReviewsListingViewControllerCoordinator
