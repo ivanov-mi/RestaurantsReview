@@ -15,7 +15,9 @@ protocol ProfileViewControllerDelegate: AnyObject {
 // MARK: - ProfileViewControllerCoordinator
 protocol ProfileViewControllerCoordinator: AnyObject {
     func didRequestLogout(from controller: ProfileViewController)
+    func didDeleteUser(from controller: ProfileViewController)
     func didRemoveCurrentUserAdminStatus(from controller: ProfileViewController)
+    func didRequestEditUser(from controller: ProfileViewController, user: User)
 }
 
 // MARK: - ProfileViewController
@@ -82,7 +84,12 @@ class ProfileViewController: UIViewController {
             guard let self else { return }
             
             persistenceManager.deleteUser(userId: user.id)
-            coordinator?.didRequestLogout(from: self)
+            if user.id == sessionManager.currentUser?.id {
+                sessionManager.logout()
+            }
+            
+            delegate?.didUpdateUser(self)
+            coordinator?.didDeleteUser(from: self)
         })
         present(alert, animated: true)
     }
@@ -118,6 +125,10 @@ class ProfileViewController: UIViewController {
     
     private func rows(for section: ProfileSection) -> [ProfileRow] {
         section.rows(showsLogout: showsLogout)
+    }
+    
+    private func editUserDetails() {
+        coordinator?.didRequestEditUser(from: self, user: user)
     }
 }
 
@@ -173,6 +184,8 @@ extension ProfileViewController: UITableViewDelegate {
         switch row {
         case .logout:
             logoutTapped()
+        case .username, .email:
+            editUserDetails()
         default:
             break
         }
@@ -190,6 +203,16 @@ extension ProfileViewController: ProfileSwitchTableViewCellDelegate {
         }
         
         updateAdminStatus(for: user, to: isOn)
+    }
+}
+
+extension ProfileViewController: RegisterViewControllerDelegate {
+    func didRegisterUser(_ controller: RegisterViewController, user: User) {
+        controller.dismiss(animated: true)
+
+        self.user = user
+        tableView.reloadData()
+        delegate?.didUpdateUser(self)
     }
 }
 
@@ -220,7 +243,7 @@ enum ProfileRow {
 
     var isTappable: Bool {
         switch self {
-        case .logout:
+        case .username, .email, .logout:
             return true
         default:
             return false

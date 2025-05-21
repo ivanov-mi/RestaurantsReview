@@ -61,6 +61,44 @@ extension CoreDataManager {
         }
     }
     
+    func updateUsernameAndEmail(id: UUID, username: String, email: String) -> User? {
+        let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+
+        do {
+            guard let entity = try context.fetch(request).first else {
+                print("User not found for update")
+                return nil
+            }
+
+            // Check for email conflict with another user
+            let emailCheckRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+            emailCheckRequest.predicate = NSPredicate(format: "email ==[c] %@ AND id != %@", email, id as CVarArg)
+
+            let conflictingUsers = try context.fetch(emailCheckRequest)
+            guard conflictingUsers.isEmpty else {
+                print("Email already in use by another user")
+                return nil
+            }
+
+            entity.username = username
+            entity.email = email
+
+            saveContext()
+
+            return User(
+                id: entity.id!,
+                email: entity.email!,
+                username: entity.username ?? "",
+                isAdmin: entity.isAdmin
+            )
+        } catch {
+            print("Update error: \(error)")
+            return nil
+        }
+    }
+
+    
     func fetchUser(by id: UUID) -> User? {
         let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)

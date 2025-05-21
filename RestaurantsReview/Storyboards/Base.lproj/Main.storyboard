@@ -803,7 +803,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="666"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ePi-SR-cxI" userLabel="InputView">
-                                                <rect key="frame" x="0.0" y="32" width="393" height="301"/>
+                                                <rect key="frame" x="0.0" y="31.999999999999986" width="393" height="252.66666666666663"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g0U-RX-atz" userLabel="Username" customClass="UITextFieldBorderColor" customModule="RestaurantsReview" customModuleProvider="target">
                                                         <rect key="frame" x="16" y="8" width="361" height="34"/>
@@ -855,33 +855,38 @@
                                                         <color key="textColor" systemColor="systemRedColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u6R-re-HMD" customClass="UITextFieldBorderColor" customModule="RestaurantsReview" customModuleProvider="target">
-                                                        <rect key="frame" x="16" y="152.66666666666669" width="361" height="34"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                <color key="value" name="LightBlue"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                <real key="value" value="1"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="0.0"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
-                                                        <connections>
-                                                            <action selector="passwordEditingChanged:" destination="GK4-Mf-BKv" eventType="editingChanged" id="BpB-ut-xfz"/>
-                                                        </connections>
-                                                    </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password Validation Error" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Opf-dB-gkx" userLabel="Password Error Label">
-                                                        <rect key="frame" x="16" y="194.66666666666669" width="361" height="14.333333333333343"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                        <color key="textColor" systemColor="systemPinkColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="WWD-5x-wtQ" userLabel="passwordField StackView">
+                                                        <rect key="frame" x="16" y="152.66666666666669" width="361" height="8"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u6R-re-HMD" customClass="UITextFieldBorderColor" customModule="RestaurantsReview" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="361" height="0.0"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                        <color key="value" name="LightBlue"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                        <real key="value" value="1"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="0.0"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <action selector="passwordEditingChanged:" destination="GK4-Mf-BKv" eventType="editingChanged" id="BpB-ut-xfz"/>
+                                                                </connections>
+                                                            </textField>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password Validation Error" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Opf-dB-gkx" userLabel="Password Error Label">
+                                                                <rect key="frame" x="0.0" y="8" width="361" height="0.0"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <color key="textColor" systemColor="systemPinkColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vyV-JT-T91">
-                                                        <rect key="frame" x="16" y="241" width="361" height="44"/>
+                                                        <rect key="frame" x="16" y="192.66666666666669" width="361" height="44"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="LYE-Vq-NQo"/>
                                                         </constraints>
@@ -899,25 +904,23 @@
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="0Is-rw-D49" secondAttribute="trailing" constant="16" id="0LK-qa-kal"/>
                                                     <constraint firstAttribute="trailing" secondItem="3MQ-9R-7A2" secondAttribute="trailing" constant="16" id="3nU-Bj-s2V"/>
-                                                    <constraint firstItem="Opf-dB-gkx" firstAttribute="top" secondItem="u6R-re-HMD" secondAttribute="bottom" constant="8" id="4WR-kU-B8N"/>
                                                     <constraint firstItem="vyV-JT-T91" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="4rO-Ih-rES"/>
                                                     <constraint firstAttribute="bottom" secondItem="vyV-JT-T91" secondAttribute="bottom" constant="16" id="6ZM-jq-Tc4"/>
                                                     <constraint firstAttribute="trailing" secondItem="vyV-JT-T91" secondAttribute="trailing" constant="16" id="7Nj-91-TL9"/>
                                                     <constraint firstAttribute="trailing" secondItem="P5R-bh-bhu" secondAttribute="trailing" constant="16" id="EHJ-Xd-dv2"/>
                                                     <constraint firstAttribute="trailing" secondItem="g0U-RX-atz" secondAttribute="trailing" constant="16" id="EO9-WW-5Wx"/>
                                                     <constraint firstItem="3MQ-9R-7A2" firstAttribute="top" secondItem="g0U-RX-atz" secondAttribute="bottom" constant="8" id="Hob-MI-klH"/>
-                                                    <constraint firstAttribute="trailing" secondItem="Opf-dB-gkx" secondAttribute="trailing" constant="16" id="HxW-P4-syg"/>
                                                     <constraint firstItem="3MQ-9R-7A2" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="Lut-Bw-S6H"/>
-                                                    <constraint firstItem="vyV-JT-T91" firstAttribute="top" secondItem="Opf-dB-gkx" secondAttribute="bottom" constant="32" id="OOK-8u-uDm"/>
-                                                    <constraint firstItem="u6R-re-HMD" firstAttribute="top" secondItem="0Is-rw-D49" secondAttribute="bottom" constant="16" id="XDW-Ae-b66"/>
+                                                    <constraint firstItem="WWD-5x-wtQ" firstAttribute="top" secondItem="0Is-rw-D49" secondAttribute="bottom" constant="16" id="Qzb-pU-LCN"/>
+                                                    <constraint firstItem="WWD-5x-wtQ" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="WHp-m5-FSo"/>
                                                     <constraint firstItem="P5R-bh-bhu" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="XTq-vt-y26"/>
                                                     <constraint firstItem="g0U-RX-atz" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="ZSD-W2-IbM"/>
-                                                    <constraint firstItem="Opf-dB-gkx" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="bZG-DC-JO2"/>
-                                                    <constraint firstAttribute="trailing" secondItem="u6R-re-HMD" secondAttribute="trailing" constant="16" id="deH-K7-mul"/>
+                                                    <constraint firstItem="vyV-JT-T91" firstAttribute="top" secondItem="WWD-5x-wtQ" secondAttribute="bottom" constant="32" id="eZ5-vH-Oqz"/>
                                                     <constraint firstItem="0Is-rw-D49" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="hr2-GS-ccA"/>
+                                                    <constraint firstAttribute="trailing" secondItem="WWD-5x-wtQ" secondAttribute="trailing" constant="16" id="hvY-QB-Ld0"/>
                                                     <constraint firstItem="g0U-RX-atz" firstAttribute="top" secondItem="ePi-SR-cxI" secondAttribute="top" constant="8" id="jTx-o2-Xoy"/>
                                                     <constraint firstItem="P5R-bh-bhu" firstAttribute="top" secondItem="3MQ-9R-7A2" secondAttribute="bottom" constant="16" id="r91-Z5-NO0"/>
-                                                    <constraint firstItem="u6R-re-HMD" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="siW-rC-htC"/>
+                                                    <constraint firstItem="vyV-JT-T91" firstAttribute="top" secondItem="0Is-rw-D49" secondAttribute="bottom" priority="999" constant="32" id="vjQ-Vv-rlP"/>
                                                     <constraint firstItem="0Is-rw-D49" firstAttribute="top" secondItem="P5R-bh-bhu" secondAttribute="bottom" constant="8" id="yUU-hR-ZE5"/>
                                                 </constraints>
                                             </view>
@@ -953,9 +956,12 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="emailErrorBottomConstraint" destination="vjQ-Vv-rlP" id="glF-A3-eJg"/>
                         <outlet property="emailErrorLabel" destination="0Is-rw-D49" id="Swm-iO-gNN"/>
                         <outlet property="emailTextField" destination="P5R-bh-bhu" id="PqV-Ic-Jh0"/>
+                        <outlet property="passwordBottomConstraint" destination="eZ5-vH-Oqz" id="06s-Fx-Bkd"/>
                         <outlet property="passwordErrorLabel" destination="Opf-dB-gkx" id="kqw-e1-f5d"/>
+                        <outlet property="passwordFieldStackView" destination="WWD-5x-wtQ" id="H7w-YJ-Ncc"/>
                         <outlet property="passwordTextField" destination="u6R-re-HMD" id="5D3-zC-TLm"/>
                         <outlet property="registerButton" destination="vyV-JT-T91" id="sHa-qX-UBt"/>
                         <outlet property="usernameErrorLabel" destination="3MQ-9R-7A2" id="jyL-iA-ujc"/>

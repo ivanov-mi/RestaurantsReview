@@ -85,7 +85,7 @@ private extension WelcomeViewController {
 
 // MARK: - RegisterViewControllerDelegate
 extension WelcomeViewController: RegisterViewControllerDelegate {
-    func didRegisterUser(_ controller: RegisterViewController, didRegister user: User) {
+    func didRegisterUser(_ controller: RegisterViewController, user: User) {
         sessionManager.login(user: user)
     }
 }

@@ -12,6 +12,7 @@ protocol PersistenceManaging {
     // MARK: - Users
     func registerUser(username: String, email: String, password: String, isAdmin: Bool) -> User?
     func login(email: String, password: String) -> User?
+    func updateUsernameAndEmail(id: UUID, username: String, email: String) -> User?
     func fetchAllUsers() -> [User]
     func fetchUser(by id: UUID) -> User?
     func changeAdminStatus(for userId: UUID, to isAdmin: Bool) -> User?

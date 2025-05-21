@@ -194,7 +194,7 @@ extension UserListingViewController: ProfileViewControllerDelegate {
 
 // MARK: - RegisterViewControllerDelegate
 extension UserListingViewController: RegisterViewControllerDelegate {
-    func didRegisterUser(_ controller: RegisterViewController, didRegister user: User) {
+    func didRegisterUser(_ controller: RegisterViewController, user: User) {
         reloadUsers()
     }
 }

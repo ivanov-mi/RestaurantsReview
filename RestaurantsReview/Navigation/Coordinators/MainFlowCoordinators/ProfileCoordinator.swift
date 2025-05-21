@@ -46,7 +46,21 @@ extension ProfileCoordinator: ProfileViewControllerCoordinator {
         delegate?.didRequestLogout(from: self)
     }
     
+    func didDeleteUser(from controller: ProfileViewController) {
+        delegate?.didRequestLogout(from: self)
+    }
+    
     func didRemoveCurrentUserAdminStatus(from controller: ProfileViewController) {
         delegate?.didChangeAdminStatus(from: self)
+    }
+    
+    func didRequestEditUser(from controller: ProfileViewController, user: User) {
+        let registerVC = AppStoryboard.main.viewController(ofType: RegisterViewController.self)
+        registerVC.mode = .edit(existingUser: user)
+        registerVC.persistenceManager = persistenceManager
+        registerVC.delegate = controller
+
+        let nav = UINavigationController(rootViewController: registerVC)
+        controller.present(nav, animated: true)
     }
 }

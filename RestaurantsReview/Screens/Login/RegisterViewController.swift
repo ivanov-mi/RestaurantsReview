@@ -7,16 +7,21 @@
 
 import UIKit
 
+// MARK: - RegisterScreenMode
+enum RegisterScreenMode {
+    case create
+    case edit(existingUser: User)
+}
+
 // MARK: - RegisterViewControllerDelegate
 protocol RegisterViewControllerDelegate: AnyObject {
-    func didRegisterUser(_ controller: RegisterViewController, didRegister user: User)
+    func didRegisterUser(_ controller: RegisterViewController, user: User)
 }
 
 // MARK: - RegisterViewControllerCoordinator
 protocol RegisterViewControllerCoordinator: AnyObject {
     func didFinishRegistration(_ controller: RegisterViewController)
 }
-
 
 // MARK: - RegisterViewController
 class RegisterViewController: UIViewController {
@@ -26,23 +31,29 @@ class RegisterViewController: UIViewController {
     @IBOutlet private weak var usernameErrorLabel: UILabel!
     @IBOutlet private weak var emailTextField: UITextField!
     @IBOutlet private weak var emailErrorLabel: UILabel!
+    
+    @IBOutlet private weak var passwordFieldStackView: UIStackView!
     @IBOutlet private weak var passwordTextField: UITextField!
     @IBOutlet private weak var passwordErrorLabel: UILabel!
     @IBOutlet private weak var registerButton: UIButton!
-    
+
+    @IBOutlet private var passwordBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private var emailErrorBottomConstraint: NSLayoutConstraint!
+
     // MARK: - Properties
     weak var coordinator: RegisterViewControllerCoordinator?
     weak var delegate: RegisterViewControllerDelegate?
     var persistenceManager: PersistenceManaging!
+    
+    var mode: RegisterScreenMode = .create
 
     // MARK: - VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupNavigation()
         setupDelegates()
         setupSecureFields()
-        clearForm()
+        configureForMode()
     }
 
     // MARK: - Actions
@@ -59,14 +70,10 @@ class RegisterViewController: UIViewController {
     }
     
     @IBAction private func registerButtonTapped(_ sender: UIButton) {
-        registerUser()
-    }
-    
-    // MARK: - Configure Views
-    private func setupNavigation() {
-        title = "Register"
+        handleSubmit()
     }
 
+    // MARK: - Configure Views
     private func setupDelegates() {
         usernameTextField.delegate = self
         emailTextField.delegate = self
@@ -76,7 +83,34 @@ class RegisterViewController: UIViewController {
     private func setupSecureFields() {
         passwordTextField.isSecureTextEntry = true
     }
+
+    private func configureForMode() {
+        switch mode {
+        case .create:
+            setupForCreateMode()
+        case .edit(let user):
+            setupForEditMode(user: user)
+        }
+    }
     
+    private func setupForCreateMode() {
+        title = "Register"
+        clearForm()
+        passwordFieldStackView.isHidden = false
+        passwordBottomConstraint.isActive = true
+        emailErrorBottomConstraint.isActive = false
+        registerButton.setTitle("Register", for: .normal)
+    }
+
+    private func setupForEditMode(user: User) {
+        title = "Edit User"
+        prepopulateForm(for: user)
+        passwordFieldStackView.isHidden = true
+        passwordBottomConstraint.isActive = false
+        emailErrorBottomConstraint.isActive = true
+        registerButton.setTitle("Update", for: .normal)
+    }
+
     // MARK: - Validation Logic
     private func updateFieldValidationState(textField: UITextField, errorLabel: UILabel, validation: (String) -> AuthInputValidatorResult) {
         let text = textField.text ?? ""
@@ -89,8 +123,16 @@ class RegisterViewController: UIViewController {
     private func updateRegisterButtonState() {
         let isUsernameValid = usernameErrorLabel.isHidden && !(usernameTextField.text ?? "").isEmpty
         let isEmailValid = emailErrorLabel.isHidden && !(emailTextField.text ?? "").isEmpty
-        let isPasswordValid = passwordErrorLabel.isHidden && !(passwordTextField.text ?? "").isEmpty
-
+        
+        let isPasswordValid: Bool = {
+            switch mode {
+            case .create:
+                return passwordErrorLabel.isHidden && !(passwordTextField.text ?? "").isEmpty
+            case .edit:
+                return true
+            }
+        }()
+        
         registerButton.isEnabled = isUsernameValid && isEmailValid && isPasswordValid
     }
 
@@ -107,31 +149,63 @@ class RegisterViewController: UIViewController {
         registerButton.isEnabled = false
     }
     
-    private func registerUser() {
+    private func prepopulateForm(for user: User) {
+        usernameTextField.text = user.username
+        emailTextField.text = user.email
+        passwordTextField.text = ""
+        
+        let errorLabels: [UILabel?] = [usernameErrorLabel, emailErrorLabel, passwordErrorLabel]
+        errorLabels.forEach {
+            $0?.text = nil
+            $0?.isHidden = true
+        }
+
+        registerButton.isEnabled = true
+    }
+    
+    private func handleSubmit() {
         guard let username = usernameTextField.text,
-              let email = emailTextField.text,
-              let password = passwordTextField.text else { return }
-        
-        // TODO: Add check for already existing user and admin rights
-        
-        var isAdmin: Bool = false
-        
-#if DEBUG
-        isAdmin = true
-#endif
-        
-        let user = persistenceManager.registerUser(
+              let email = emailTextField.text else { return }
+
+        switch mode {
+        case .create:
+            handleCreateUser(username: username, email: email)
+        case .edit(let existingUser):
+            handleEditUser(existingUser: existingUser, username: username, email: email)
+        }
+    }
+    
+    private func handleEditUser(existingUser: User, username: String, email: String) {
+        let updatedUser = persistenceManager.updateUsernameAndEmail(
+            id: existingUser.id,
+            username: username,
+            email: email
+        ) ?? existingUser
+
+        delegate?.didRegisterUser(self, user: updatedUser)
+        coordinator?.didFinishRegistration(self)
+    }
+    
+    private func handleCreateUser(username: String, email: String) {
+        guard let password = passwordTextField.text else { return }
+
+        #if DEBUG
+        let isAdmin = true
+        #else
+        let isAdmin = false
+        #endif
+
+        guard let user = persistenceManager.registerUser(
             username: username,
             email: email,
             password: password,
-            isAdmin: isAdmin)
-        
-        guard let user else {
+            isAdmin: isAdmin
+        ) else {
             print("Failed to register user.")
             return
         }
-        
-        delegate?.didRegisterUser(self, didRegister: user)
+
+        delegate?.didRegisterUser(self, user: user)
         coordinator?.didFinishRegistration(self)
     }
 }
