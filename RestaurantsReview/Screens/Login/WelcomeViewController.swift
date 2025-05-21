@@ -53,9 +53,10 @@ class WelcomeViewController: UIViewController {
     }
 }
 
+
+// MARK: - Add populate with test data functionality
 #if DEBUG
 private extension WelcomeViewController {
-
     func setupDebugBarButton() {
         let isPopulated = TestDataProvider.isTestingDataAvailable(using: CoreDataManager.shared)
         
@@ -92,7 +93,7 @@ extension WelcomeViewController: RegisterViewControllerDelegate {
 
 // MARK: - RegisterViewControllerDelegate
 extension WelcomeViewController: LoginViewControllerDelegate {
-    func didRegisterUser(_ controller: LoginViewController, didRegister user: User) {
+    func didRegisterUser(_ controller: LoginViewController, user: User) {
         sessionManager.login(user: user)
     }
 }

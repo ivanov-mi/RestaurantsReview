@@ -14,7 +14,7 @@ protocol LoginViewControllerCoordinator: AnyObject {
 
 // MARK: - LoginViewControllerDelegate
 protocol LoginViewControllerDelegate: AnyObject {
-    func didRegisterUser(_ controller: LoginViewController, didRegister user: User)
+    func didRegisterUser(_ controller: LoginViewController, user: User)
 }
 
 // MARK: - LoginViewController
@@ -126,7 +126,7 @@ class LoginViewController: UIViewController {
             return
         }
         
-        delegate?.didRegisterUser(self, didRegister: user)
+        delegate?.didRegisterUser(self, user: user)
         coordinator?.didFinishLogin(self)
         clearForm()
     }
