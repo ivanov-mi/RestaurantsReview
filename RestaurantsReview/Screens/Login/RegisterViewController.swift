@@ -62,25 +62,9 @@ class RegisterViewController: UIViewController {
         registerUser()
     }
     
-    #if DEBUG
-    @IBAction private func addTestUserTapped(_ sender: UIButton) {
-        usernameTextField.text = TestData.User.admin.username
-        emailTextField.text = TestData.User.admin.email
-        passwordTextField.text = TestData.User.admin.password
-        usernameEditingChanged(usernameTextField)
-        emailEditingChanged(emailTextField)
-        passwordEditingChanged(passwordTextField)
-        updateRegisterButtonState()
-    }
-    #endif
-    
     // MARK: - Configure Views
     private func setupNavigation() {
         title = "Register"
-        
-    #if DEBUG
-        addLogoutBarButton()
-    #endif
     }
 
     private func setupDelegates() {
@@ -92,17 +76,6 @@ class RegisterViewController: UIViewController {
     private func setupSecureFields() {
         passwordTextField.isSecureTextEntry = true
     }
-    
-    #if DEBUG
-    private func addLogoutBarButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Add test user",
-            style: .plain,
-            target: self,
-            action: #selector(addTestUserTapped)
-        )
-    }
-    #endif
     
     // MARK: - Validation Logic
     private func updateFieldValidationState(textField: UITextField, errorLabel: UILabel, validation: (String) -> AuthInputValidatorResult) {
@@ -141,17 +114,23 @@ class RegisterViewController: UIViewController {
         
         // TODO: Add check for already existing user and admin rights
         
+        var isAdmin: Bool = false
+        
+#if DEBUG
+        isAdmin = true
+#endif
+        
         let user = persistenceManager.registerUser(
             username: username,
             email: email,
             password: password,
-            isAdmin: true)
+            isAdmin: isAdmin)
         
         guard let user else {
             print("Failed to register user.")
             return
         }
-
+        
         delegate?.didRegisterUser(self, didRegister: user)
         coordinator?.didFinishRegistration(self)
     }
