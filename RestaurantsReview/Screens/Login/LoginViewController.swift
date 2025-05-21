@@ -17,7 +17,7 @@ protocol LoginViewControllerDelegate: AnyObject {
     func didRegisterUser(_ controller: LoginViewController, didRegister user: User)
 }
 
-// MARK - LoginViewController
+// MARK: - LoginViewController
 class LoginViewController: UIViewController {
     
     // MARK: - IBOutlets
@@ -27,7 +27,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak private var passwordTextField: UITextField!
     @IBOutlet weak private var passwordErrorLabel: UILabel!
     @IBOutlet weak private var loginButton: UIButton!
-    @IBOutlet weak private var forgotPasswordButton: UIButton!
     
     // MARK: - Properties
     weak var coordinator: LoginViewControllerCoordinator?
@@ -42,6 +41,7 @@ class LoginViewController: UIViewController {
         setupKeyboardHandling()
         setupUI()
         clearForm()
+        populateDebugCredentialsIfNeeded()
     }
 
     // MARK: - Actions
@@ -57,19 +57,6 @@ class LoginViewController: UIViewController {
         authenticate()
     }
 
-    @IBAction private func forgotPasswordButtonTapped(_ sender: Any) {
-        
-        // TODO: Implement forgot password functionality
-        
-        #if DEBUG
-        emailTextField.text = TestData.User.admin.email
-        passwordTextField.text = TestData.User.admin.password
-        emailEditingChanged(emailTextField)
-        passwordEditingChanged(passwordTextField)
-        updateLoginButtonState()
-        #endif
-    }
-
     // MARK: - Configure Views
     private func setupDelegates() {
         emailTextField.delegate = self
@@ -79,7 +66,6 @@ class LoginViewController: UIViewController {
     private func setupUI() {
         title = "Login"
         loginButton.setTitle("Login", for: .normal)
-        forgotPasswordButton.setTitle("Forgot password?", for: .normal)
         passwordTextField.isSecureTextEntry = true
     }
     
@@ -98,6 +84,18 @@ class LoginViewController: UIViewController {
         loginButton.isEnabled = false
     }
     
+    #if DEBUG
+    private func populateDebugCredentialsIfNeeded() {
+        emailTextField.text = TestData.User.admin.email
+        passwordTextField.text = TestData.User.admin.password
+        emailEditingChanged(emailTextField)
+        passwordEditingChanged(passwordTextField)
+        updateLoginButtonState()
+    }
+    #else
+    private func populateDebugCredentialsIfNeeded() {}
+    #endif
+
     // MARK: - Validation Handling
     private func updateFieldValidationState(textField: UITextField, errorLabel: UILabel, validation: (String) -> AuthInputValidatorResult) {
         let result = validation(textField.text ?? "")

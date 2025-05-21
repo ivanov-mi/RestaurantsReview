@@ -657,7 +657,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="666"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ugt-hJ-QgA" userLabel="InputView">
-                                                <rect key="frame" x="0.0" y="32" width="393" height="263"/>
+                                                <rect key="frame" x="0.0" y="31.999999999999986" width="393" height="212.66666666666663"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="alr-p9-vtZ" customClass="UITextFieldBorderColor" customModule="RestaurantsReview" customModuleProvider="target">
                                                         <rect key="frame" x="16" y="8" width="361" height="34"/>
@@ -723,38 +723,24 @@
                                                             <action selector="loginButtonTapped:" destination="58F-1y-nNM" eventType="touchUpInside" id="Ebx-Tj-y97"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vdo-zW-t6Z">
-                                                        <rect key="frame" x="16" y="212.66666666666669" width="361" height="34.333333333333343"/>
-                                                        <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" title="Forgot password?">
-                                                            <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
-                                                            <color key="baseForegroundColor" systemColor="systemBlueColor"/>
-                                                        </buttonConfiguration>
-                                                        <connections>
-                                                            <action selector="forgotPasswordButtonTapped:" destination="58F-1y-nNM" eventType="touchUpInside" id="Qq9-C8-daG"/>
-                                                        </connections>
-                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstItem="alr-p9-vtZ" firstAttribute="top" secondItem="ugt-hJ-QgA" secondAttribute="top" constant="8" id="3p7-A7-Bja"/>
                                                     <constraint firstAttribute="trailing" secondItem="rQl-rN-wDi" secondAttribute="trailing" constant="16" id="6Wl-W0-ImS"/>
                                                     <constraint firstItem="rQl-rN-wDi" firstAttribute="top" secondItem="sIf-f7-ZH3" secondAttribute="bottom" constant="8" id="DWj-3d-YXj"/>
-                                                    <constraint firstItem="vdo-zW-t6Z" firstAttribute="leading" secondItem="ugt-hJ-QgA" secondAttribute="leading" constant="16" id="EM3-XO-UAc"/>
                                                     <constraint firstItem="LOe-7P-43t" firstAttribute="top" secondItem="rQl-rN-wDi" secondAttribute="bottom" constant="16" id="Ff8-HR-ETj"/>
                                                     <constraint firstAttribute="trailing" secondItem="LOe-7P-43t" secondAttribute="trailing" constant="16" id="LZX-0b-DZV"/>
                                                     <constraint firstItem="sIf-f7-ZH3" firstAttribute="leading" secondItem="ugt-hJ-QgA" secondAttribute="leading" constant="16" id="LkF-ks-dxa"/>
-                                                    <constraint firstItem="vdo-zW-t6Z" firstAttribute="top" secondItem="LOe-7P-43t" secondAttribute="bottom" constant="16" id="QqR-vC-RsR"/>
                                                     <constraint firstItem="LOe-7P-43t" firstAttribute="leading" secondItem="ugt-hJ-QgA" secondAttribute="leading" constant="20" symbolic="YES" id="Rsr-Dm-5Ci"/>
                                                     <constraint firstItem="sIf-f7-ZH3" firstAttribute="top" secondItem="yPi-Rm-U38" secondAttribute="bottom" constant="16" id="UFe-S4-eC3"/>
                                                     <constraint firstAttribute="trailing" secondItem="yPi-Rm-U38" secondAttribute="trailing" constant="16" id="YMz-ij-pxn"/>
-                                                    <constraint firstAttribute="bottom" secondItem="vdo-zW-t6Z" secondAttribute="bottom" constant="16" id="cMT-Bp-qxk"/>
                                                     <constraint firstItem="rQl-rN-wDi" firstAttribute="leading" secondItem="ugt-hJ-QgA" secondAttribute="leading" constant="16" id="fzH-JO-S8K"/>
                                                     <constraint firstAttribute="trailing" secondItem="alr-p9-vtZ" secondAttribute="trailing" constant="16" id="hgE-3f-k4T"/>
                                                     <constraint firstItem="yPi-Rm-U38" firstAttribute="leading" secondItem="ugt-hJ-QgA" secondAttribute="leading" constant="16" id="mbb-wl-eZI"/>
-                                                    <constraint firstAttribute="trailing" secondItem="vdo-zW-t6Z" secondAttribute="trailing" constant="16" id="p5z-TF-KxX"/>
                                                     <constraint firstAttribute="trailing" secondItem="sIf-f7-ZH3" secondAttribute="trailing" constant="16" id="qUf-1S-dfk"/>
                                                     <constraint firstItem="yPi-Rm-U38" firstAttribute="top" secondItem="alr-p9-vtZ" secondAttribute="bottom" constant="8" id="rlP-24-3OM"/>
+                                                    <constraint firstAttribute="bottom" secondItem="LOe-7P-43t" secondAttribute="bottom" constant="16" id="w3O-i2-afh"/>
                                                     <constraint firstItem="alr-p9-vtZ" firstAttribute="leading" secondItem="ugt-hJ-QgA" secondAttribute="leading" constant="16" id="waO-xO-vOn"/>
                                                 </constraints>
                                             </view>
@@ -792,7 +778,6 @@
                     <connections>
                         <outlet property="emailErrorLabel" destination="yPi-Rm-U38" id="5Ne-xV-5Mn"/>
                         <outlet property="emailTextField" destination="alr-p9-vtZ" id="4Ru-pb-RxN"/>
-                        <outlet property="forgotPasswordButton" destination="vdo-zW-t6Z" id="OGP-m9-ttb"/>
                         <outlet property="loginButton" destination="LOe-7P-43t" id="EZX-0B-SXe"/>
                         <outlet property="passwordErrorLabel" destination="rQl-rN-wDi" id="3RD-4i-eMP"/>
                         <outlet property="passwordTextField" destination="sIf-f7-ZH3" id="0G7-vE-aH8"/>
