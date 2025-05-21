@@ -75,6 +75,13 @@ extension AuthCoordinator: LoginViewControllerCoordinator {
 
 // MARK: - RegisterViewControllerCoordinator
 extension AuthCoordinator: RegisterViewControllerCoordinator {
+    
+    // TODO: Fix AuthCoordinator
+    
+    func didFinishRegistration(_ controller: RegisterViewController) {
+        print("Finish registration flow")
+    }
+    
     func didFinishRegistration(with user: User) {
         finishAuthFlow(with: user)
     }

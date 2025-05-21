@@ -45,7 +45,7 @@ extension ProfileCoordinator: ProfileViewControllerCoordinator {
         delegate?.didRequestLogout(from: self)
     }
     
-    func didChangeAdminStatus(from controller: ProfileViewController) {
+    func didRemoveCurrentUserAdminStatus(from controller: ProfileViewController) {
         delegate?.didChangeAdminStatus(from: self)
     }
 }

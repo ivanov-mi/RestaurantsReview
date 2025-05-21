@@ -10,6 +10,7 @@ import UIKit
 // MARK: - AdminCoordinatorDelegate
 protocol AdminCoordinatorDelegate: AnyObject {
     func didRequestLogout(from coordinator: AdminCoordinator)
+    func didChangeAdminStatus(from coordinator: AdminCoordinator)
 }
 
 // MARK: - AdminCoordinator
@@ -60,10 +61,10 @@ extension AdminCoordinator: AdminViewControllerCoordinator {
 
 // MARK: - UserListingViewControllerCoordinator
 extension AdminCoordinator: UserListingViewControllerCoordinator {
-    func usersDeleted(_ controller: UserListingViewController, userIds: [UUID]) {
-        if userIds.first(where: { $0 == SessionManager.shared.currentUser?.id }) != nil {
+    func currentUserDeleted(_ controller: UserListingViewController) {
+//        if userIds.first(where: { $0 == SessionManager.shared.currentUser?.id }) != nil {
             delegate?.didRequestLogout(from: self)
-        }
+//        }
     }
     
     func didSelectUser(_ controller: UserListingViewController, user: User) {
@@ -71,14 +72,16 @@ extension AdminCoordinator: UserListingViewControllerCoordinator {
         profileVC.persistenceManager = persistenceManager
         profileVC.user = user
         profileVC.delegate = controller
+        profileVC.coordinator = self
  
         navigationController.pushViewController(profileVC, animated: true)
     }
     
-    func didTapAddUser(from controller: UserListingViewController) {
+    func didTapAddUser(_ controller: UserListingViewController) {
         let registerVC = AppStoryboard.main.viewController(ofType: RegisterViewController.self)
         registerVC.persistenceManager = persistenceManager
         registerVC.delegate = controller
+        registerVC.coordinator = self
         
         let nav = UINavigationController(rootViewController: registerVC)
         controller.present(nav, animated: true)
@@ -111,6 +114,22 @@ extension AdminCoordinator: ReviewDetailsViewControllerCoordinator {
     }
 
     func didCancelReviewCreation(_ controller: ReviewDetailsViewController) {
+        controller.dismiss(animated: true)
+    }
+}
+
+extension AdminCoordinator: ProfileViewControllerCoordinator {
+    func didRequestLogout(from controller: ProfileViewController) {
+        delegate?.didRequestLogout(from: self)
+    }
+    
+    func didRemoveCurrentUserAdminStatus(from controller: ProfileViewController) {
+        delegate?.didChangeAdminStatus(from: self)
+    }
+}
+
+extension AdminCoordinator: RegisterViewControllerCoordinator {
+    func didFinishRegistration(_ controller: RegisterViewController) {
         controller.dismiss(animated: true)
     }
 }

@@ -9,13 +9,13 @@ import UIKit
 
 // MARK: - ProfileViewControllerDelegate
 protocol ProfileViewControllerDelegate: AnyObject {
-    func profileViewController(_ controller: ProfileViewController, didUpdateUser updatedUser: User)
+    func didUpdateUser(_ controller: ProfileViewController)
 }
 
 // MARK: - ProfileViewControllerCoordinator
 protocol ProfileViewControllerCoordinator: AnyObject {
     func didRequestLogout(from controller: ProfileViewController)
-    func didChangeAdminStatus(from controller: ProfileViewController)
+    func didRemoveCurrentUserAdminStatus(from controller: ProfileViewController)
 }
 
 // MARK: - ProfileViewController
@@ -87,6 +87,35 @@ class ProfileViewController: UIViewController {
         present(alert, animated: true)
     }
     
+    private func presentAdminStatusChangeConfirmationAlert(for user: User, isOn: Bool) {
+        let alert = UIAlertController(
+            title: "Remove Admin Status",
+            message: "Are you sure you want to remove user admin privileges?",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Confirm", style: .destructive) { [weak self] _ in
+            guard let self else { return }
+            
+            self.updateAdminStatus(for: user, to: isOn)
+        })
+        present(alert, animated: true)
+    }
+    
+    private func updateAdminStatus(for user: User, to isOn: Bool) {
+        guard let updatedUser = persistenceManager.changeAdminStatus(for: user.id, to: isOn) else {
+            return
+        }
+        
+        self.user = updatedUser
+        tableView.reloadData()
+        delegate?.didUpdateUser(self)
+        
+        if sessionManager.currentUser?.id == user.id {
+            coordinator?.didRemoveCurrentUserAdminStatus(from: self)
+        }
+    }
+    
     private func rows(for section: ProfileSection) -> [ProfileRow] {
         section.rows(showsLogout: showsLogout)
     }
@@ -155,14 +184,12 @@ extension ProfileViewController: UITableViewDelegate {
 // MARK: - ProfileSwitchTableViewCellDelegate
 extension ProfileViewController: ProfileSwitchTableViewCellDelegate {
     func profileSwitchCell(_ cell: ProfileSwitchTableViewCell, didChangeValue isOn: Bool) {
-        guard let updatedUser = persistenceManager.changeAdminStatus(for: user.id, to: isOn) else {
+        guard !user.isAdmin else {
+            presentAdminStatusChangeConfirmationAlert(for: user, isOn: isOn)
             return
         }
         
-        self.user = updatedUser
-        tableView.reloadData()
-        delegate?.profileViewController(self, didUpdateUser: updatedUser)
-        coordinator?.didChangeAdminStatus(from: self)
+        updateAdminStatus(for: user, to: isOn)
     }
 }
 

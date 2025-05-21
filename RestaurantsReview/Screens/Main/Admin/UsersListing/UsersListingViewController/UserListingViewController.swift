@@ -7,17 +7,11 @@
 
 import UIKit
 
-// MARK: - UserListingViewControllerDelegate
-protocol UserListingViewControllerDelegate: AnyObject {
-    func userListingViewControllerDidAddUser(_ controller: UserListingViewController)
-}
-
-
-// MARK: - UserListingViewControllerCoordinator Protocol
+// MARK: - UserListingViewControllerCoordinator
 protocol UserListingViewControllerCoordinator: AnyObject {
     func didSelectUser(_ controller: UserListingViewController, user: User)
-    func usersDeleted(_ controller: UserListingViewController, userIds: [UUID])
-    func didTapAddUser(from controller: UserListingViewController)
+    func currentUserDeleted(_ controller: UserListingViewController)
+    func didTapAddUser(_ controller: UserListingViewController)
 }
 
 // MARK: - View Controller
@@ -25,8 +19,8 @@ class UserListingViewController: UITableViewController {
     
     // MARK: - Properties
     weak var coordinator: UserListingViewControllerCoordinator?
-    weak var delegate: UserListingViewControllerDelegate?
     var persistenceManager: PersistenceManaging!
+    var sessionManager: SessionManaging = SessionManager.shared
     
     private var users: [User] = []
     private var selectedUsers: Set<UUID> = []
@@ -68,7 +62,7 @@ class UserListingViewController: UITableViewController {
     
     // MARK: - Actions
     @objc private func addUserTapped() {
-        coordinator?.didTapAddUser(from: self)
+        coordinator?.didTapAddUser(self)
     }
     
     @objc private func toggleEditMode() {
@@ -130,19 +124,26 @@ class UserListingViewController: UITableViewController {
     private func deleteUser(at indexPath: IndexPath) {
         let user = users[indexPath.row]
         persistenceManager.deleteUser(userId: user.id)
-        coordinator?.usersDeleted(self, userIds: [user.id])
         users.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
+        
+        if sessionManager.currentUser?.id == user.id {
+            coordinator?.currentUserDeleted(self)
+        }
     }
     
     private func deleteUsers() {
         let userIds = users.filter { selectedUsers.contains($0.id) }.map { $0.id }
         persistenceManager.deleteUsers(userIds: userIds)
-        coordinator?.usersDeleted(self, userIds: userIds)
         users.removeAll { selectedUsers.contains($0.id) }
         tableView.reloadData()
         selectedUsers.removeAll()
         deleteButton.isEnabled = false
+        
+        if let currentUserId = sessionManager.currentUser?.id,
+           userIds.contains(currentUserId) {
+            coordinator?.currentUserDeleted(self)
+        }
     }
     
     // MARK: - TableViewDataSource
@@ -186,16 +187,14 @@ class UserListingViewController: UITableViewController {
 
 // MARK: - ProfileViewControllerDelegate
 extension UserListingViewController: ProfileViewControllerDelegate {
-    func profileViewController(_ controller: ProfileViewController, didUpdateUser updatedUser: User) {
+    func didUpdateUser(_ controller: ProfileViewController) {
         reloadUsers()
     }
 }
 
 // MARK: - RegisterViewControllerDelegate
 extension UserListingViewController: RegisterViewControllerDelegate {
-    func registerViewController(_ controller: RegisterViewController, didRegister user: User) {
-        controller.dismiss(animated: true) { [weak self] in
-            self?.reloadUsers()
-        }
+    func didRegisterUser(_ controller: RegisterViewController, didRegister user: User) {
+        reloadUsers()
     }
 }

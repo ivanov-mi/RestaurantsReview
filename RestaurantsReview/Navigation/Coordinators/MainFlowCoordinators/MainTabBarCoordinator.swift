@@ -107,5 +107,10 @@ extension MainTabBarCoordinator: AdminCoordinatorDelegate {
     func didRequestLogout(from coordinator: AdminCoordinator) {
         delegate?.didRequestLogout(from: self)
     }
+    
+    func didChangeAdminStatus(from coordinator: AdminCoordinator) {
+        SessionManager.shared.updateCurrentUser()
+        start()
+    }
 }
     

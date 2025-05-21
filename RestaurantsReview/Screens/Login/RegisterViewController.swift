@@ -9,12 +9,12 @@ import UIKit
 
 // MARK: - RegisterViewControllerDelegate
 protocol RegisterViewControllerDelegate: AnyObject {
-    func registerViewController(_ controller: RegisterViewController, didRegister user: User)
+    func didRegisterUser(_ controller: RegisterViewController, didRegister user: User)
 }
 
 // MARK: - RegisterViewControllerCoordinator
 protocol RegisterViewControllerCoordinator: AnyObject {
-    func didFinishRegistration(with user: User)
+    func didFinishRegistration(_ controller: RegisterViewController)
 }
 
 
@@ -151,9 +151,9 @@ class RegisterViewController: UIViewController {
             print("Failed to register user.")
             return
         }
-        
-        delegate?.registerViewController(self, didRegister: user)
-        coordinator?.didFinishRegistration(with: user)
+
+        delegate?.didRegisterUser(self, didRegister: user)
+        coordinator?.didFinishRegistration(self)
     }
 }
 
