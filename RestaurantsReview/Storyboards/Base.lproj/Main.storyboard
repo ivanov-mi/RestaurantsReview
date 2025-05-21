@@ -657,7 +657,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="666"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ugt-hJ-QgA" userLabel="InputView">
-                                                <rect key="frame" x="0.0" y="31.999999999999986" width="393" height="212.66666666666663"/>
+                                                <rect key="frame" x="0.0" y="31.999999999999986" width="393" height="228.66666666666663"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="alr-p9-vtZ" customClass="UITextFieldBorderColor" customModule="RestaurantsReview" customModuleProvider="target">
                                                         <rect key="frame" x="16" y="8" width="361" height="34"/>
@@ -710,7 +710,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LOe-7P-43t">
-                                                        <rect key="frame" x="20" y="152.66666666666669" width="357" height="44"/>
+                                                        <rect key="frame" x="20" y="168.66666666666669" width="357" height="44"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="Tnl-g3-XIQ"/>
                                                         </constraints>
@@ -729,7 +729,7 @@
                                                     <constraint firstItem="alr-p9-vtZ" firstAttribute="top" secondItem="ugt-hJ-QgA" secondAttribute="top" constant="8" id="3p7-A7-Bja"/>
                                                     <constraint firstAttribute="trailing" secondItem="rQl-rN-wDi" secondAttribute="trailing" constant="16" id="6Wl-W0-ImS"/>
                                                     <constraint firstItem="rQl-rN-wDi" firstAttribute="top" secondItem="sIf-f7-ZH3" secondAttribute="bottom" constant="8" id="DWj-3d-YXj"/>
-                                                    <constraint firstItem="LOe-7P-43t" firstAttribute="top" secondItem="rQl-rN-wDi" secondAttribute="bottom" constant="16" id="Ff8-HR-ETj"/>
+                                                    <constraint firstItem="LOe-7P-43t" firstAttribute="top" secondItem="rQl-rN-wDi" secondAttribute="bottom" constant="32" id="Ff8-HR-ETj"/>
                                                     <constraint firstAttribute="trailing" secondItem="LOe-7P-43t" secondAttribute="trailing" constant="16" id="LZX-0b-DZV"/>
                                                     <constraint firstItem="sIf-f7-ZH3" firstAttribute="leading" secondItem="ugt-hJ-QgA" secondAttribute="leading" constant="16" id="LkF-ks-dxa"/>
                                                     <constraint firstItem="LOe-7P-43t" firstAttribute="leading" secondItem="ugt-hJ-QgA" secondAttribute="leading" constant="20" symbolic="YES" id="Rsr-Dm-5Ci"/>
@@ -803,7 +803,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="666"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ePi-SR-cxI" userLabel="InputView">
-                                                <rect key="frame" x="0.0" y="32" width="393" height="285"/>
+                                                <rect key="frame" x="0.0" y="32" width="393" height="301"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g0U-RX-atz" userLabel="Username" customClass="UITextFieldBorderColor" customModule="RestaurantsReview" customModuleProvider="target">
                                                         <rect key="frame" x="16" y="8" width="361" height="34"/>
@@ -881,7 +881,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vyV-JT-T91">
-                                                        <rect key="frame" x="16" y="225" width="361" height="44"/>
+                                                        <rect key="frame" x="16" y="241" width="361" height="44"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="LYE-Vq-NQo"/>
                                                         </constraints>
@@ -908,7 +908,7 @@
                                                     <constraint firstItem="3MQ-9R-7A2" firstAttribute="top" secondItem="g0U-RX-atz" secondAttribute="bottom" constant="8" id="Hob-MI-klH"/>
                                                     <constraint firstAttribute="trailing" secondItem="Opf-dB-gkx" secondAttribute="trailing" constant="16" id="HxW-P4-syg"/>
                                                     <constraint firstItem="3MQ-9R-7A2" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="Lut-Bw-S6H"/>
-                                                    <constraint firstItem="vyV-JT-T91" firstAttribute="top" secondItem="Opf-dB-gkx" secondAttribute="bottom" constant="16" id="OOK-8u-uDm"/>
+                                                    <constraint firstItem="vyV-JT-T91" firstAttribute="top" secondItem="Opf-dB-gkx" secondAttribute="bottom" constant="32" id="OOK-8u-uDm"/>
                                                     <constraint firstItem="u6R-re-HMD" firstAttribute="top" secondItem="0Is-rw-D49" secondAttribute="bottom" constant="16" id="XDW-Ae-b66"/>
                                                     <constraint firstItem="P5R-bh-bhu" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="XTq-vt-y26"/>
                                                     <constraint firstItem="g0U-RX-atz" firstAttribute="leading" secondItem="ePi-SR-cxI" secondAttribute="leading" constant="16" id="ZSD-W2-IbM"/>
