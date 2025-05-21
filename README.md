@@ -70,6 +70,7 @@ A custom **SessionManager** manages authentication state, integrating with the K
 
 ### Codebase
 - Refactor and modularize architecture
+- Add async/await support
 - Split storyboards for better organization
 - Improve Core Data handling
 - Add comprehensive error handling
@@ -92,7 +93,7 @@ A custom **SessionManager** manages authentication state, integrating with the K
 - Pull-to-refresh on key screens
 - Better Admin panel layout and controls
 - Improve Add/Edit Restaurant flow
-- Implement Forgot Password functionality
+- Implement Forgot and Change Password functionalities
 - Enhance Profile features
 - Integrate Google NearMe API (future scope)
 
@@ -123,10 +124,12 @@ The app uses a `MainTabBarController` with three tabs: **Restaurants**, **Profil
 
 #### Profile
 - View user information
-- Update profile (limited to admin toggle in this version)
+- Update profile
+    - **Update admin status** (Admin toggle is for demo purposes and should be removed for production.)
+    - **Update username**  
+    - **Update email**  
 - Logout
 - Delete account  
-  _Note: Admin toggle is for demo purposes and would not be editable in production._
 
 #### Admin
 Accessible only to admin users. It provides management interfaces for:
@@ -147,10 +150,11 @@ Each is presented using a basic `UITableView`. Detail views reuse:
   ## For demo purposes is integrated "Populate testing data" / "Clear test data" functionality 
 <img src="https://github.com/user-attachments/assets/850db478-094f-4915-b9c0-01f3cedbcc04" width="300">
 <img src="https://github.com/user-attachments/assets/73bfb5fa-076d-4c86-b115-007b0c98ea6b" width="300">
-<img src="https://github.com/user-attachments/assets/8b2ac3ac-100a-4e65-8f8e-679853547cab" width="300"> 
-<img src="https://github.com/user-attachments/assets/a0c25157-20dd-4fed-997b-44d2fe659554" width="300">
-<img src="https://github.com/user-attachments/assets/b56cc0d5-ccda-4a2b-9163-6656a3c53577" width="300">
-<img src="https://github.com/user-attachments/assets/e22511c1-6559-4c81-a0eb-1c8ef867f7dc" width="300"> 
+<img src="https://github.com/user-attachments/assets/17710c0c-cd50-426f-a6db-b6ef5c0626d9" width="300"> 
+<img src="https://github.com/user-attachments/assets/69ed6221-72b1-4cef-b18f-73f96eebbed1" width="300">
+<img src="https://github.com/user-attachments/assets/a446e737-53da-4ccf-afc5-34380156d483" width="300">
+<img src="https://github.com/user-attachments/assets/c7c54935-e804-4319-b72f-f032de287e08" width="300"> 
+
 
 
 <br>  </br>
@@ -207,8 +211,11 @@ Each is presented using a basic `UITableView`. Detail views reuse:
 - User Profile
 ## For demo purposes the admin access is granted by a switch
 <img src="https://github.com/user-attachments/assets/948b7534-e4f9-4abf-80cb-18176a4e2c61" width="300">
+<img src="https://github.com/user-attachments/assets/6be11ff2-ae4b-46f0-a02b-4f0fd162ea31" width="300">
 <img src="https://github.com/user-attachments/assets/fe477117-1831-4037-9848-e68dda98b3d6" width="300"> 
 <img src="https://github.com/user-attachments/assets/dad6a1ff-ec27-4f93-b3ab-f24187881058" width="300">
+<img src="https://github.com/user-attachments/assets/e381aafb-2433-47a2-a1bb-b7bcc3294503" width="300"> 
+<img src="https://github.com/user-attachments/assets/13a3fba8-8f6d-485e-b326-006bb8bc3928" width="300">
 <br>  </br>
 
 - Admin panel
@@ -216,15 +223,15 @@ Each is presented using a basic `UITableView`. Detail views reuse:
 <img src="https://github.com/user-attachments/assets/57d79977-2782-44f8-91c8-15daec02c67a" width="300">
 <br>
   - Users<br>
-<img src="https://github.com/user-attachments/assets/31be821e-9348-4d65-9ad6-6b84254a8138" width="300">
+<img src="https://github.com/user-attachments/assets/40300e77-0017-4dfe-bbc3-fa09ae8f37c8" width="300">
 <img src="https://github.com/user-attachments/assets/d2a75f97-7d38-450e-be64-3e5533eb3bf5" width="300">
-<img src="https://github.com/user-attachments/assets/fd08d6ee-139f-4e04-9c86-3db7e84b311d" width="300">
+<img src="https://github.com/user-attachments/assets/35220b0f-0e64-4486-a3f1-7e81a24df1c5" width="300">
+<img src="https://github.com/user-attachments/assets/8e3ecded-2a11-4f39-9ce1-5fa61b9d95be" width="300">
 
 - Reviews
 <img src="https://github.com/user-attachments/assets/43d6251f-1dff-4bd1-87c3-a3008713a6ff" width="300">
 <img src="https://github.com/user-attachments/assets/a3af8265-1743-402a-b6ac-b6f096128d1d" width="300">
 <img src="https://github.com/user-attachments/assets/f7ee6bc2-9b8f-4152-8d29-d28bc9bf8244" width="300">
-
 
 
 
