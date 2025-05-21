@@ -62,9 +62,7 @@ extension AdminCoordinator: AdminViewControllerCoordinator {
 // MARK: - UserListingViewControllerCoordinator
 extension AdminCoordinator: UserListingViewControllerCoordinator {
     func currentUserDeleted(_ controller: UserListingViewController) {
-//        if userIds.first(where: { $0 == SessionManager.shared.currentUser?.id }) != nil {
             delegate?.didRequestLogout(from: self)
-//        }
     }
     
     func didSelectUser(_ controller: UserListingViewController, user: User) {

@@ -47,7 +47,7 @@ class RestaurantDetailsViewController: UIViewController {
     var sessionManager: SessionManaging = SessionManager.shared
     
     private var isAdmin: Bool {
-        sessionManager.currentUser?.isAdmin ?? false
+        sessionManager.isAdmin
     }
     
     // MARK: - Public methods

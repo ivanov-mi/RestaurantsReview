@@ -10,6 +10,7 @@ import UIKit
 // MARK: - AppCoordinator
 class AppCoordinator: Coordinator {
     private let persistenceManager: PersistenceManaging
+    var sessionManager: SessionManaging = SessionManager.shared
     
     // MARK: - Properties
     private let navigationController: UINavigationController
@@ -25,7 +26,7 @@ class AppCoordinator: Coordinator {
 
     // MARK: - Public methods
     func start() {
-        SessionManager.shared.isAuthenticated ? showMainFlow() : showAuthFlow()
+        sessionManager.isAuthenticated ? showMainFlow() : showAuthFlow()
     }
 
     // MARK: - Private methods

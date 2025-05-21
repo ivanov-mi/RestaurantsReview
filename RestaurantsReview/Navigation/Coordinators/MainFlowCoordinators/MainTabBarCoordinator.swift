@@ -17,6 +17,7 @@ class MainTabBarCoordinator: Coordinator {
 
     // MARK: - Properties
     weak var delegate: MainTabBarCoordinatorDelegate?
+    var sessionManager: SessionManaging = SessionManager.shared
 
     private var navigationController: UINavigationController
     private let tabBarController = MainTabViewController()
@@ -43,7 +44,7 @@ class MainTabBarCoordinator: Coordinator {
     // MARK: - Private methods
     private func availableTabs() -> [MainTabItem] {
         var tabs: [MainTabItem] = [.restaurants, .profile]
-        if SessionManager.shared.currentUser?.isAdmin ?? false {
+        if sessionManager.isAdmin {
             tabs.append(.admin)
         }
         
@@ -97,7 +98,7 @@ extension MainTabBarCoordinator: ProfileCoordinatorDelegate {
     }
     
     func didChangeAdminStatus(from coordinator: ProfileCoordinator) {
-        SessionManager.shared.updateCurrentUser()
+        sessionManager.updateCurrentUser()
         start()
     }
 }
@@ -109,7 +110,7 @@ extension MainTabBarCoordinator: AdminCoordinatorDelegate {
     }
     
     func didChangeAdminStatus(from coordinator: AdminCoordinator) {
-        SessionManager.shared.updateCurrentUser()
+        sessionManager.updateCurrentUser()
         start()
     }
 }

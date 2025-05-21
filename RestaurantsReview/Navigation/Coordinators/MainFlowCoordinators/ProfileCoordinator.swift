@@ -20,6 +20,7 @@ class ProfileCoordinator: Coordinator {
     private let navigationController: UINavigationController
     private let persistenceManager: PersistenceManaging
     weak var delegate: ProfileCoordinatorDelegate?
+    var sessionManager: SessionManaging = SessionManager.shared
 
     // MARK: - Init
     init(navigationController: UINavigationController, persistenceManager: PersistenceManaging) {
@@ -31,7 +32,7 @@ class ProfileCoordinator: Coordinator {
     func start() {
         let profileVC = AppStoryboard.main.viewController(ofType: ProfileViewController.self)
         navigationController.setViewControllers([profileVC], animated: false)
-        profileVC.user = SessionManager.shared.currentUser
+        profileVC.user = sessionManager.currentUser
         profileVC.coordinator = self
         profileVC.persistenceManager = persistenceManager
         navigationController.setViewControllers([profileVC], animated: false)

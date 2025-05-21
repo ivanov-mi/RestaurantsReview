@@ -68,8 +68,7 @@ class RestaurantListViewController: UITableViewController {
     }
     
     private func updateNavigationButtons() {
-        guard let isAdmin = sessionManager.currentUser?.isAdmin,
-            isAdmin else {
+        guard sessionManager.isAdmin else {
             navigationItem.rightBarButtonItems = nil
             if isEditing {
                 setEditing(false, animated: true)
@@ -167,8 +166,7 @@ class RestaurantListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let isAdmin = sessionManager.currentUser?.isAdmin,
-              isAdmin else {
+        guard sessionManager.isAdmin else {
             return nil
         }
         

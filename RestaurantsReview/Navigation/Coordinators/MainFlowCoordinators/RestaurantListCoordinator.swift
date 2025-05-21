@@ -13,6 +13,7 @@ class RestaurantListCoordinator: Coordinator {
     // MARK: - Properties
     private let navigationController: UINavigationController
     private let persistenceManager: PersistenceManaging
+    var sessionManager: SessionManaging = SessionManager.shared
 
     // MARK: - Init
     init(navigationController: UINavigationController, persistenceManager: PersistenceManaging) {
@@ -36,7 +37,7 @@ class RestaurantListCoordinator: Coordinator {
     }
     
     func presentReviewDetailsScreen(from controller: RestaurantDetailsViewController, for restaurant: Restaurant) {
-        guard let user = SessionManager.shared.currentUser else {
+        guard let user = sessionManager.currentUser else {
             
             // TODO: Implement session error flow
             
